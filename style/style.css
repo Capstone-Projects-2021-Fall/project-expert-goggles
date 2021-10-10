@@ -1,0 +1,39 @@
+.prompt
+{
+    position: relative;
+    display: inline-block;
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+    color: #FCCD1F;
+    cursor: pointer;
+    white-space: nowrap;
+    letter-spacing: 0.05rem;
+    line-height: 1.25rem;
+    margin-top: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    background-color: #DFE9F3;
+    border-radius: 8px;
+    box-shadow: 0px 0px 5px #74A5FD;
+    z-index: 1;
+    right: 0px;
+    transition: all 1s ease 0s;
+}
+
+.sidebar
+{
+     height: 100%; /* 100% Full-height */
+     width: 250px; /* 0 width - change this with JavaScript */
+     position: fixed; /* Stay in place */
+     z-index: 1; /* Stay on top */
+     top: 0; /* Stay at the top */
+     right: 0;
+     background-color: #6f7378; /* Black*/
+     overflow-x: hidden; /* Disable horizontal scroll */
+     padding-top: 60px; /* Place content 60px from the top */
+     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+#main {
+  transition: margin-right .5s;
+  padding: 20px;
+}

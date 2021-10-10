@@ -3,10 +3,15 @@
   "name": "Expert Goggles",
   "description": "Guides for Data Visualizations",
   "version": "1.0",
-  "background":
-  {
-    "service_worker": "Javascript/hello_world.js"
-  },
+  "content_scripts":
+  [{
+      "matches":
+      [
+        "<all_urls>"
+      ],
+      "css": ["style/style.css"],
+      "js": ["Javascript/UIGen.js"]
+  }],
   "icons":
   {
     "128": "icon.png"
