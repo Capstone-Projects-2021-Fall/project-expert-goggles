@@ -1,14 +1,44 @@
-import './App.css';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch
+} from 'react-router-dom';
 
-function App() {
+import Welcome from './pages/Welcome/Welcome';
+import Settings from './pages/Settings/Settings';
+import HistoryofViews from './pages/HistoryofViews/HistoryofViews';
+import Download from './pages/Download/Download';
+import AvailableGuides from './pages/AvailbleGuides/AvailableGuides';
+import Navbar from './Components/Navbar/Navbar';
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Welcome to Expert Goggles!
-        </p>
-      </header>
-    </div>
+    <Router>
+      <Navbar/>
+      <main>
+        <Switch>
+          <Route path = "/" exact>
+            <Welcome/>
+          </Route>
+          <Route path = "/Download" exact>
+            <Download/>
+          </Route>
+          <Route path = "/Settings" exact>
+            <Settings/>
+          </Route>
+          <Route path = "/HistoryofViews" exact>
+            <HistoryofViews/>
+          </Route>
+          <Route path = "/AvailableGuides" exact>
+            <AvailableGuides/>
+          </Route>
+          
+          <Redirect to ="/" />
+        </Switch>
+      </main>
+    </Router>
   );
 }
 
