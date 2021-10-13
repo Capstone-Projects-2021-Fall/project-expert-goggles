@@ -1,13 +1,22 @@
 "use strict";
 
-function createSidebar()
+var sbOpened = -1;
+var sb;
+
+function toggleSidebar()
 {
-    var sb = document.createElement("div");
-    sb.classList.add("sidebar");
-    sb.innerHTML = "Hello World!"
-    console.log("Sidebar Created.");
-    document.body.style.marginRight = "250px";
-    document.body.appendChild(sb);
+    if(sbOpened < 0)
+    {
+        document.body.style.marginRight = "250px";
+        sb.style.width = "250px";
+    }
+    else
+    {
+        document.body.style.marginRight = "0px";
+        sb.style.width = "0px";
+    }
+
+    sbOpened *= -1;
     return;
 }
 
@@ -24,13 +33,17 @@ function createPrompt(DOMid)
     window.onclick = function(event)
     {
         if(event.target.id == "ExpertGoggles")
-            createSidebar();
+            toggleSidebar();
     }
     return;
 }
 
 try
 {
+    sb = document.createElement("div");
+    sb.classList.add("sidebar");
+    sb.innerHTML = "Hello World!";
+    document.body.appendChild(sb);
     createPrompt("test");
     console.log("prompt created.");
 }

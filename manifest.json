@@ -3,6 +3,10 @@
   "name": "Expert Goggles",
   "description": "Guides for Data Visualizations",
   "version": "1.0",
+  "background":
+  {
+    "js": ["Javascript/DBConn.js"]
+  },
   "content_scripts":
   [{
       "matches":
