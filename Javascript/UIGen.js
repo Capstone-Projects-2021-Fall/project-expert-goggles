@@ -12,14 +12,15 @@
 
 //Internal Variables
 var sbOpened = -1; //-1 if the Sidebar is not currently showing, 1 if so.
-var sb = null; //Holds a sidebar DOM Element
+var sidebar = null; //Holds a sidebar DOM Element
+var myD3; //Holds the D3InfoObj that is sent to it.
 
 //Toggles the sidebar open and closed.
 //If this is somehow called while no sidebar is generated, logs to the console instead.
 function toggleSidebar()
 {
     //Check that sidebar exists, return if not
-    if(sb === null)
+    if(sidebar === null)
     {
         console.log("Cannot open sidebar: doesn't exist.");
         return;
@@ -28,13 +29,15 @@ function toggleSidebar()
     //If the sidebar is closed, open it
     if(sbOpened < 0)
     {
-        document.body.style.marginRight = "250px";
-        sb.style.width = "250px";
+        document.body.style.marginRight = "265px";
+        sidebar.style.width = "250px";
+        sidebar.style["padding-left"] = "15px";
     }
     else //Otherwise, hide it.
     {
         document.body.style.marginRight = "0px";
-        sb.style.width = "0px";
+        sidebar.style.width = "0px";
+        sidebar.style["padding-left"] = "0px";
     }
 
     sbOpened *= -1;
@@ -61,26 +64,39 @@ function createPrompt(id)
     return;
 }
 
+//generateSidebar() generates a sidebar DOM element and populates
+//it with a vis. guide that was appended to the D3InfoObj sent
+//from DBConn.js
+
+function generateSidebar(guide)
+{
+    var sb = document.createElement("div");
+    sb.classList.add("sidebar");
+
+    //Placeholder Code: Takes a string instead of JSON
+    sb.innerHTML = guide;
+    return sb;
+}
+
+
+
 //Listen for a message from DBConn
 chrome.runtime.onMessage.addListener(
   function(D3InfoObj, sender, sendResponse)
   {
     myD3 = D3InfoObj;
-    myD3.tab = sender.tab.id;
 
-    //Populates Guide and sends a fake message to the UIGenerator
-    myD3.guide = "Pie Charts are just fabulous.";
-    console.log("Sending: " + myD3);
-    sendToUI(myD3);
+    //Test Code: Make a sidebar from the Object Recieved
+    try
+    {
+        sidebar = generateSidebar(myD3.guide);
+        document.body.appendChild(sidebar);
+        createPrompt(myD3.DOMid);
+    }
+    catch(err)
+    {
+        console.log("Error in UI Generation");
+        console.log(err);
+    }
   }
 );
-
-try
-{
-    sb = document.createElement("div");
-    sb.classList.add("sidebar");
-    sb.innerHTML = "Hello World!";
-    document.body.appendChild(sb);
-    createPrompt("test");
-    console.log("prompt created.");
-}
