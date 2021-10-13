@@ -1,11 +1,11 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "Expert Goggles",
   "description": "Guides for Data Visualizations",
   "version": "1.0",
   "background":
   {
-    "js": ["Javascript/DBConn.js"]
+    "scripts": ["Javascript/DBConn.js"]
   },
   "content_scripts":
   [{
@@ -14,7 +14,11 @@
         "<all_urls>"
       ],
       "css": ["style/style.css"],
-      "js": ["Javascript/UIGen.js"]
+      "js":
+      [
+          "Javascript/UIGen.js",
+          "Javascript/Scraper.js"
+      ]
   }],
   "icons":
   {
@@ -22,7 +26,7 @@
   },
   "permissions":
   [
-    "unlimitedStorage",
-    "notifications"
+    "storage",
+    "tabs"
   ]
 }
