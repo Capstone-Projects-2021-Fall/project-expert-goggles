@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="d3.min" type="kotlin.js">
+    <CLASSES>
+      <root url="file://$USER_HOME$/node_modules/d3/dist/d3.min.js" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
