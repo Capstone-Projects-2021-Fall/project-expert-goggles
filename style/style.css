@@ -34,6 +34,12 @@
      transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
 
+.guideTitle
+{
+    text-align: center;
+    font-size: 50px;
+}
+
 #main {
   transition: margin-right .5s;
   padding: 20px;

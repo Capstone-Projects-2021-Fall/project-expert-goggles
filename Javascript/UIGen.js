@@ -68,13 +68,23 @@ function createPrompt(id)
 //it with a vis. guide that was appended to the D3InfoObj sent
 //from DBConn.js
 
-function generateSidebar(guide)
+function generateSidebar(guideInfo)
 {
     var sb = document.createElement("div");
     sb.classList.add("sidebar");
 
-    //Placeholder Code: Takes a string instead of JSON
-    sb.innerHTML = guide;
+    //Take the Object Passed by the Database and Generate the Guide
+    //Title
+    var titleDiv = document.createElement("div");
+    titleDiv.innerHTML = guideInfo["Name"] + "<br><br>";
+    titleDiv.classList.add("guideTitle");
+    sb.appendChild(titleDiv);
+
+    //Body
+    var bodyDiv = document.createElement("div");
+    bodyDiv.innerHTML = guideInfo["Guide"];
+    sb.appendChild(bodyDiv);
+
     return sb;
 }
 
