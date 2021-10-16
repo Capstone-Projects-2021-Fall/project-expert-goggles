@@ -15,10 +15,26 @@ const firebaseConfig = {
   appId: "1:842842636015:web:6063d22d26749d71e7251a"
 };
 
-// Initialize Firebase, Local D3InfoObj storage
+// Initialize Firebase, database object, and Local D3InfoObj storage
 firebase.initializeApp(firebaseConfig);
+const vis_db = firebase.firestore().collection("visualizations");
 var myD3 = {};
 
+//The fetchGuide(type) function runs a query to the firestore database
+//to check if the type argument passed to it has a guide associated with it
+//in the team database.
+
+async function fetchGuide(type)
+{
+    const query = await vis_db.doc(type).get();
+    if(query.empty) //If no guide for that type existed, log that fact
+        console.log("Queried for " + type + " but no guide found.");
+    else //Otherwise, Parse Out the returned info and append to myD3
+        myD3.guide = query.data();
+
+    //Forward to the UI Generator. This is here to avoid a race condition.
+    sendToUI(myD3);
+}
 
 /* For reference
 var visref = firebase.firestore().collection('visualizations')
@@ -51,10 +67,8 @@ chrome.runtime.onMessage.addListener(
     myD3 = D3InfoObj;
     myD3.tab = sender.tab.id;
 
-    //Populates Guide and sends a fake message to the UIGenerator
-    myD3.guide = "Pie charts are just awful.";
-    console.log("Sending: " + myD3);
-    sendToUI(myD3);
+    //Run a query based on the info that the scraper passed over
+    //FetchGuide appends necessary info into the D3InfoObj
+    fetchGuide(myD3.type);
   }
 );
-
