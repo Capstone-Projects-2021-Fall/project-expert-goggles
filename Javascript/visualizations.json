@@ -1,0 +1,35 @@
+{
+  "visualization": 
+  [
+    {
+       "type":"Bar Chart",
+       "img":"Placeholder",
+       "guide":"This is a placeholder bar chart guide"
+    },
+    
+    {
+      "type":"Scatter Plot",
+      "img":"Placeholder",
+      "guide":"This is a placeholder scatter plot guide"
+    },
+
+    {
+      "type": "Pie Chart",
+      "img": "Placeholder",
+      "guide": "This is a placeholder pie chart guide"
+    },
+    {
+      "type": "Stacked Area Chart",
+      "img": "Placeholder",
+      "guide": 
+      [
+        "A stacked area chart is a type of area chart that compares how its specific components change over time in comparison to one another.",
+        "Each color represents a different component being measured in the chart, and the height of each",
+        "component represents the value of each component. As you move along the x-axis, the heights of each",
+        "component change, and you see how each one increases or decreases over time. The increasing",
+        "components will increase in size and the decreasing components will decrease in size and this chart",
+        "makes it easy to visualize the proportions of each component to the overall total."
+      ]
+    }
+  ]
+}
