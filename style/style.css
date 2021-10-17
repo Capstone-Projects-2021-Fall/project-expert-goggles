@@ -38,10 +38,17 @@
     text-align: center;
 }
 
+.sidebar .bodyDiv
+{
+    text-align: justify;
+    text-justify: inter-word;
+}
+
 .guideTitle
 {
     text-align: center;
-    font-size: 36px;
+    font-size: 24px;
+    white-space: nowrap;
 }
 
 #main {

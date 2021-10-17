@@ -88,6 +88,7 @@ function generateSidebar(guideInfo)
     //Body
     var bodyDiv = document.createElement("div");
     bodyDiv.innerHTML = guideInfo["Guide"];
+    bodyDiv.classList.add("bodyDiv");
     sb.appendChild(bodyDiv);
 
     return sb;

@@ -16,5 +16,5 @@ function sendToDB(sentObj)
 }
 
 //Creates a simulated D3InfoObj as if it had identified its DOMid and type
-var D3InfoObj = {DOMid:"test", type:"test_input"};
+var D3InfoObj = {DOMid:"test", type:"stacked_area_chart"};
 sendToDB(D3InfoObj);
