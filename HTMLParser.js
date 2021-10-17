@@ -192,9 +192,10 @@ function locateD3InPage(){
     // ... Possibly make a D3 and grab the same thing? Check if an SVG is being attached? etc.? 
     console.log("boundElement: " + boundElementName);
 
-    //var testD3 = d3.select(boundElementName);
-    d3.select("interactiveChart").html("<p>This is new inner html.</p>");
-    d3.select('div').html('<p>Testing</p>');
+    var bEM = boundElementName.replace(/[^a-zA-Z]+/g, '');
+    var boundElement = document.getElementById(bEM);
+    
+    console.log(boundElement.childNodes);
 
 
     /*
