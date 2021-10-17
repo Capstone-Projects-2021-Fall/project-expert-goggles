@@ -16,6 +16,7 @@ class D3InfoObj
         this.type = null; // The Type of the parsed D3 Element
         this.guide = null; // An object that holds the JSON Representing a Vis. Guide
         this.URL = null; // The URL the D3 was located at.
+        this.img = null; //The URL for an image to include with the guide.
         this.tab = null; // The Tab ID where a D3 was located. For use in messaging between scripts.
     }
 }
