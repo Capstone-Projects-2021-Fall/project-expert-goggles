@@ -36,19 +36,6 @@ async function fetchGuide(type)
     sendToUI(myD3);
 }
 
-/* For reference
-var visref = firebase.firestore().collection('visualizations')
-firebase
-  .firestore()
-  .collection("visualizations")
-  .onSnapshot((snapshot) => {
-    const data = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    console.log("All data in 'visualizations' collection", data);
-  }); */
-
 //MockUp Function for sending the object to the UIGenerator
 function sendToUI(sentObj)
 {
