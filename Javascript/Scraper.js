@@ -79,8 +79,7 @@ function main(){
         //console.log(...scriptsWithD3sMap.entries());
         //console.log(scriptsWithD3sMap.values().next().value);
         D3InfoObj.DOMid = locateD3InPage();
-        D3InfoObj.type = "stacked_area_chart"; //Hardcoded for now
-        console.log(D3InfoObj.DOMid);
+        D3InfoObj.type = parseType();
         //Send that info along to DBConn
         if(D3InfoObj.DOMid)
             sendToDB(D3InfoObj);
@@ -241,6 +240,23 @@ function locateD3InPage(){
     */
 
 }
+
+//The parser doesn't currently work :( this code will just be for the demo
+function parseType()
+{
+    var title = document.getElementsByTagName("title")[0].innerHTML;
+    if(title.includes("Sunburst"))
+        return "sequences_sunburst";
+    else if(title.includes("Area") || title.includes("Millenial"))
+        return "stacked_area_chart";
+    else if(title.includes("Line"))
+        return "line_chart";
+    else if(title.includes("Bar"))
+        return "stacked_bar_chart";
+    else
+        return "test_input";
+}
+
 
 
 // CTRL + K + C OR CTRL + K + U to comment/uncomment blocks

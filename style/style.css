@@ -1,6 +1,7 @@
 .prompt
 {
     position: relative;
+    float: right;
     display: inline-block;
     margin-right: 0.5rem;
     color: white;
