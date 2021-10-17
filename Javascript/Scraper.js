@@ -5,11 +5,17 @@ const SCRIPT_MIME_TYPES = [
     "module",
 ];
 const sourceVersions = [
+    "/d3.v2.js",
     "/d3.v2.min.js",
+    "/d3.v3.js",
     "/d3.v3.min.js",
+    "/d3.v4.js",
     "/d3.v4.min.js",
+    "/d3.v5.js",
     "/d3.v5.min.js",
+    "/d3.v6.js",
     "/d3.v6.min.js",
+    "/d3.v7.js",
     "/d3.v7.min.js",
 ]; // Keeps a list of the various versions of D3 source code file names
 const d3LocationTags = [
@@ -31,16 +37,16 @@ function main(){
     // First, save some time by checking whether or not the open source code for D3s are on this page
     if(hasD3SourceCode == false){
         console.warn("Could not find D3 source code on this page.");
-        //return;
+        return;
     }
 
     const scripts = Array.from(document.getElementsByTagName('script'));
     //console.log(scripts);
 
-    const javascriptScripts = scripts.filter(isJavaScript);
+    //const javascriptScripts = scripts.filter(isJavaScript);
     //console.log(javascriptScripts);
 
-    const sMap = javascriptScripts.map(getContentFromScript);
+    const sMap = scripts.map(getContentFromScript);
     //console.log("LENGTH OF MAP: " + sMap.length);
     const scriptsText = Promise.all(sMap);
 
@@ -53,7 +59,7 @@ function main(){
                 // This gives us the index of the current script text within our script texts array initialized for the loop, called "texts"
                 const indexOfThisIteration = scriptData.indexOf(text);
                 // Below gives the value at the current index we're working with
-                const currentScript = javascriptScripts[indexOfThisIteration].getAttribute('src');
+                const currentScript = scripts[indexOfThisIteration].getAttribute('src');
 
                 //console.log("Iteration: " + indexOfThisIteration);
                 //console.log(text);
@@ -73,9 +79,12 @@ function main(){
         //console.log(...scriptsWithD3sMap.entries());
         //console.log(scriptsWithD3sMap.values().next().value);
         D3InfoObj.DOMid = locateD3InPage();
-
+        D3InfoObj.type = "stacked_area_chart"; //Hardcoded for now
+        console.log(D3InfoObj.DOMid);
         //Send that info along to DBConn
-        sendToDB(D3InfoObj);
+        if(D3InfoObj.DOMid)
+            sendToDB(D3InfoObj);
+
 
     });
 }
@@ -94,6 +103,12 @@ function checkForD3Sources(){
 
             return true;
         }
+
+        if(sourceVersions.includes(fileEnding.slice(fileEnding.length - 9))){
+            console.log("Found a D3 source file in the page.");
+            return true;
+        }
+
     }
 
 
@@ -110,14 +125,14 @@ function checkForD3Sources(){
 function isJavaScript(script){
     const type = script.getAttribute('type');
     if(type === null){
-        console.log('Script: ' + script.getAttribute('src') + ' has type \'null\'.');
+        //console.log('Script: ' + script.getAttribute('src') + ' has type \'null\'.');
         if(checkFileExtension(script.getAttribute('src'))){
-            console.log('Has a .js extension');
+            //console.log('Has a .js extension');
             return true;
         }
         return false;
     }else if(SCRIPT_MIME_TYPES.includes(type)){
-        console.log('Script: ' + script.getAttribute('src') + ' has type \''+ type + '\'');
+        //console.log('Script: ' + script.getAttribute('src') + ' has type \''+ type + '\'');
         return true;
     }
 }
@@ -133,7 +148,7 @@ async function getContentFromScript(script){
         const text = await response.text();
         return text;
     }catch{
-        console.warn('ERROR: Could not retrieve the content from: ', script);
+        //console.warn('ERROR: Could not retrieve the content from: ', script);
     }
 }
 
@@ -184,7 +199,7 @@ function locateD3InPage(){
         indexOfSelect = textDataString.search(regexSelectAll);
         // if it can't find selectAll() either...
         if(indexOfSelect == -1){
-            console.warn("Cannot find the binding element. So select or selectAll.");
+            //console.warn("Cannot find the binding element. So select or selectAll.");
             return;
         }
         bindFunctionID = 1;
@@ -204,8 +219,12 @@ function locateD3InPage(){
     // OOOOH. Found this: HTMLCollection Objects: namedItem() function: returns the element with the specified ID/name in the HTML collection
     // ... Possibly make a D3 and grab the same thing? Check if an SVG is being attached? etc.?
     console.log("boundElement: " + boundElementName);
+    var bEM = boundElementName;
 
-    var bEM = boundElementName.replace(/[^a-zA-Z]+/g, '');
+    //check if first character is letter
+    while(bEM.charAt(0).toUpperCase() == bEM.charAt(0).toLowerCase())
+        bEM = bEM.substring(1);
+
     return bEM;
 
 
