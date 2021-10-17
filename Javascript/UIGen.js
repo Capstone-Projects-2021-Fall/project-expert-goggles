@@ -92,9 +92,15 @@ function generateSidebar(guideInfo)
     sb.appendChild(outerDiv);
     outerDiv.appendChild(titleDiv);
 
+    //img
+    var pic = document.createElement("img");
+    pic.src = guideInfo["img"];
+    pic.width = "225";
+    outerDiv.appendChild(pic);
+
     //Body
     var bodyDiv = document.createElement("div");
-    bodyDiv.innerHTML = guideInfo["Guide"];
+    bodyDiv.innerHTML = "<br>" + guideInfo["Guide"];
     bodyDiv.classList.add("bodyDiv");
     sb.appendChild(bodyDiv);
 
