@@ -34,7 +34,6 @@ const App = () => {
           <Route path = "/AvailableGuides" exact>
             <AvailableGuides/>
           </Route>
-          
           <Redirect to ="/" />
         </Switch>
       </main>

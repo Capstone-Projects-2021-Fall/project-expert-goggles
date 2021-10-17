@@ -76,7 +76,7 @@ const Navbar = () => {
                     <li className = "nav-item-active">
                         <NavLink classname = "nav-link" to = "/" exact>
                             <i
-                            className = "fas fa-tachometer-alt">
+                            className = "fa fa-home">
                             </i> Home
                         </NavLink>
                     </li>
@@ -84,7 +84,7 @@ const Navbar = () => {
                     <li className = "nav-item">
                         <NavLink classname = "nav-link" to = "/Download" exact>
                             <i
-                            className = "far fa-clone">
+                            className = "fa fa-arrow-circle-o-down">
                             </i> Download
                         </NavLink>
                     </li>
@@ -92,16 +92,24 @@ const Navbar = () => {
                     <li className = "nav-item">
                         <NavLink classname = "nav-link" to = "/HistoryofViews" exact>
                             <i
-                            className = "far fa-copy">
+                            className = "fa fa-history">
                             </i> History of Views
                         </NavLink>
                     </li>
 
                     <li className = "nav-item">
+                        <NavLink classname = "nav-link" to = "/AvailableGuides" exact>
+                            <i
+                            className = "fa fa-book">
+                            </i> Available Guides
+                        </NavLink>
+                    </li>
+                    
+                    <li className = "nav-item">
                         <NavLink classname = "nav-link"
                         to = "/Settings" exact>
                             <i
-                            className = "far fa-address-book">
+                            className = "fa fa-cog">
                             </i> Settings
                         </NavLink>
                     </li>
