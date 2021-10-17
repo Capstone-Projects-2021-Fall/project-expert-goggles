@@ -80,11 +80,10 @@ function main(){
         //console.log(scriptsWithD3sMap.values().next().value);
         D3InfoObj.DOMid = locateD3InPage();
         D3InfoObj.type = parseType();
+
         //Send that info along to DBConn
         if(D3InfoObj.DOMid)
             sendToDB(D3InfoObj);
-
-
     });
 }
 
@@ -224,6 +223,10 @@ function locateD3InPage(){
     while(bEM.charAt(0).toUpperCase() == bEM.charAt(0).toLowerCase())
         bEM = bEM.substring(1);
 
+    //check if last character is a quotation mark
+    if(bEM.charAt(bEM.length - 1) == '"')
+        bEM = bEM.substring(0, bEM.length - 1);
+
     return bEM;
 
 
@@ -247,12 +250,14 @@ function parseType()
     var title = document.getElementsByTagName("title")[0].innerHTML;
     if(title.includes("Sunburst"))
         return "sequences_sunburst";
-    else if(title.includes("Area") || title.includes("Millenial"))
+    else if(title.includes("Area"))
         return "stacked_area_chart";
     else if(title.includes("Line"))
         return "line_chart";
     else if(title.includes("Bar"))
         return "stacked_bar_chart";
+    else if(title.includes("Millennial"))
+        return "stacked_area_chart";
     else
         return "test_input";
 }
