@@ -26,7 +26,7 @@ class AvailableGuides extends React.Component {
     render() {
         return (
             <div classname = "container">
-                <h1 classname = "text-center" style = {{paddingTop: "30%"}}>
+                <h1 class = "text-center" style = {{paddingTop: "2%"}}>
                     Available Guides
                 </h1>
                 {
