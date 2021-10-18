@@ -114,7 +114,7 @@ chrome.runtime.onMessage.addListener(
   function(D3InfoObj, sender, sendResponse)
   {
     myD3 = D3InfoObj;
-    console.log("UI Generator: Received Request to generate for " + myD3.type + "at DOM ID " + myD3.DOMid);
+    console.log("UI Generator: Received Request to generate a guide for a " + myD3.type + " at DOM ID " + myD3.DOMid);
 
     //Test Code: Make a sidebar from the Object Recieved
     try

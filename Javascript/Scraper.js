@@ -97,13 +97,13 @@ function checkForD3Sources(){
 
         // If the last 13 characters (including the "/") match
         if(sourceVersions.includes(fileEnding.slice(fileEnding.length - 13))){
-            console.log("Found a D3 source file in the page.");
+            console.log("Scraper: Found a D3 source file in the page.");
 
             return true;
         }
 
         if(sourceVersions.includes(fileEnding.slice(fileEnding.length - 9))){
-            console.log("Found a D3 source file in the page.");
+            console.log("Scraper: Found a D3 source file in the page.");
             return true;
         }
 
@@ -203,7 +203,7 @@ function locateD3InPage(){
         bindFunctionID = 1;
         boundElementNameIndex = 11;
     }
-    console.log("IndexOfSelect: " + indexOfSelect);
+    //console.log("IndexOfSelect: " + indexOfSelect);
 
 
     var currCharIndex = indexOfSelect + boundElementNameIndex;
@@ -216,7 +216,7 @@ function locateD3InPage(){
 
     // OOOOH. Found this: HTMLCollection Objects: namedItem() function: returns the element with the specified ID/name in the HTML collection
     // ... Possibly make a D3 and grab the same thing? Check if an SVG is being attached? etc.?
-    console.log("boundElement: " + boundElementName);
+    //console.log("boundElement: " + boundElementName);
     var bEM = boundElementName;
 
     //check if first character is letter
@@ -227,6 +227,7 @@ function locateD3InPage(){
     if(bEM.charAt(bEM.length - 1) == '"')
         bEM = bEM.substring(0, bEM.length - 1);
 
+    console.log("Scraper: D3 visualization identified at page element with ID " + bEM);
     return bEM;
 
 
