@@ -10,22 +10,25 @@
   },
   "content_scripts":
   [{
-      "matches":
-      [
-        "<all_urls>"
-      ],
+    "matches": ["<all_urls>"],
+    "js": ["Javascript/injector.js"],
+    "run_at": "document_start"
+  },
+  {
+      "matches": ["<all_urls>"],
       "css": ["style/style.css"],
       "js":
       [
-          "Javascript/UIGen.js",
-          "Javascript/Scraper.js"
-      ]
+          "Javascript/UIGen.js"
+      ],
+      "run_at": "document_end"
   }],
   "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com/; object-src 'self'",
   "icons":
   {
     "128": "icon.png"
   },
+  "web_accessible_resources": ["Javascript/d3.js", "Javascript/interceptor.js"],
   "permissions":
   [
     "storage",

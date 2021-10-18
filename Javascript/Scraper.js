@@ -36,7 +36,7 @@ function main(){
     hasD3SourceCode = checkForD3Sources();
     // First, save some time by checking whether or not the open source code for D3s are on this page
     if(hasD3SourceCode == false){
-        console.warn("Could not find D3 source code on this page.");
+        console.log("Could not find D3 source code on this page.");
         return;
     }
 
