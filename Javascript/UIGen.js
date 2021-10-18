@@ -50,7 +50,14 @@ function toggleSidebar()
 //a floating prompt near that DOM element on the page.
 function createPrompt(id)
 {
+    //Grab that id, or if that fails, try to figure out where to put it
     var d3 = document.getElementById(id);
+    if(d3 === null)
+    {
+        d3 = document.getElementsByTagName("IFRAME")[0];
+        while(d3.tagName != 'DIV')
+            d3 = d3.parentElement;
+    }
 
     var prompt = document.createElement("div");
     prompt.innerHTML = "Expert Goggles:<br>Click for a guide.";
@@ -85,9 +92,15 @@ function generateSidebar(guideInfo)
     sb.appendChild(outerDiv);
     outerDiv.appendChild(titleDiv);
 
+    //img
+    var pic = document.createElement("img");
+    pic.src = guideInfo["img"];
+    pic.width = "225";
+    outerDiv.appendChild(pic);
+
     //Body
     var bodyDiv = document.createElement("div");
-    bodyDiv.innerHTML = guideInfo["Guide"];
+    bodyDiv.innerHTML = "<br>" + guideInfo["Guide"];
     bodyDiv.classList.add("bodyDiv");
     sb.appendChild(bodyDiv);
 
@@ -101,6 +114,7 @@ chrome.runtime.onMessage.addListener(
   function(D3InfoObj, sender, sendResponse)
   {
     myD3 = D3InfoObj;
+    console.log("UI Generator: Received Request to generate a guide for a " + myD3.type + " at DOM ID " + myD3.DOMid);
 
     //Test Code: Make a sidebar from the Object Recieved
     try

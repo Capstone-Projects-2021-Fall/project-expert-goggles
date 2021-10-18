@@ -53,6 +53,7 @@ chrome.runtime.onMessage.addListener(
   {
     myD3 = D3InfoObj;
     myD3.tab = sender.tab.id;
+    console.log("Received a guide request for " + D3InfoObj.type);
 
     //Run a query based on the info that the scraper passed over
     //FetchGuide appends necessary info into the D3InfoObj
