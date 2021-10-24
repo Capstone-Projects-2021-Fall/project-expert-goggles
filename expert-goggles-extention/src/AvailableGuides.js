@@ -6,7 +6,18 @@ class AvailableGuides extends React.Component {
     state = { 
         visualizations: null
     }
-
+/*
+    generateImage() {
+        var sb = document.createElement("div");
+        sb.classList.add("sidebar");
+        var outerDiv = document.createElement("div");
+        var pic = document.createElement("img");
+        pic.src = [URL];
+        pic.width = "225";
+        outerDiv.appendChild(pic);
+        return sb;
+    }
+*/
     componentDidMount() { //will run as soon as this app component gets put on the screen
         console.log('mounted')
         db.collection('visualizations') // creates a reference to the students collection
@@ -34,9 +45,9 @@ class AvailableGuides extends React.Component {
                     this.state.visualizations.map ( visualizations => {
                         return (
                             <div>
-                                <p>Name: {String(visualizations.Name)}</p>
-                                <p>Guide: {String(visualizations.Guide)}</p>
-                                <p>Image: {visualizations.img}</p>
+                                <p style = {{fontWeight: "bold"}}>Name: {String(visualizations.Name)}</p>
+                                <p style = {{fontWeight: "bold"}}>Guide: {String(visualizations.Guide)}</p>
+                                <p style = {{paddingLeft: "20%"}}><img src={visualizations.img} alt ='guide'/></p>
                             </div>
                         )
                     })
