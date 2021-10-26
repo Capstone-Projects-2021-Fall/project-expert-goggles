@@ -12,14 +12,16 @@ i {
   margin-right: 10px;
 }
 .navbar-logo {
-  padding: 15px;
+  padding: 10px;
   color: #fff;
   pointer-events: none;
+  margin-right: auto;
 }
 
 .navbar-mainbg {
   background-color: #000000;
   padding: 0px;
+  justify-content: flex-end;
 }
 #navbarSupportedContent {
   overflow: hidden;
