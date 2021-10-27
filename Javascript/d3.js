@@ -1,4 +1,10 @@
 // https://d3js.org v7.1.1 Copyright 2010-2021 Mike Bostock
+
+//Modifications by Expert Goggles's Team for Use in Extension
+//All Modifications are commented
+var funcsCalled = []; //Track Relevant Function Calls
+
+//Expert Goggles Source Code Starts Here
 (function (global, factory) {
 typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -2374,6 +2380,10 @@ Selection$1.prototype = selection.prototype = {
 };
 
 function select(selector) {
+    //Expert Goggles Interception
+    if(!funcsCalled.includes("select"))
+        funcsCalled.push("select");
+
   return typeof selector === "string"
       ? new Selection$1([[document.querySelector(selector)]], [document.documentElement])
       : new Selection$1([[selector]], root$1);
@@ -2446,6 +2456,10 @@ function pointers(events, node) {
 }
 
 function selectAll(selector) {
+    //Expert Goggles Interception
+    if(!funcsCalled.includes("select_all"))
+        funcsCalled.push("select_all");
+
   return typeof selector === "string"
       ? new Selection$1([document.querySelectorAll(selector)], [document.documentElement])
       : new Selection$1([array$4(selector)], root$1);
@@ -4010,6 +4024,10 @@ function get(node, id) {
 }
 
 function create(node, id, self) {
+    //Expert Goggles Interception
+    if(!funcsCalled.includes("create"))
+        funcsCalled.push("create");
+
   var schedules = node.__transition,
       tween;
 
@@ -13150,6 +13168,10 @@ function score(node) {
 }
 
 function Node(circle) {
+  //Expert Goggles Interception
+  if(!funcsCalled.includes("node"))
+    funcsCalled.push("node");
+
   this._ = circle;
   this.next = null;
   this.previous = null;
@@ -17444,6 +17466,10 @@ function y(p) {
 }
 
 function line(x$1, y$1) {
+  //Expert Goggles Interception
+  if(!funcsCalled.includes("line"))
+           funcsCalled.push("line");
+
   var defined = constant$1(true),
       context = null,
       curve = curveLinear,
@@ -17453,6 +17479,10 @@ function line(x$1, y$1) {
   y$1 = typeof y$1 === "function" ? y$1 : (y$1 === undefined) ? y : constant$1(y$1);
 
   function line(data) {
+    //Expert Goggles Interception
+    if(!funcsCalled.includes("line"))
+         funcsCalled.push("line");
+
     var i,
         n = (data = array(data)).length,
         d,
@@ -20124,3 +20154,34 @@ exports.zoomTransform = transform;
 Object.defineProperty(exports, '__esModule', { value: true });
 
 }));
+
+//Expert Goggles Interception: Make sure they can't overwrite the functions we've modified
+Object.defineProperty(window.d3, "create", {value: window.d3.create, writable: false});
+Object.defineProperty(window.d3, "select", {value: window.d3.select, writable: false});
+Object.defineProperty(window.d3, "selectAll", {value: window.d3.selectAll, writable: false});
+Object.defineProperty(window.d3, "line", {value: window.d3.line, writable: false});
+
+
+//Expert Goggles Interception: SendToParser()
+//sendToParser() Sends a list of tracked function from the injected script
+//back out to the extension's parser
+function sendToParser()
+{
+    //Generate an object with the necessary info, append funcList to it
+    var parseObj = {};
+    parseObj.funcList = funcsCalled;
+    parseObj.sender = "ExpertGoggles";
+
+    console.log("Sending message to background.");
+
+    //Message ParseObj out
+    try
+    {
+        window.postMessage(parseObj, "*");
+    }
+    catch(err) {console.log(err);}
+}
+
+//Expert Goggles Incterception: After a timeout for page load, message funcsCalled out to
+//our extension
+setTimeout(function() {sendToParser(); }, 1500);
