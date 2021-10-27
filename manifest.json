@@ -19,6 +19,7 @@
       "css": ["style/style.css"],
       "js":
       [
+          "Javascript/Parser.js",
           "Javascript/UIGen.js"
       ],
       "run_at": "document_end"

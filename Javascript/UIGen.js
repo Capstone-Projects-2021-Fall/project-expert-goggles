@@ -54,9 +54,8 @@ function createPrompt(id)
     var d3 = document.getElementById(id);
     if(d3 === null)
     {
-        d3 = document.getElementsByTagName("IFRAME")[0];
-        while(d3.tagName != 'DIV')
-            d3 = d3.parentElement;
+        d3 = document.getElementsByTagName("svg")[0];
+        d3 = d3.parentElement;
     }
 
     var prompt = document.createElement("div");
