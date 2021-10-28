@@ -51,17 +51,16 @@ const Navbar = () => {
             <button
                 className="navbar-toggle"
                 onClick ={ function() {
-                    setTimeout(function() {
-                        animation();
-                    });
+                    setTimeout(function() { animation(); });
                 }}
                     type = "button"
                     data-toggle = "collapse"
                     data-target = "#navbarSupportedContent"
                     aria-controls = "navbarSupportedContent"
                     aria-expanded = "false"
+                    aria-hidden = "true"
                     aria-label = "Toggle navigation">
-                <i className = "fas fa-bars text-white"></i>                    
+                <i className = "fas fa-bars text-white"></i>
             </button>
 
             <div

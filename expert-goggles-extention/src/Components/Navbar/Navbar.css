@@ -18,6 +18,10 @@ i {
   margin-right: auto;
 }
 
+.navbar-toggle {
+  display: block;
+}
+
 .navbar-mainbg {
   background-color: #000000;
   padding: 0px;

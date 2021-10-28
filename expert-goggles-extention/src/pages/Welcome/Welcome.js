@@ -6,13 +6,18 @@ import './Welcome.css'
 function Welcome() {
         return (
             <main>
-                <section class="section section-1">
-                    <p>Welcome to Expert Goggles 🥽</p>
+                <section id = "sec-1">
+                    <section class="section section-1">
+                        <h1 class = "one">Welcome to Expert Goggles 🥽</h1>
+                        <a href = "#sec-2" class = "button"><span> Explore</span></a>
+                    </section>
                 </section>
+                <section id = "sec-2">
                 <section class="section section-2">
-                    <p>Expert goggles is a context-aware browswer extention in regards to training for data literacy.
+                    <p>Expert goggles is a context-aware browser extention in regards to training for data literacy.
                         This extention proposes an approach to integrate data literacey training into activities that people are already doing such as web browsing.
                     </p>
+                </section>
                 </section>
                 <section class="section section-3">
                     <p>How does it work?     The extention reacds each page that the user navigates to and parses out the visualization on the page using a web scraping library.
