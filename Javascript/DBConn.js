@@ -1,6 +1,8 @@
 /**
-    This is a placeholder file for the Database Connector code.
-    Currently, it is hardcoded to show flow of execution for the extension.
+    DBConn.js is the extension's database connector code. It runs in the background,
+    so its execution is not relative to page content. It awaits a message from Parser.js,
+    which includes the type of guide to make a Database Query for. It handles the case
+    of an unsupported guide type, and then forwards information to UIGen.js.
 */
 
 "use strict";
@@ -30,8 +32,12 @@ async function fetchGuide()
     var type = myD3.type;
 
     const query = await vis_db.doc(type).get();
-    if(query.empty) //If no guide for that type existed, log that fact
+    if(query.empty)
+    {
+        //If no guide for that type existed, log that fact and set type to "unsupported"
         console.log("Queried for " + type + " but no guide found.");
+        myD3.type = "unsupported";
+    }
     else //Otherwise, Parse Out the returned info and append to myD3
         myD3.guide = query.data();
 
@@ -45,11 +51,7 @@ async function fetchGuide()
 function sendToUI(sentObj)
 {
     try{chrome.tabs.sendMessage(myD3.tab, sentObj);}
-    catch(err)
-    {
-       console.log(err);
-       console.log(sentObj);
-    }
+    catch(err){console.log(err);}
 }
 
 //Listens for a message from the Parser
@@ -59,9 +61,14 @@ chrome.runtime.onMessage.addListener(
     //Append tab information so we know where to send info back to
     myD3 = D3InfoObj;
     myD3.tab = sender.tab.id;
-    console.log("Received a message from the Parser.");
+    console.log("Received a guide request from the Parser for " + myD3.type);
 
-    //FetchGuide retrieves a guide from the DB and appends it to myD3
-    fetchGuide();
+
+    //If the Parser determined that type to be unsupported, or there was an error,
+    //do not attempt to fetch the guide. Simply forward that info to the UIGen
+    if(!myD3.type || myD3.type == "unsupported")
+        sendToUI(myD3);
+    else //Otherwise, FetchGuide retrieves a guide from the DB, appends it to myD3, and forwards it
+        fetchGuide();
   }
 );
