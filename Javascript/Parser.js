@@ -18,12 +18,16 @@ function parseType(parseInfo)
     var funcList = parseInfo.funcList;
 
     //Parsing Decision Tree goes here.
-    if(funcList.includes("node"))
+    //If no D3 calls were detected, set type "none"
+    if(funcList.length == 0)
+        D3InfoObj.type = "none";
+    else if(funcList.includes("node"))
         D3InfoObj.type = "sequences_sunburst";
-    if(funcList.includes("line"))
+    else if(funcList.includes("line"))
         D3InfoObj.type = "line_chart";
+    else
+        D3InfoObj.type = "unsupported";
 
-    console.log(D3InfoObj.type);
     sendToDB(D3InfoObj);
 }
 

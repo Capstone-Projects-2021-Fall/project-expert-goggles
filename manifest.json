@@ -25,14 +25,21 @@
       "run_at": "document_end"
   }],
   "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com/; object-src 'self'",
+  "page_action":
+  {
+      "default_tooltip": "Unsupported Type",
+      "default_title": "Expert Goggles",
+      "default_popup": "HTML/error.html"
+  },
   "icons":
   {
-    "128": "icon.png"
+    "128": "style/icon.png"
   },
   "web_accessible_resources": ["Javascript/d3.js", "Javascript/interceptor.js"],
   "permissions":
   [
     "storage",
-    "tabs"
+    "tabs",
+    "notifications"
   ]
 }

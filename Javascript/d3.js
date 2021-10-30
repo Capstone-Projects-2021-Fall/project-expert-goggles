@@ -4,7 +4,10 @@
 //All Modifications are commented
 var funcsCalled = []; //Track Relevant Function Calls
 
-//Expert Goggles Source Code Starts Here
+//Expert Goggles: Intercept key functions
+var interceptedFuncs = {};
+
+//D3 Source Code Starts Here
 (function (global, factory) {
 typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -20153,13 +20156,19 @@ exports.zoomTransform = transform;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+//Expert Goggles, grab those functions outside of their definitions
+interceptedFuncs.create = create;
+interceptedFuncs.select = select;
+interceptedFuncs.selectAll = selectAll;
+interceptedFuncs.line = line;
+
 }));
 
 //Expert Goggles Interception: Make sure they can't overwrite the functions we've modified
-Object.defineProperty(window.d3, "create", {value: window.d3.create, writable: false});
-Object.defineProperty(window.d3, "select", {value: window.d3.select, writable: false});
-Object.defineProperty(window.d3, "selectAll", {value: window.d3.selectAll, writable: false});
-Object.defineProperty(window.d3, "line", {value: window.d3.line, writable: false});
+Object.defineProperty(window.d3, "create", {value: interceptedFuncs.create, writable: false});
+Object.defineProperty(window.d3, "select", {value: interceptedFuncs.select, writable: false});
+Object.defineProperty(window.d3, "selectAll", {value: interceptedFuncs.selectAll, writable: false});
+Object.defineProperty(window.d3, "line", {value: interceptedFuncs.line, writable: false});
 
 
 //Expert Goggles Interception: SendToParser()
