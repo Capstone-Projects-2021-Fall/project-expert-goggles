@@ -1237,6 +1237,12 @@ function entering() {
 }
 
 function axis(orient, scale) {
+    //Expert Goggles Interception
+    if(!funcsCalled.includes("axis"))
+        funcsCalled.push("axis");
+
+    console.log("axis was called");
+
   var tickArguments = [],
       tickValues = null,
       tickFormat = null,
@@ -17482,9 +17488,6 @@ function line(x$1, y$1) {
   y$1 = typeof y$1 === "function" ? y$1 : (y$1 === undefined) ? y : constant$1(y$1);
 
   function line(data) {
-    //Expert Goggles Interception
-    if(!funcsCalled.includes("line"))
-         funcsCalled.push("line");
 
     var i,
         n = (data = array(data)).length,
@@ -20161,6 +20164,7 @@ interceptedFuncs.create = create;
 interceptedFuncs.select = select;
 interceptedFuncs.selectAll = selectAll;
 interceptedFuncs.line = line;
+interceptedFuncs.axis = axis;
 
 }));
 
@@ -20169,6 +20173,7 @@ Object.defineProperty(window.d3, "create", {value: interceptedFuncs.create, writ
 Object.defineProperty(window.d3, "select", {value: interceptedFuncs.select, writable: false});
 Object.defineProperty(window.d3, "selectAll", {value: interceptedFuncs.selectAll, writable: false});
 Object.defineProperty(window.d3, "line", {value: interceptedFuncs.line, writable: false});
+Object.defineProperty(window.d3, "axis", {value: interceptedFuncs.axis, writable: false});
 
 
 //Expert Goggles Interception: SendToParser()
@@ -20193,4 +20198,4 @@ function sendToParser()
 
 //Expert Goggles Incterception: After a timeout for page load, message funcsCalled out to
 //our extension
-setTimeout(function() {sendToParser(); }, 1500);
+setTimeout(function() {sendToParser(); }, 2000);
