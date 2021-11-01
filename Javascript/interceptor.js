@@ -57,9 +57,11 @@ document.addEventListener("DOMContentLoaded", function()
 {
     var scripts = document.getElementsByTagName("script");
     for(let script of scripts)
+    {
         script.onload = interceptD3();
+    }
 });
 
-setTimeout( function() {sendToParser();}, 2000);
+setTimeout( function() {sendToParser();}, 1500);
 
 
