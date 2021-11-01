@@ -54,9 +54,8 @@ function createPrompt(id)
     var d3 = document.getElementById(id);
     if(d3 === null)
     {
-        d3 = document.getElementsByTagName("IFRAME")[0];
-        while(d3.tagName != 'DIV')
-            d3 = d3.parentElement;
+        d3 = document.getElementsByTagName("svg")[0];
+        d3 = d3.parentElement;
     }
 
     var prompt = document.createElement("div");
@@ -65,6 +64,7 @@ function createPrompt(id)
     prompt.id = "ExpertGoggles";
     d3.appendChild(prompt);
 
+    //The sidebar opens when the prompt is clicked
     window.onclick = function(event)
     {
         if(event.target.id == "ExpertGoggles")
@@ -100,33 +100,25 @@ function generateSidebar(guideInfo)
 
     //Body
     var bodyDiv = document.createElement("div");
-    bodyDiv.innerHTML = "<br>" + guideInfo["Guide"];
+    bodyDiv.innerHTML = "<br>" + guideInfo["Guide"] + "<br><br><br>";
     bodyDiv.classList.add("bodyDiv");
     sb.appendChild(bodyDiv);
 
     return sb;
 }
 
-
-
 //Listen for a message from DBConn
 chrome.runtime.onMessage.addListener(
   function(D3InfoObj, sender, sendResponse)
   {
     myD3 = D3InfoObj;
-    console.log("UI Generator: Received Request to generate a guide for a " + myD3.type + " at DOM ID " + myD3.DOMid);
 
-    //Test Code: Make a sidebar from the Object Recieved
     try
     {
         sidebar = generateSidebar(myD3.guide);
         document.body.appendChild(sidebar);
         createPrompt(myD3.DOMid);
     }
-    catch(err)
-    {
-        console.log("Error in UI Generation");
-        console.log(err);
-    }
+    catch(err){console.log(err);}
   }
 );
