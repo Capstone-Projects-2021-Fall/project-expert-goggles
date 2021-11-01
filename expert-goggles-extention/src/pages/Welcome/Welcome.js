@@ -14,21 +14,21 @@ function Welcome() {
                 </section>
                 <section id = "sec-2">
                 <section class="section section-2">
-                    <p>Expert goggles is a context-aware browser extention in regards to training for data literacy.
-                        This extention proposes an approach to integrate data literacey training into activities that people are already doing such as web browsing.
+                    <p>Expert goggles is a context-aware browser extension in regards to training for data literacy.
+                        This extension proposes an approach to integrate data literacey training into activities that people are already doing such as web browsing.
                     </p>
                 </section>
                 </section>
                 <section class="section section-3">
-                    <p>How does it work?     The extention reacds each page that the user navigates to and parses out the visualization on the page using a web scraping library.
-                        After scraping the web page and identifying the visualization type, the extention would show an HTML page with training for how to interpret the visualization on that page.
+                    <p>How does it work?     The extension reads each page that the user navigates to and parses out the visualization on the page using a web scraping library.
+                        After scraping the web page and identifying the visualization type, the extension would show an HTML page with training for how to interpret the visualization on that page.
                     </p>
                 </section>
                 <section class="section section-4">
-                    <p>Each time the extention detects a visualization and provides contextual guidance for interpreting that visualization, the extention will log the date, time, and web page in a database.</p>
+                    <p>Each time the extension detects a visualization and provides contextual guidance for interpreting that visualization, the extension will log the date, time, and web page in a database.</p>
                 </section>
                 <section class="section section-5">
-                    <h2>You can use the navigation bar at the top of the screen to view the other features with this extention.</h2>
+                    <h2>You can use the navigation bar at the top of the screen to view the other features with this extension.</h2>
                 </section>
             </main>
         )
