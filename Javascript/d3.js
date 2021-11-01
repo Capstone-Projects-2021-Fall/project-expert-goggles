@@ -1,12 +1,5 @@
 // https://d3js.org v7.1.1 Copyright 2010-2021 Mike Bostock
 
-//Modifications by Expert Goggles's Team for Use in Extension
-//All Modifications are commented
-var funcsCalled = []; //Track Relevant Function Calls
-
-//Expert Goggles: Intercept key functions
-var interceptedFuncs = {};
-
 //D3 Source Code Starts Here
 (function (global, factory) {
 typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
@@ -1237,9 +1230,6 @@ function entering() {
 }
 
 function axis(orient, scale) {
-    //Expert Goggles Interception
-    if(!funcsCalled.includes("axis"))
-        funcsCalled.push("axis");
 
     console.log("axis was called");
 
@@ -2389,9 +2379,6 @@ Selection$1.prototype = selection.prototype = {
 };
 
 function select(selector) {
-    //Expert Goggles Interception
-    if(!funcsCalled.includes("select"))
-        funcsCalled.push("select");
 
   return typeof selector === "string"
       ? new Selection$1([[document.querySelector(selector)]], [document.documentElement])
@@ -2465,9 +2452,6 @@ function pointers(events, node) {
 }
 
 function selectAll(selector) {
-    //Expert Goggles Interception
-    if(!funcsCalled.includes("select_all"))
-        funcsCalled.push("select_all");
 
   return typeof selector === "string"
       ? new Selection$1([document.querySelectorAll(selector)], [document.documentElement])
@@ -4033,9 +4017,6 @@ function get(node, id) {
 }
 
 function create(node, id, self) {
-    //Expert Goggles Interception
-    if(!funcsCalled.includes("create"))
-        funcsCalled.push("create");
 
   var schedules = node.__transition,
       tween;
@@ -13177,9 +13158,6 @@ function score(node) {
 }
 
 function Node(circle) {
-  //Expert Goggles Interception
-  if(!funcsCalled.includes("node"))
-    funcsCalled.push("node");
 
   this._ = circle;
   this.next = null;
@@ -17475,9 +17453,6 @@ function y(p) {
 }
 
 function line(x$1, y$1) {
-  //Expert Goggles Interception
-  if(!funcsCalled.includes("line"))
-           funcsCalled.push("line");
 
   var defined = constant$1(true),
       context = null,
@@ -20159,22 +20134,36 @@ exports.zoomTransform = transform;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-//Expert Goggles, grab those functions outside of their definitions
-interceptedFuncs.create = create;
-interceptedFuncs.select = select;
-interceptedFuncs.selectAll = selectAll;
-interceptedFuncs.line = line;
-interceptedFuncs.axis = axis;
-
 }));
 
-//Expert Goggles Interception: Make sure they can't overwrite the functions we've modified
-Object.defineProperty(window.d3, "create", {value: interceptedFuncs.create, writable: false});
-Object.defineProperty(window.d3, "select", {value: interceptedFuncs.select, writable: false});
-Object.defineProperty(window.d3, "selectAll", {value: interceptedFuncs.selectAll, writable: false});
-Object.defineProperty(window.d3, "line", {value: interceptedFuncs.line, writable: false});
-Object.defineProperty(window.d3, "axis", {value: interceptedFuncs.axis, writable: false});
+//Expert Goggles: Function Logger Tracks function calls from D3
+var funcLogger = {};
+funcLogger.funcsCalled = [];
 
+//This is called to replace D3 functions with functions that log themselves but return the same thing
+funcLogger.replace = function(old_func, func_name)
+{
+    return function()
+    {
+        if(!funcLogger.funcsCalled.includes(func_name))
+            funcLogger.funcsCalled.push(func_name);
+        return old_func.apply(this, arguments);
+    }
+}
+
+//Expert Goggles Interception: Add a logger to all functions
+for(var name in window.d3)
+{
+    var func = window.d3[name];
+    if(typeof func == "function")
+        Object.defineProperty(window.d3, name, {value: funcLogger.replace(func, name), writable: false, configurable: false});
+}
+
+const myCopy = {...window.d3};
+Object.freeze(myCopy);
+window.d3 = myCopy;
+console.log(window.d3);
+console.log(Object.getOwnPropertyDescriptor(window, d3));
 
 //Expert Goggles Interception: SendToParser()
 //sendToParser() Sends a list of tracked function from the injected script
@@ -20183,19 +20172,17 @@ function sendToParser()
 {
     //Generate an object with the necessary info, append funcList to it
     var parseObj = {};
-    parseObj.funcList = funcsCalled;
+    parseObj.funcList = funcLogger.funcsCalled;
     parseObj.sender = "ExpertGoggles";
 
     console.log("Sending message to background.");
+    console.log(window.d3);
 
     //Message ParseObj out
-    try
-    {
-        window.postMessage(parseObj, "*");
-    }
+    try{window.postMessage(parseObj, "*");}
     catch(err) {console.log(err);}
 }
 
 //Expert Goggles Incterception: After a timeout for page load, message funcsCalled out to
 //our extension
-setTimeout(function() {sendToParser(); }, 2000);
+setTimeout(function() {sendToParser(); }, 1500);
