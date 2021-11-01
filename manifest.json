@@ -35,7 +35,7 @@
   {
     "128": "style/icon.png"
   },
-  "web_accessible_resources": ["Javascript/d3.js", "Javascript/interceptor.js"],
+  "web_accessible_resources": ["Javascript/interceptor.js"],
   "permissions":
   [
     "storage",

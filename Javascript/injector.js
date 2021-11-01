@@ -1,9 +1,9 @@
-//Inject modified D3 source code onto the page
+//Inject Interceptor onto the page
 
 //Workaround to race condition
 //Recommended by Comments Section Addressing this Bug
 //https://bugs.chromium.org/p/chromium/issues/detail?id=634381
-var url = chrome.extension.getURL("Javascript/d3.js");
+var url = chrome.extension.getURL("Javascript/interceptor.js");
 var urlEncoded = window.btoa(unescape(encodeURIComponent(url)));
 var urlContent = localStorage.getItem(urlEncoded);
 
@@ -30,8 +30,9 @@ else
     var d3script = document.createElement("script");
     //d3script.src = chrome.extension.getURL("Javascript/d3.js");
     d3script.textContent = urlContent;
-    d3script.id = "EGScript";
     d3script.charset = "utf-8";
+    d3script.type = "text/javascript";
+    d3script.async = false;
     document.documentElement.append(d3script);
     console.log("Expert Goggles: Injected D3 Source Code.");
 }
