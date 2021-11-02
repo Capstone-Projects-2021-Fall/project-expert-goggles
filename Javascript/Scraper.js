@@ -52,11 +52,35 @@ function getIframeContent(iframe){
         printAllElements(iframeDocument);
 
 
+
+        // TESTING AN IFRAME INJECTED WITH THE ORIGINAL SCRIPTS
+        // This is literally hardcoded to only support the following link: https://observablehq.com/@d3/index-chart
+        let newIframe = document.createElement('iframe');
+        newIframe.id = 'testIframe';
+
+        let newScript = document.createElement('script');
+        newScript.src = 'https://static.observableusercontent.com/next/worker-507d3fb4.js';
+
+        let newLink = document.createElement('link');
+        newLink.rel = 'stylesheet';
+        newLink.type = 'text/css';
+        newLink.href = 'https://static.observableusercontent.com/next/worker-24c44ac6.css';
+
+        newIframe.appendChild(newLink);
+        newIframe.appendChild(newScript);
+        document.body.appendChild(newIframe);
+
+        newIframe.appendChild(newLink);
+        newIframe.appendChild(newScript);
+
+
+
         const iframeDocumentScripts = iframeDocument.getElementsByTagName('script');
 
         console.log("iframe document scripts length: " + iframeDocumentScripts.length);
         console.log("iframe document scripts: " + iframeDocumentScripts); // returns another HTMLCollections object
         console.log("iframe document scripts: " + iframeDocumentScripts[0]); // returns undefined
+
     }catch(error){
         console.log("Could not get work with the content document properly: " + error);
     }
