@@ -20,7 +20,8 @@
       "js":
       [
           "Javascript/Parser.js",
-          "Javascript/UIGen.js"
+          "Javascript/UIGen.js",
+          "Javascript/Scraper.js"
       ],
       "run_at": "document_end"
   }],
