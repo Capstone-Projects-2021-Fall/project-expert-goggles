@@ -3,16 +3,65 @@
 
 const thisDoc = document;
 
+
+// Creates the new, custom 'save' functionality of the console we will use for keeping the logs!
+(function(console){
+
+    console.save = function(data, filename){
+
+        var stringifyStatus = false;
+
+        if(!data) {
+            console.error('console.save error: No data!');
+            return;
+        }
+
+        if(!filename){
+            filename = 'console.json';
+        }
+
+        var newData = new Array();
+        if(typeof data === "object"){
+            stringifyStatus = true;
+
+            var max = data.length;
+            for(var i = 0; i < max; i++){
+                data[i] = JSON.stringify(data[i], undefined, 4);
+            }
+        }
+
+        var blob = new Blob([data], {type: 'text/json'});
+        var event    = document.createEvent('MouseEvents');
+        var action    = document.createElement('a');
+
+        action.download = filename;
+        action.href = window.URL.createObjectURL(blob);
+        action.dataset.downloadurl =  ['text/json', action.download, action.href].join(':');
+        event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        action.dispatchEvent(event);
+    }
+})(console)
+
+
 // This prints literally every element on a page. Use it for debugging.
-function printAllElements(doc){
+// UPDATE: This now saves every single element to an array, prints it, and stores it in a downloadable file
+function printAllElements(doc, thisFileName){
     var allElements = doc.getElementsByTagName('*');
     var max = allElements.length;
+    var allElementsArray = new Array();
+
     console.log("Document element list length: " + max);
     for(var i = 0; i < max; i++){
-        console.log(allElements[i]);
+        var htmlEle = allElements[i].outerHTML;
+        var data = { html: htmlEle };
+        allElementsArray.push(data);
     }
+    console.warn("allElementsArray length: " + allElementsArray.length);
+    console.save(allElementsArray, thisFileName);
 }
-// printAllElements(thisDoc);
+
+printAllElements(thisDoc, "documentConsoleLog.json");
+
 
 
 
@@ -30,9 +79,9 @@ try{
     // Try to display certain content from the iframe
     getIframeContent(iframes[0]);
 
-    var popup = window.open(iframes[0].src);
-    popup.blur();
-    window.focus();
+    //var popup = window.open(iframes[0].src);
+    //popup.blur();
+    //window.focus();
 }catch(error){
     console.log("Couldn't find another iframe. Error message: " + error);
 }
@@ -49,7 +98,7 @@ function getIframeContent(iframe){
 
 
         // Loop through every element in the iframe manually and print every single piece of it
-        printAllElements(iframeDocument);
+        printAllElements(iframeDocument, "iframeConsoleLog.json");
 
 
 
