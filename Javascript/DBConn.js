@@ -65,16 +65,27 @@ function notifyUnsupported()
     chrome.pageAction.setIcon({tabId: myD3.tab,path: icon});
 }
 
-//Listens for a message from the Parser
+var scriptList;
+var tab;
+
+//Listens for a message from the scriptGrabber
 chrome.runtime.onMessage.addListener(
-  function(D3InfoObj, sender, sendResponse)
+  function(message, sender, sendResponse)
   {
-    //Append tab information so we know where to send info back to
-    myD3 = D3InfoObj;
-    myD3.tab = sender.tab.id;
-    console.log("Received a guide request from the Parser for " + myD3.type);
+    if(!message.scripts)
+        return;
+
+    tab = sender.tab.id;
+
+    //Grab the info needed to post messages into the sandbox
+    var sandbox = document.getElementById("sandbox").contentWindow;
+
+    sandbox.postMessage(message, "*");
+  }
+);
 
 
+/* For Reference
     //If the Parser determined there was no D3 on a page or if there was an error,
     //do nothing and make sure the extension isn't showing anything
     if(!myD3.type || myD3.type == "none")
@@ -83,5 +94,4 @@ chrome.runtime.onMessage.addListener(
         notifyUnsupported();
     else //Otherwise, FetchGuide retrieves a guide from the DB, appends it to myD3, and forwards it
         fetchGuide();
-  }
-);
+*/

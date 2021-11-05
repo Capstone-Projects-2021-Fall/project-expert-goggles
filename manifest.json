@@ -10,17 +10,12 @@
   },
   "content_scripts":
   [{
-    "matches": ["<all_urls>"],
-    "js": ["Javascript/injector.js"],
-    "run_at": "document_start"
-  },
-  {
       "matches": ["<all_urls>"],
       "css": ["style/style.css"],
       "js":
       [
-          "Javascript/Parser.js",
-          "Javascript/UIGen.js"
+          "Javascript/UIGen.js",
+          "Javascript/scriptGrabber.js"
       ],
       "run_at": "document_end"
   }],
@@ -30,6 +25,10 @@
       "default_tooltip": "Unsupported Type",
       "default_title": "Expert Goggles",
       "default_popup": "HTML/error.html"
+  },
+  "sandbox":
+  {
+    "pages": ["HTML/sandbox.html"]
   },
   "icons":
   {
