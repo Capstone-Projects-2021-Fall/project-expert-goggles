@@ -80,10 +80,10 @@ chrome.runtime.onMessage.addListener(
     //Grab the info needed to post messages into the sandbox
     var sandbox = document.getElementById("sandbox").contentWindow;
 
+
     sandbox.postMessage(message, "*");
   }
 );
-
 
 /* For Reference
     //If the Parser determined there was no D3 on a page or if there was an error,

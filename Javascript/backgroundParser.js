@@ -1,9 +1,20 @@
 //Expert Goggles: Function Logger Tracks function calls from D3
+"use strict";
+
 var funcLogger = {};
 funcLogger.funcsCalled = [];
 var alreadyFired = false;
 var scriptList;
 var index = 0;
+
+window.onerror = function (msg, url, lineNo, columnNo, error) {
+  console.log("Error Line Number: " + lineNo);
+  console.log(columnNo);
+  console.log(error);
+  interceptD3();
+
+  return false;
+}
 
 //This is called to replace D3 functions with functions that log themselves but return the same thing
 funcLogger.replace = function(old_func, func_name)
@@ -54,22 +65,13 @@ function runNext()
     var curr = scriptList[index];
 
     var script = window.document.createElement("script");
-    script.addEventListener("load", function()
-    {
-        interceptD3();
-    });
-    script.type = "module";
     script.charset = "utf-8";
-
-
-    if(curr.type == "src")
-        script.src = curr.src;
-    else if(curr.type == "inline")
-        script.textContent = curr.inline;
+    script.textContent = curr.inline;
 
     console.log(script);
     window.document.body.appendChild(script);
     console.log("script appended.");
+    interceptD3();
 }
 
 //Listen for a message from the scriptGrabber forwarded by DBConn
