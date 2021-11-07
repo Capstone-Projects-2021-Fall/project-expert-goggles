@@ -50,8 +50,16 @@ function interceptD3()
         for(var name in window.d3)
         {
             var func = window.d3[name];
-            if(typeof func == "function")
+            if(typeof func == "function") //Intercept functions
                 window.d3[name] = funcLogger.replace(func, name);
+            else //Intercept Subfunctions
+                for(var subName in window.d3[name])
+                {
+                    var subFunc = window.d3[name][subName]
+                    if(typeof subFunc == "function")
+                        window.d3[name][subName] = funcLogger.replace(subFunc, subName);
+                }
+
         }
     }
 }
