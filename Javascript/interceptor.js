@@ -32,7 +32,11 @@ function sendToParser()
      //Message ParseObj out
      try{window.postMessage(parseObj, "*");}
      catch(err) {console.log(err)};
+
+     //Sends message to the iframe listener
+     var tabID = chrome.tab.id
 }
+
 
 function interceptD3()
 {
