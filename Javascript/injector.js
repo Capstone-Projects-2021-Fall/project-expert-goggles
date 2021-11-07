@@ -32,9 +32,11 @@ else
     d3script.textContent = urlContent;
     d3script.charset = "utf-8";
     d3script.type = "text/javascript";
-    d3script.async = false;
+    d3script.id = "ExpertGoggles";
+    d3script.setAttribute("async", "false");
     document.documentElement.append(d3script);
-    console.log("Expert Goggles: Injected D3 Source Code.");
+    localStorage.removeItem(urlEncoded);
+    console.log("Expert Goggles: Injected D3 Interception Script.");
 }
 
 

@@ -32,6 +32,7 @@ function sendToParser()
      //Message ParseObj out
      try{window.postMessage(parseObj, "*");}
      catch(err) {console.log(err)};
+
 }
 
 function interceptD3()
@@ -42,25 +43,44 @@ function interceptD3()
     if(window.d3)
     {
         alreadyFired = true;
+        mo.disconnect();
+        console.log("Expert Goggles: Interceptor Fired.")
 
         //Expert Goggles Interception: Add a logger to all functions
         for(var name in window.d3)
         {
             var func = window.d3[name];
-            if(typeof func == "function")
+            if(typeof func == "function") //Intercept functions
                 window.d3[name] = funcLogger.replace(func, name);
+            else //Intercept Subfunctions
+                for(var subName in window.d3[name])
+                {
+                    var subFunc = window.d3[name][subName]
+                    if(typeof subFunc == "function")
+                        window.d3[name][subName] = funcLogger.replace(subFunc, subName);
+                }
+
         }
     }
 }
 
-document.addEventListener("DOMContentLoaded", function()
+var count = 0;
+
+function callback(mutations)
 {
-    var scripts = document.getElementsByTagName("script");
-    for(let script of scripts)
+    for(let m of mutations)
     {
-        script.onload = interceptD3();
+        var newNode = m.addedNodes[0];
+        try
+        {
+            if(newNode.tagName == "SCRIPT")
+                interceptD3();
+        }catch(err){}
     }
-});
+}
+var mo = new MutationObserver(callback);
+mo.observe(document, {subtree: true, childList: true});
+
 
 setTimeout( function() {sendToParser();}, 1500);
 
