@@ -1,0 +1,32 @@
+[debug] [2021-11-08T17:31:47.126Z] ----------------------------------------------------------------------
+[debug] [2021-11-08T17:31:47.128Z] Command:       /usr/local/bin/firebase /home/ayman/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/bin/firebase deploy
+[debug] [2021-11-08T17:31:47.128Z] CLI Version:   9.19.0
+[debug] [2021-11-08T17:31:47.128Z] Platform:      linux
+[debug] [2021-11-08T17:31:47.128Z] Node Version:  v12.18.1
+[debug] [2021-11-08T17:31:47.136Z] Time:          Mon Nov 08 2021 12:31:47 GMT-0500 (Eastern Standard Time)
+[debug] [2021-11-08T17:31:47.136Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-11-08T17:31:47.140Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2021-11-08T17:31:47.234Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-11-08T17:31:47.235Z] > authorizing via signed-in user (tug38264@temple.edu)
+[debug] [2021-11-08T17:31:47.235Z] [iam] checking project expertgoggles-b21b1 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2021-11-08T17:31:47.236Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-11-08T17:31:47.236Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-11-08T17:33:58.545Z] [iam] error while checking permissions, command may fail: FirebaseError: Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+[debug] [2021-11-08T17:33:58.547Z] > refreshing access token with scopes: []
+[debug] [2021-11-08T17:33:58.547Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-11-08T17:36:11.663Z] Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+[debug] [2021-11-08T17:38:24.784Z] FirebaseError: Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+    at invalidCredentialError (/home/ayman/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/auth.js:141:12)
+    at refreshTokens (/home/ayman/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/auth.js:448:15)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+[error] 
+[error] Error: Failed to get Firebase project expertgoggles-b21b1. Please make sure the project exists and your account has permission to access it.
