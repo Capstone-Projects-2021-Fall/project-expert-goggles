@@ -1,6 +1,7 @@
 .prompt
 {
     position: relative;
+    float: right;
     display: inline-block;
     margin-right: 0.5rem;
     color: white;
@@ -23,12 +24,13 @@
      position: fixed; /* Stay in place */
      z-index: 1; /* Stay on top */
      top: 0; /* Stay at the top */
+     bottom: 0;
      right: 0;
      color: white;
      box-shadow: -2px 0px 1px #154c79;
      background-color: #1e81b0;
      overflow-x: hidden; /* Disable horizontal scroll */
-     padding-top: 18px; /* Place content 60px from the top */
+     padding-top: 30px; /* Place content 60px from the top */
      padding-left: 0px;
      transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
@@ -41,7 +43,6 @@
 .sidebar .bodyDiv
 {
     text-align: justify;
-    text-justify: inter-word;
 }
 
 .guideTitle

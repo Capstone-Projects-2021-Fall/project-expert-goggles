@@ -50,7 +50,13 @@ function toggleSidebar()
 //a floating prompt near that DOM element on the page.
 function createPrompt(id)
 {
+    //Grab that id, or if that fails, try to figure out where to put it
     var d3 = document.getElementById(id);
+    if(d3 === null)
+    {
+        d3 = document.getElementsByTagName("svg")[0];
+        d3 = d3.parentElement;
+    }
 
     var prompt = document.createElement("div");
     prompt.innerHTML = "Expert Goggles:<br>Click for a guide.";
@@ -58,6 +64,7 @@ function createPrompt(id)
     prompt.id = "ExpertGoggles";
     d3.appendChild(prompt);
 
+    //The sidebar opens when the prompt is clicked
     window.onclick = function(event)
     {
         if(event.target.id == "ExpertGoggles")
@@ -85,16 +92,20 @@ function generateSidebar(guideInfo)
     sb.appendChild(outerDiv);
     outerDiv.appendChild(titleDiv);
 
+    //img
+    var pic = document.createElement("img");
+    pic.src = guideInfo["img"];
+    pic.width = "225";
+    outerDiv.appendChild(pic);
+
     //Body
     var bodyDiv = document.createElement("div");
-    bodyDiv.innerHTML = guideInfo["Guide"];
+    bodyDiv.innerHTML = "<br>" + guideInfo["Guide"] + "<br><br><br>";
     bodyDiv.classList.add("bodyDiv");
     sb.appendChild(bodyDiv);
 
     return sb;
 }
-
-
 
 //Listen for a message from DBConn
 chrome.runtime.onMessage.addListener(
@@ -102,17 +113,12 @@ chrome.runtime.onMessage.addListener(
   {
     myD3 = D3InfoObj;
 
-    //Test Code: Make a sidebar from the Object Recieved
     try
     {
         sidebar = generateSidebar(myD3.guide);
         document.body.appendChild(sidebar);
         createPrompt(myD3.DOMid);
     }
-    catch(err)
-    {
-        console.log("Error in UI Generation");
-        console.log(err);
-    }
+    catch(err){console.log(err);}
   }
 );

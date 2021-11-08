@@ -1,9 +1,14 @@
 /**
-    This is a placeholder file for the Database Connector code.
-    Currently, it is hardcoded to show flow of execution for the extension.
+*                           Expert Goggles Database Connector
+*   DBConn.js is the extension's database connector code. It runs in the background,
+*   so its execution is not relative to page content. It awaits a message from Parser.js,
+*   which includes the type of guide to make a Database Query for. It handles the case
+*   of an unsupported guide type, and then forwards information to UIGen.js.
 */
 
 "use strict";
+
+var myD3 = {};
 
 const firebaseConfig = {
   apiKey: "AIzaSyDZoQ24-ym0W4wbJeuRopvlwt5AwT9KQ4M",
@@ -18,7 +23,6 @@ const firebaseConfig = {
 // Initialize Firebase, database object, and Local D3InfoObj storage
 firebase.initializeApp(firebaseConfig);
 const vis_db = firebase.firestore().collection("visualizations");
-var myD3 = {};
 
 firebase.auth().signInAnonymously()
   .then(() => {
@@ -46,38 +50,60 @@ if (user) {
 //to check if the type argument passed to it has a guide associated with it
 //in the team database.
 
-async function fetchGuide(type)
+async function fetchGuide()
 {
+    var type = myD3.type;
+
     const query = await vis_db.doc(type).get();
-    if(query.empty) //If no guide for that type existed, log that fact
-        console.log("Queried for " + type + " but no guide found.");
-    else //Otherwise, Parse Out the returned info and append to myD3
-        myD3.guide = query.data();
-
-    //Forward to the UI Generator. This is here to avoid a race condition.
-    sendToUI(myD3);
-}
-
-//MockUp Function for sending the object to the UIGenerator
-function sendToUI(sentObj)
-{
-    try{chrome.tabs.sendMessage(myD3.tab, sentObj);}
-    catch(err)
+    if(query.empty)
     {
-       console.log(err);
-       console.log(sentObj);
+        //If we somehow get here with an unsupported type, create error notification
+        myD3.type = "unsupported";
+        notifyUnsupported();
+    }
+    else //Otherwise, Parse Out the returned info into to myD3 and forward it to the UI
+    {
+        myD3.guide = query.data();
+        console.log("Fetched a guide for " + type + " and forwarding to UI.");
+        sendToUI(myD3);
     }
 }
 
-//Listens for a message from the Scraper
+//Callback function to forward guides to the UI Generator
+function sendToUI(sentObj)
+{
+    try{chrome.tabs.sendMessage(myD3.tab, sentObj);}
+    catch(err){console.log(err);}
+}
+
+//function to create a Chrome Notification in the case of an unsupported or null type parsed
+function notifyUnsupported()
+{
+    console.log("Unsupported type. Creating error notification.");
+    var icon = chrome.runtime.getURL("style/errIcon.png");
+
+    //Create a notification to the toolbar icon
+    chrome.pageAction.show(myD3.tab);
+    chrome.pageAction.setIcon({tabId: myD3.tab,path: icon});
+}
+
+//Listens for a message from the Parser
 chrome.runtime.onMessage.addListener(
   function(D3InfoObj, sender, sendResponse)
   {
+    //Append tab information so we know where to send info back to
     myD3 = D3InfoObj;
     myD3.tab = sender.tab.id;
+    console.log("Received a guide request from the Parser for " + myD3.type);
 
-    //Run a query based on the info that the scraper passed over
-    //FetchGuide appends necessary info into the D3InfoObj
-    fetchGuide(myD3.type);
+
+    //If the Parser determined there was no D3 on a page or if there was an error,
+    //do nothing and make sure the extension isn't showing anything
+    if(!myD3.type || myD3.type == "none")
+        chrome.pageAction.hide(myD3.tab);
+    else if(myD3.type == "unsupported") //If we detected D3 but couldnt Parse it, notify an error
+        notifyUnsupported();
+    else //Otherwise, FetchGuide retrieves a guide from the DB, appends it to myD3, and forwards it
+        fetchGuide();
   }
 );
