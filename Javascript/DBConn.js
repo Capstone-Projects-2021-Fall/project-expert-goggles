@@ -20,6 +20,28 @@ firebase.initializeApp(firebaseConfig);
 const vis_db = firebase.firestore().collection("visualizations");
 var myD3 = {};
 
+firebase.auth().signInAnonymously()
+  .then(() => {
+    console.log("sign-in successful")
+  })
+  .catch((error) => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    console.log("sign-in failed")
+  });
+
+firebase.auth().onAuthStateChanged((user) => {
+if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    var uid = user.uid;
+    // ...
+} else {
+    // User is signed out
+    // ...
+}
+});
+
 //The fetchGuide(type) function runs a query to the firestore database
 //to check if the type argument passed to it has a guide associated with it
 //in the team database.
