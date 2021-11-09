@@ -1,0 +1,34 @@
+[
+    {
+        "type": "bar_chart",
+        "functions": ["linear"]
+    },
+    {
+        "type": "scatter_plot",
+        "functions": ["keys"]
+    },
+    {
+        "type": "line_chart",
+        "functions": ["line"]
+    },
+    {
+        "type": "pie_chart",
+        "functions": ["pie"]
+    },
+    {
+        "type": "sequences_sunburst",
+        "functions": ["hierarchy"]
+    },
+    {
+        "type": "stacked_area_chart",
+        "functions": ["stack", "area"]
+    },
+    {
+        "type": "stacked_bar_chart",
+        "functions": ["stack"]
+    },
+    {
+        "type": "box_plot",
+        "functions": ["linear", "quantile"]
+    }
+]

@@ -1,9 +1,7 @@
 var D3InfoObj = {};
 
 //Array of currently supported types
-const supportedTypes = ["bar_chart", "scatter_plot", "line_chart", "pie_chart",
-               "sequences_sunburst", "stacked_area_chart", "stacked_bar_chart",
-               "box_plot"];
+var supportedTypes;
 
 function sendToDB(sentObj)
 {
@@ -22,49 +20,59 @@ function parseType(parseInfo)
     //Default: Unsupported
     D3InfoObj.type = "unsupported";
 
-    //Parsing Decision Tree goes here.
-    //If no D3 calls were detected, send no information out
-    //Simplest, most straight-forward functions go first
-    if(funcList.includes("line"))
-        if(funcList.includes("kernelDensityEstimator"))
-            D3InfoObj.type = "density_plot";
-        else
-            D3InfoObj.type = "line_chart";
-    else if(funcList.includes("keys"))
-        D3InfoObj.type = "scatter_plot";
-    else if(funcList.includes("histogram"))
-        D3InfoObj.type = "histogram";
-    else if(funcList.includes("hierarchy"))
-        D3InfoObj.type = "sequences_sunburst";
-    else if(funcList.includes("scaleQuantize"))
-        D3InfoObj.type = "candlestick_chart";
-    else if(funcList.includes("pie"))
-        D3InfoObj.type = "pie_chart";
-    else if(funcList.includes("geoPath")){
-        if(funcList.includes("geoAlbersUsa") || funcList.includes("geoAlbersUsa"))
-            D3InfoObj.type = "albers_usa_map";
-        else
-            D3InfoObj.type = "geographical_map";
-    }
-    else if(funcList.includes("treemap"))
-        D3InfoObj.type = "tree_map";
-    else if(funcList.includes("stack"))
-    {
-        if(funcList.includes("area"))
-            D3InfoObj.type = "stacked_area_chart";
-        else
-            D3InfoObj.type = "stacked_bar_chart";
-    }
-    else if(funcList.includes("linear"))
-    {
-        if(funcList.includes("quantile"))
-            D3InfoObj.type = "box_plot";
-        else
-            D3InfoObj.type = "bar_chart";
+
+    //Logic:
+    waitForJson();
+
+    var possType;
+    var funcListLen = funcList.length;
+    var prevNumMatches = 0;
+
+    for(var jsonEntry = 0; jsonEntry < supportedTypes.length; jsonEntry++){
+
+        var numMatches = 0;
+        var currEntry = supportedTypes[jsonEntry];
+        //console.log(currEntry);
+        if(funcListLen == currEntry.functions.length){
+            if(funcList === currEntry.functions){
+                possType = currEntry.type;
+                break;
+            }
+        }
+        for(var currFunc = 0; currFunc < currEntry.functions.length; currFunc++){
+            if(funcList.includes(currEntry.functions[currFunc])){
+                numMatches++;
+            }
+        }
+        if(numMatches > prevNumMatches){
+            // possType becomes the most likely answer
+            possType = currEntry.type;
+            prevNumMatches = numMatches;
+        }
+        else if(numMatches != 0 && numMatches == prevNumMatches){
+            console.log("Could either be type \'" + possType
+             + "\' or \'" + currEntry.type);
+        }
     }
 
-
+    console.log("It is likely: " + possType);
+    D3InfoObj.type = possType;
     sendToDB(D3InfoObj);
+
+}
+
+// Populates the parser with the JSON configuration file types that are currently supported
+async function populateTypes(){
+    return fetch(chrome.extension.getURL('Javascript/SupportedTypes.json'))
+        .then((response) => response.json())
+        .then((responseJson) => {
+            return responseJson;
+        });
+}
+
+// Wait for the JSON fetch...
+async function waitForJson() {
+    supportedTypes = await this.populateTypes();
 }
 
 //Listen for a message from the script we injected
@@ -73,3 +81,5 @@ window.addEventListener("message", (event) => {
     if(event.data.sender && event.data.sender == "ExpertGoggles")
         parseType(event.data);
 });
+
+waitForJson();
