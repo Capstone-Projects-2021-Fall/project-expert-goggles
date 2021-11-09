@@ -30,5 +30,13 @@
     {
         "type": "box_plot",
         "functions": ["linear", "quantile"]
+    },
+    {
+        "type": "histogram",
+        "functions": ["histogram"]
+    },
+    {
+        "type": "candlestick_chart",
+        "functions": ["scaleQuantize"]
     }
 ]

@@ -32,13 +32,7 @@ function parseType(parseInfo)
 
         var numMatches = 0;
         var currEntry = supportedTypes[jsonEntry];
-        //console.log(currEntry);
-        if(funcListLen == currEntry.functions.length){
-            if(funcList === currEntry.functions){
-                possType = currEntry.type;
-                break;
-            }
-        }
+
         for(var currFunc = 0; currFunc < currEntry.functions.length; currFunc++){
             if(funcList.includes(currEntry.functions[currFunc])){
                 numMatches++;
@@ -48,6 +42,9 @@ function parseType(parseInfo)
             // possType becomes the most likely answer
             possType = currEntry.type;
             prevNumMatches = numMatches;
+
+            // if the number of matches matches the amount of functions defined for a type, then we've found it. break the loop
+            if(numMatches == currEntry.functions.length){ break; }
         }
         else if(numMatches != 0 && numMatches == prevNumMatches){
             console.log("Could either be type \'" + possType
