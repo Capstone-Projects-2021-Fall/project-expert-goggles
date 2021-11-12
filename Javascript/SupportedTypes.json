@@ -78,9 +78,33 @@
         "arguments": []
     },
     {
-        "type": "hierarchial_bar_chart",
-        "functions": ["linear", "hierarchy"],
+        "type": "moving_averages",
+        "functions": ["scaleLinear", "scaleTime", "linear", "time", "range"],
+        "length": 5,
+        "arguments": []
+    },
+    {
+        "type": "density_contours",
+        "functions": ["contourDensity", "density"],
         "length": 2,
         "arguments": []
+    },
+    {
+        "type": "hexbin_chart",
+        "functions": ["hexbin"],
+        "length": 1,
+        "arguments": []
+    },
+    {
+        "type": "hexbin_chart",
+        "functions": ["hexbin"],
+        "length": 1,
+        "arguments": []
+    },
+    {
+        "type": "scatter_plot",
+        "functions": ["scaleLinear", "scaleLinear"],
+        "length": 2,
+        "arguments": ["circle", "cx", "cy"]
     }
 ]

@@ -27,6 +27,12 @@ function parseType(parseInfo)
     var possType;
     var funcListLen = funcList.length;
     var prevNumMatches = 0;
+    
+    //No D3 Code
+    if(funcListLen == 0)
+        possType = "none";
+    else //Default: unsupported, gets overwritten if it is supported
+        possType = "unsupported";
 
     for(var jsonEntry = 0; jsonEntry < supportedTypes.length; jsonEntry++){
 
