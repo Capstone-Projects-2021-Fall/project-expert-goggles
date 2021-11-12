@@ -112,6 +112,7 @@ chrome.runtime.onMessage.addListener(
     myD3.tab = sender.tab.id;
     console.log("Received a guide request from the Parser for " + myD3.type);
     myD3.url = sender.tab.url;
+    myD3.iframeList = D3InfoObj.iframeList;
 
     //If the Parser determined there was no D3 on a page or if there was an error,
     //do nothing and make sure the extension isn't showing anything

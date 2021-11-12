@@ -1,4 +1,4 @@
-.prompt
+.expertGogglesPrompt
 {
     position: relative;
     float: right;
@@ -17,7 +17,7 @@
     transition: all 1s ease 0s;
 }
 
-.sidebar
+.expertGogglesSidebar
 {
      height: 100%; /* 100% Full-height */
      width: 0px; /* 0 width - change this with JavaScript */
@@ -35,7 +35,7 @@
      transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
 
-.sidebar .titlediv
+.expertGogglesSidebar .titlediv
 {
     text-align: center;
 }

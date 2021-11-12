@@ -60,7 +60,7 @@ function createPrompt(id)
 
     var prompt = document.createElement("div");
     prompt.innerHTML = "Expert Goggles:<br>Click for a guide.";
-    prompt.classList.add("prompt");
+    prompt.classList.add("expertGogglesPrompt");
     prompt.id = "ExpertGoggles";
     d3.appendChild(prompt);
 
@@ -80,7 +80,7 @@ function createPrompt(id)
 function generateSidebar(guideInfo)
 {
     var sb = document.createElement("div");
-    sb.classList.add("sidebar");
+    sb.classList.add("expertGogglesSidebar");
 
     //Take the Object Passed by the Database and Generate the Guide
     //Title
