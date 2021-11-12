@@ -4,6 +4,8 @@ funcLogger.funcsCalled = [];
 funcLogger.argList = [];
 var alreadyFired = false;
 
+var needArgs = ["append", "attr"];
+
 //This is called to replace D3 functions with functions that log themselves but return the same thing
 funcLogger.replace = function(old_func, func_name)
 {
@@ -12,7 +14,7 @@ funcLogger.replace = function(old_func, func_name)
         if(!funcLogger.funcsCalled.includes(func_name))
             funcLogger.funcsCalled.push(func_name);
 
-        if(arguments)
+        if(needArgs.includes(func_name) && arguments)
         {
             var argString = func_name + "(";
             var count = 0;
