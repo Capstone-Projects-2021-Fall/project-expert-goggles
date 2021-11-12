@@ -1,42 +1,86 @@
 [
     {
         "type": "bar_chart",
-        "functions": ["linear"]
+        "functions": ["linear"],
+        "length": 1,
+        "arguments": []
     },
     {
         "type": "scatter_plot",
-        "functions": ["keys"]
+        "functions": ["keys"],
+        "length": 1,
+        "arguments": []
     },
     {
         "type": "line_chart",
-        "functions": ["line"]
+        "functions": ["line"],
+        "length": 1,
+        "arguments": []
     },
     {
         "type": "pie_chart",
-        "functions": ["pie"]
+        "functions": ["pie"],
+        "length": 1,
+        "arguments": []
     },
     {
         "type": "sequences_sunburst",
-        "functions": ["hierarchy"]
+        "functions": ["hierarchy"],
+        "length": 1,
+        "arguments": []
     },
     {
         "type": "stacked_area_chart",
-        "functions": ["stack", "area"]
+        "functions": ["stack", "area"],
+        "length": 2,
+        "arguments": []
     },
     {
         "type": "stacked_bar_chart",
-        "functions": ["stack"]
+        "functions": ["stack"],
+        "length": 1,
+        "arguments": []
     },
     {
         "type": "box_plot",
-        "functions": ["linear", "quantile"]
+        "functions": ["linear", "quantile"],
+        "length": 2,
+        "arguments": []
     },
     {
         "type": "histogram",
-        "functions": ["histogram"]
+        "functions": ["histogram"],
+        "length": 1,
+        "arguments": []
     },
     {
         "type": "candlestick_chart",
-        "functions": ["scaleQuantize"]
+        "functions": ["scaleQuantize"],
+        "length": 1,
+        "arguments": []
+    },
+    {
+        "type": "tree_map",
+        "functions": ["treemap"],
+        "length": 1,
+        "arguments": []
+    },
+    {
+        "type": "circle_pack",
+        "functions": ["pack"],
+        "length": 1,
+        "arguments": []
+    },
+    {
+        "type": "colored_line_chart",
+        "functions": ["line", "style"],
+        "length": 2,
+        "arguments": []
+    },
+    {
+        "type": "hierarchial_bar_chart",
+        "functions": ["linear", "hierarchy"],
+        "length": 2,
+        "arguments": []
     }
 ]

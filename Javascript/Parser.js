@@ -56,21 +56,6 @@ function parseType(parseInfo)
     D3InfoObj.type = possType;
     sendToDB(D3InfoObj);
 
-    // If no substantial results are found from D3 scraping...
-    if(funcList.length == 0 || funcList == null || possType == undefined){
-        // check for an iframe. 
-        var iframes = document.getElementsByTagName('iframe');
-        if(!(iframes.length == 0)){
-            if(confirm("Could not locate a D3, should we open the iframe in a new tab?")){
-                window.open(iframes[0].src);
-            }
-            else{
-                console.log("User did not want to open the iframe.");
-            }
-        }
-        console.log("No D3 or iframe located.");
-    }
-
 }
 
 // Populates the parser with the JSON configuration file types that are currently supported
