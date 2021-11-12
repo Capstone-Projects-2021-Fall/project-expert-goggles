@@ -19,12 +19,11 @@ function parseType(parseInfo)
     var funcList = [...parseInfo.funcList];
     D3InfoObj.iframeList = parseInfo.iframeList;
 
-    //Default: Unsupported
-    D3InfoObj.type = "unsupported";
-
     //Parsing Decision Tree goes here.
     //If no D3 calls were detected, send no information out
-    if(funcList.includes("line"))
+    if(funcList.length == 0)
+        D3InfoObj.type = "none";
+    else if(funcList.includes("line"))
         D3InfoObj.type = "line_chart";
     else if(funcList.includes("keys"))
         D3InfoObj.type = "scatter_plot";
@@ -50,6 +49,8 @@ function parseType(parseInfo)
         else
             D3InfoObj.type = "bar_chart";
     }
+    else
+        D3InfoObj.type = "unsupported";
 
     sendToDB(D3InfoObj);
 }

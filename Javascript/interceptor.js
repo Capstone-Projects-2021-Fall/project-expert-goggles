@@ -20,9 +20,6 @@ funcLogger.replace = function(old_func, func_name)
 //back out to the extension's parser
 function sendToParser()
 {
-    if(!alreadyFired && iframeList.length < 1)
-        return;
-
     //Generate an object with the necessary info, append funcList to it
     var parseObj = {};
     parseObj.funcList = funcLogger.funcsCalled;

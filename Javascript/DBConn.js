@@ -62,6 +62,7 @@ function notifyUnsupported()
     var icon = chrome.runtime.getURL("style/errIcon.png");
 
     //Create a notification to the toolbar icon
+    chrome.pageAction.setPopup({popup: "HTML/error.html", tabId: myD3.tab});
     chrome.pageAction.show(myD3.tab);
     chrome.pageAction.setIcon({tabId: myD3.tab,path: icon});
 
@@ -93,7 +94,7 @@ chrome.runtime.onMessage.addListener(
     //If the Parser determined there was no D3 on a page or if there was an error,
     //do nothing and make sure the extension isn't showing anything
     if(!myD3.type || myD3.type == "none")
-        chrome.pageAction.hide(myD3.tab);
+        chrome.pageAction.show(myD3.tab);
     else if(myD3.type == "unsupported") //If we detected D3 but couldnt Parse it, notify an error
         notifyUnsupported();
     else //Otherwise, FetchGuide retrieves a guide from the DB, appends it to myD3, and forwards it
