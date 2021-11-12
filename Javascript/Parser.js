@@ -25,6 +25,12 @@ function parseType(parseInfo)
     var funcListLen = funcList.length;
     var prevNumMatches = 0;
 
+    //No D3 Code
+    if(funcListLen == 0)
+        possType = "none";
+    else //Default: unsupported, gets overwritten if it is supported
+        possType = "unsupported";
+
     for(var jsonEntry = 0; jsonEntry < supportedTypes.length; jsonEntry++){
 
         var numMatches = 0;
@@ -48,28 +54,10 @@ function parseType(parseInfo)
              + "\' or \'" + currEntry.type);
         }
     }
-    else
-        D3InfoObj.type = "unsupported";
 
     console.log("It is likely: " + possType);
     D3InfoObj.type = possType;
     sendToDB(D3InfoObj);
-
-    // If no substantial results are found from D3 scraping...
-    if(funcList.length == 0 || funcList == null || possType == undefined){
-        // check for an iframe. 
-        var iframes = document.getElementsByTagName('iframe');
-        if(!(iframes.length == 0)){
-            if(confirm("Could not locate a D3, should we open the iframe in a new tab?")){
-                window.open(iframes[0].src);
-            }
-            else{
-                console.log("User did not want to open the iframe.");
-            }
-        }
-        console.log("No D3 or iframe located.");
-    }
-
 }
 
 // Populates the parser with the JSON configuration file types that are currently supported
