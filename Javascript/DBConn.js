@@ -72,6 +72,7 @@ async function fetchGuide()
 //Callback function to forward guides to the UI Generator
 function sendToUI(sentObj)
 {
+    sentObj.recipient = "UI";
     try{chrome.tabs.sendMessage(myD3.tab, sentObj);}
     catch(err){console.log(err);}
 }
@@ -83,9 +84,24 @@ function notifyUnsupported()
     var icon = chrome.runtime.getURL("style/errIcon.png");
 
     //Create a notification to the toolbar icon
+    chrome.pageAction.setPopup({popup: "HTML/error.html", tabId: myD3.tab});
     chrome.pageAction.show(myD3.tab);
     chrome.pageAction.setIcon({tabId: myD3.tab,path: icon});
+
+    var message = {"iframeList": myD3.iframeList};
+    message.recipient = "Popup";
+
+    if(myD3.iframeList.length > 0) //Send Iframe Information if Present
+    {
+        //Communicate with Error Popup
+        chrome.extension.onConnect.addListener(function(port)
+        {
+            port.postMessage(message);
+        });
+    }
 }
+
+
 
 //Listens for a message from the Parser
 chrome.runtime.onMessage.addListener(
@@ -100,7 +116,7 @@ chrome.runtime.onMessage.addListener(
     //If the Parser determined there was no D3 on a page or if there was an error,
     //do nothing and make sure the extension isn't showing anything
     if(!myD3.type || myD3.type == "none")
-        chrome.pageAction.hide(myD3.tab);
+        chrome.pageAction.show(myD3.tab);
     else if(myD3.type == "unsupported") //If we detected D3 but couldnt Parse it, notify an error
         notifyUnsupported();
     else //Otherwise, FetchGuide retrieves a guide from the DB, appends it to myD3, and forwards it

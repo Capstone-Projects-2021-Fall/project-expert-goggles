@@ -27,9 +27,9 @@
   "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com/; object-src 'self'",
   "page_action":
   {
-      "default_tooltip": "Unsupported Type",
+      "default_tooltip": "No D3 Vis. Detected",
       "default_title": "Expert Goggles",
-      "default_popup": "HTML/error.html"
+      "default_popup": "HTML/defPopup.html"
   },
   "icons":
   {

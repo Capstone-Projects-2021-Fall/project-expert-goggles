@@ -2,6 +2,7 @@
 var funcLogger = {};
 funcLogger.funcsCalled = [];
 var alreadyFired = false;
+var iframeList = [] ;
 
 //This is called to replace D3 functions with functions that log themselves but return the same thing
 funcLogger.replace = function(old_func, func_name)
@@ -19,13 +20,11 @@ funcLogger.replace = function(old_func, func_name)
 //back out to the extension's parser
 function sendToParser()
 {
-    if(!alreadyFired)
-        return;
-
     //Generate an object with the necessary info, append funcList to it
     var parseObj = {};
     parseObj.funcList = funcLogger.funcsCalled;
     parseObj.sender = "ExpertGoggles";
+    parseObj.iframeList = iframeList;
 
     console.log("Expert Goggles Scraper: Sending message to background.");
 
@@ -59,13 +58,13 @@ function interceptD3()
                     if(typeof subFunc == "function")
                         window.d3[name][subName] = funcLogger.replace(subFunc, subName);
                 }
-
         }
     }
 }
 
 var count = 0;
 
+//Callback for Mutation Observer that watches Window.d3
 function callback(mutations)
 {
     for(let m of mutations)
@@ -78,9 +77,20 @@ function callback(mutations)
         }catch(err){}
     }
 }
+
+//Watch for changes to window.d3, indicating it was loaded
 var mo = new MutationObserver(callback);
 mo.observe(document, {subtree: true, childList: true});
 
+//Also watch for iframes on the page
+document.addEventListener("DOMContentLoaded", function()
+{
+    var iframes = document.getElementsByTagName("iframe");
+    for(let i of iframes)
+    {
+      iframeList.push(i.src);
+    }
+});
 
 setTimeout( function() {sendToParser();}, 1500);
 

@@ -16,10 +16,7 @@ function parseType(parseInfo)
     //the modified D3 source code
     console.log(parseInfo.funcList);
     var funcList = [...parseInfo.funcList];
-
-    //Default: Unsupported
-    D3InfoObj.type = "unsupported";
-
+    D3InfoObj.iframeList = parseInfo.iframeList;
 
     //Logic:
     //waitForJson();
@@ -51,6 +48,8 @@ function parseType(parseInfo)
              + "\' or \'" + currEntry.type);
         }
     }
+    else
+        D3InfoObj.type = "unsupported";
 
     console.log("It is likely: " + possType);
     D3InfoObj.type = possType;
