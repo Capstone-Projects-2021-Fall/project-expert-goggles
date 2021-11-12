@@ -17,6 +17,7 @@ function parseType(parseInfo)
     //the modified D3 source code
     console.log(parseInfo.funcList);
     var funcList = [...parseInfo.funcList];
+    D3InfoObj.iframeList = parseInfo.iframeList;
 
     //Default: Unsupported
     D3InfoObj.type = "unsupported";

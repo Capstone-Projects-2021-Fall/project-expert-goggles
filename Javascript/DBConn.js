@@ -50,6 +50,7 @@ async function fetchGuide()
 //Callback function to forward guides to the UI Generator
 function sendToUI(sentObj)
 {
+    sentObj.recipient = "UI";
     try{chrome.tabs.sendMessage(myD3.tab, sentObj);}
     catch(err){console.log(err);}
 }
@@ -63,7 +64,21 @@ function notifyUnsupported()
     //Create a notification to the toolbar icon
     chrome.pageAction.show(myD3.tab);
     chrome.pageAction.setIcon({tabId: myD3.tab,path: icon});
+
+    var message = {"iframeList": myD3.iframeList};
+    message.recipient = "Popup";
+
+    if(myD3.iframeList.length > 0) //Send Iframe Information if Present
+    {
+        //Communicate with Error Popup
+        chrome.extension.onConnect.addListener(function(port)
+        {
+            port.postMessage(message);
+        });
+    }
 }
+
+
 
 //Listens for a message from the Parser
 chrome.runtime.onMessage.addListener(
@@ -85,3 +100,5 @@ chrome.runtime.onMessage.addListener(
         fetchGuide();
   }
 );
+
+
