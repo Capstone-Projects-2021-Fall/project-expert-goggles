@@ -48,15 +48,14 @@ function toggleSidebar()
 
 //createPrompt(id) uses the DOM id passed to it from the rest of the program, and generates
 //a floating prompt near that DOM element on the page.
-function createPrompt(id)
+function createPrompt()
 {
-    //Grab that id, or if that fails, try to figure out where to put it
-    var d3 = document.getElementById(id);
+    //Try to find an svg to place the prompt by
+    var d3 = document.getElementsByTagName("svg")[0];
     if(d3 === null)
-    {
-        d3 = document.getElementsByTagName("svg")[0];
+        d3 = document.body; //If that didn't work, we'll try appending straight to body
+    else
         d3 = d3.parentElement;
-    }
 
     var prompt = document.createElement("div");
     prompt.innerHTML = "Expert Goggles:<br>Click for a guide.";
@@ -120,7 +119,7 @@ chrome.runtime.onMessage.addListener(
     {
         sidebar = generateSidebar(myD3.guide);
         document.body.appendChild(sidebar);
-        createPrompt(myD3.DOMid);
+        createPrompt();
     }
     catch(err){console.log(err);}
   }
