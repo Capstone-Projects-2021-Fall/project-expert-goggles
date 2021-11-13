@@ -78,6 +78,24 @@ function reportError()
     console.log("Sending Error Report Request to Background");
     try{chrome.runtime.sendMessage(message);}
     catch(err) {console.log(err);}
+
+    //Repopulate the sidebar with a thanks for the feedback
+    sidebar.innerHTML = ""; //Clear current contents
+
+    var sorry = document.createElement("div");
+    var outerDiv = document.createElement("div");
+    outerDiv.style["text-align"] = "center";
+    sorry.innerHTML = "Sorry!<br><br>";
+    sorry.classList.add("guideTitle");
+    outerDiv.appendChild(sorry);
+    sidebar.appendChild(outerDiv);
+
+    var thanks = document.createElement("div");
+    thanks.classList.add("bodyDiv");
+    thanks.innerHTML = "We are constantly working to improve Expert Goggles.<br><br>"
+                     + "Your feedback will help us do that. Thank you!<br><br>"
+                     + "A report has been filed with this URL so we can diagnose the issue.<br>";
+    sidebar.appendChild(thanks);
 }
 
 //generateSidebar() generates a sidebar DOM element and populates
