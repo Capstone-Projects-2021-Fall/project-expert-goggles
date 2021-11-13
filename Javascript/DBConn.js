@@ -101,7 +101,6 @@ chrome.runtime.onMessage.addListener(
     myD3 = D3InfoObj;
     myD3.tab = sender.tab.id;
     myD3.url = sender.tab.url;
-    myD3.iframeList = D3InfoObj.iframeList;
 
     //log what kind of request was received
     console.log("Received a guide request from the Parser for " + myD3.type);
