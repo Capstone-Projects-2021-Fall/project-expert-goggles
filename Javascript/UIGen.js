@@ -72,6 +72,14 @@ function createPrompt()
     return;
 }
 
+function reportError()
+{
+    var message = {"from": "UI"};
+    console.log("Sending Error Report Request to Background");
+    try{chrome.runtime.sendMessage(message);}
+    catch(err) {console.log(err);}
+}
+
 //generateSidebar() generates a sidebar DOM element and populates
 //it with a vis. guide that was appended to the D3InfoObj sent
 //from DBConn.js
@@ -99,9 +107,25 @@ function generateSidebar(guideInfo)
 
     //Body
     var bodyDiv = document.createElement("div");
-    bodyDiv.innerHTML = "<br>" + guideInfo["Guide"] + "<br><br><br>";
+    bodyDiv.innerHTML = "<br>" + guideInfo["Guide"] + "<br><br>";
+    bodyDiv.innerHTML += "-------------------------------------------<br>";
+    bodyDiv.innerHTML += "&nbsp;&nbsp;&nbsp;Did we get this type wrong?&nbsp;&nbsp;<br><br>";
     bodyDiv.classList.add("bodyDiv");
     sb.appendChild(bodyDiv);
+
+    //Error Button
+    var buttonDiv = document.createElement("div");
+    var button = document.createElement("button");
+    button.innerHTML = "Report a parsing error.";
+    buttonDiv.classList.add("titlediv");
+    buttonDiv.appendChild(button);
+    sb.appendChild(buttonDiv);
+    button.onclick = function(){ reportError(); };
+
+    //End Spacing
+    var spaceDiv = document.createElement("div");
+    spaceDiv.innerHTML = "<br><br><br>";
+    sb.appendChild(spaceDiv);
 
     return sb;
 }

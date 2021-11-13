@@ -24,6 +24,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const vis_db = firebase.firestore().collection("visualizations");
 const his_db = firebase.firestore().collection("UserHistories");
+const error_db = firebase.firestore().collection("ErrorReports");
 
 firebase.auth().signInAnonymously()
   .then(() => {
@@ -102,45 +103,36 @@ chrome.runtime.onMessage.addListener(
     myD3.tab = sender.tab.id;
     myD3.url = sender.tab.url;
 
-    //log what kind of request was received
-    console.log("Received a guide request from the Parser for " + myD3.type);
-
-    //Decision Tree depending on information received from Parser
-
-    //If there was no D3...
-    if(myD3.type == "none")
+    //See if we got a guide request or an error report
+    if(myD3.from == "UI")
     {
-        //...and there were no iframes, show the default page action and do nothing else
-        if(myD3.iframeList.length == 0)
-            chrome.pageAction.show(myD3.tab);
-        //...but there were iframes, create an error popup to allow workaround
-        else
-            notifyUnsupported();
+        console.log("Received an error report from the UI.");
+        makeErrorReport();
     }
-    //If there was D3 code but it was unparsed, also create the error popup
-    else if(myD3.type == "unsupported")
-        notifyUnsupported();
-    else //Otherwise, FetchGuide retrieves a guide from the DB, appends it to myD3, and forwards it
-        fetchGuide();
+    else if(myD3.from == "parser")
+    {
+        console.log("Received a guide request from the Parser for " + myD3.type);
+
+
+        //Decision Tree depending on information received from Parser
+        //If there was no D3...
+        if(myD3.type == "none")
+        {
+            //...and there were no iframes, show the default page action and do nothing else
+            if(myD3.iframeList.length == 0)
+                chrome.pageAction.show(myD3.tab);
+            //...but there were iframes, create an error popup to allow workaround
+            else
+                notifyUnsupported();
+        }
+        //If there was D3 code but it was unparsed, also create the error popup
+        else if(myD3.type == "unsupported")
+            notifyUnsupported();
+        else //Otherwise, FetchGuide retrieves a guide from the DB, appends it to myD3, and forwards it
+            fetchGuide();
+    }
   }
 );
-
-//saves document to database containing ID of relevant user,
-//vis. type, URL, and date last accessed
-function saveToHistory(sentObj) {
-
-  his_db.doc(jenkinsOneAtATimeHash(uid + String(sentObj.url))).set({
-      user: uid,
-      type: sentObj.type,
-      url: String(sentObj.url),
-      last_accessed: firebase.firestore.Timestamp.now()
-  })
-  .then(() => {
-    console.log("document saved to history");
-  })
-  .catch((error) => {
-    console.error("Error saving doc: ", error);
-  });
 
 //Credits (modified code): Bob Jenkins (http://www.burtleburtle.net/bob/hash/doobs.html)
 //See also: https://en.wikipedia.org/wiki/Jenkins_hash_function
@@ -160,4 +152,30 @@ function jenkinsOneAtATimeHash(keyString)
   return (((hash + (hash << 15)) & 4294967295) >>> 0).toString(16)
 };
 
+//Pushes a reported incorrect parse to the ErrorReports table, saving URLs
+function makeErrorReport()
+{
+    error_db.doc(jenkinsOneAtATimeHash(myD3.url)).set(
+    {
+        url: myD3.url,
+        timestamp: firebase.firestore.Timestamp.now()
+    });
+}
+
+//saves document to database containing ID of relevant user,
+//vis. type, URL, and date last accessed
+function saveToHistory(sentObj) {
+
+  his_db.doc(jenkinsOneAtATimeHash(uid + String(sentObj.url))).set({
+      user: uid,
+      type: sentObj.type,
+      url: String(sentObj.url),
+      last_accessed: firebase.firestore.Timestamp.now()
+  })
+  .then(() => {
+    console.log("document saved to history");
+  })
+  .catch((error) => {
+    console.error("Error saving doc: ", error);
+  });
 }

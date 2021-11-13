@@ -5,6 +5,7 @@ var supportedTypes;
 
 function sendToDB(sentObj)
 {
+    sentObj.from = "parser";
     console.log("Type: " + sentObj.type);
     try{chrome.runtime.sendMessage(sentObj);}
     catch(err) {console.log("Error in sendToDB()");}
