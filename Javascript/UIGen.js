@@ -48,19 +48,18 @@ function toggleSidebar()
 
 //createPrompt(id) uses the DOM id passed to it from the rest of the program, and generates
 //a floating prompt near that DOM element on the page.
-function createPrompt(id)
+function createPrompt()
 {
-    //Grab that id, or if that fails, try to figure out where to put it
-    var d3 = document.getElementById(id);
+    //Try to find an svg to place the prompt by
+    var d3 = document.getElementsByTagName("svg")[0];
     if(d3 === null)
-    {
-        d3 = document.getElementsByTagName("svg")[0];
+        d3 = document.body; //If that didn't work, we'll try appending straight to body
+    else
         d3 = d3.parentElement;
-    }
 
     var prompt = document.createElement("div");
     prompt.innerHTML = "Expert Goggles:<br>Click for a guide.";
-    prompt.classList.add("prompt");
+    prompt.classList.add("expertGogglesPrompt");
     prompt.id = "ExpertGoggles";
     d3.appendChild(prompt);
 
@@ -73,6 +72,32 @@ function createPrompt(id)
     return;
 }
 
+function reportError()
+{
+    var message = {"from": "UI"};
+    console.log("Sending Error Report Request to Background");
+    try{chrome.runtime.sendMessage(message);}
+    catch(err) {console.log(err);}
+
+    //Repopulate the sidebar with a thanks for the feedback
+    sidebar.innerHTML = ""; //Clear current contents
+
+    var sorry = document.createElement("div");
+    var outerDiv = document.createElement("div");
+    outerDiv.style["text-align"] = "center";
+    sorry.innerHTML = "Sorry!<br><br>";
+    sorry.classList.add("guideTitle");
+    outerDiv.appendChild(sorry);
+    sidebar.appendChild(outerDiv);
+
+    var thanks = document.createElement("div");
+    thanks.classList.add("bodyDiv");
+    thanks.innerHTML = "We are constantly working to improve Expert Goggles.<br><br>"
+                     + "Your feedback will help us do that. Thank you!<br><br>"
+                     + "A report has been filed with this URL so we can diagnose the issue.<br>";
+    sidebar.appendChild(thanks);
+}
+
 //generateSidebar() generates a sidebar DOM element and populates
 //it with a vis. guide that was appended to the D3InfoObj sent
 //from DBConn.js
@@ -80,7 +105,7 @@ function createPrompt(id)
 function generateSidebar(guideInfo)
 {
     var sb = document.createElement("div");
-    sb.classList.add("sidebar");
+    sb.classList.add("expertGogglesSidebar");
 
     //Take the Object Passed by the Database and Generate the Guide
     //Title
@@ -100,9 +125,25 @@ function generateSidebar(guideInfo)
 
     //Body
     var bodyDiv = document.createElement("div");
-    bodyDiv.innerHTML = "<br>" + guideInfo["Guide"] + "<br><br><br>";
+    bodyDiv.innerHTML = "<br>" + guideInfo["Guide"] + "<br><br>";
+    bodyDiv.innerHTML += "-------------------------------------------<br>";
+    bodyDiv.innerHTML += "&nbsp;&nbsp;&nbsp;Did we get this type wrong?&nbsp;&nbsp;<br><br>";
     bodyDiv.classList.add("bodyDiv");
     sb.appendChild(bodyDiv);
+
+    //Error Button
+    var buttonDiv = document.createElement("div");
+    var button = document.createElement("button");
+    button.innerHTML = "Report a parsing error.";
+    buttonDiv.classList.add("titlediv");
+    buttonDiv.appendChild(button);
+    sb.appendChild(buttonDiv);
+    button.onclick = function(){ reportError(); };
+
+    //End Spacing
+    var spaceDiv = document.createElement("div");
+    spaceDiv.innerHTML = "<br><br><br>";
+    sb.appendChild(spaceDiv);
 
     return sb;
 }
@@ -120,7 +161,7 @@ chrome.runtime.onMessage.addListener(
     {
         sidebar = generateSidebar(myD3.guide);
         document.body.appendChild(sidebar);
-        createPrompt(myD3.DOMid);
+        createPrompt();
     }
     catch(err){console.log(err);}
   }

@@ -5,30 +5,40 @@ var port = chrome.extension.connect({
     name: "Sample Communication"
 });
 
-//Await a Message with Iframe Information
-//We only get this message if iframes are on the page, so we can add information
-//about them to our error popup without a check
+//Populate the error message depending on whether D3 was present or absent, and whether there are iframes
 port.onMessage.addListener(function(msg)
 {
+    //Handle if D3 Code is present
+    var d3 = msg.d3type;
+    var d3div = document.getElementById("d3div");
+    if(d3 == "none")
+        d3div.innerHTML = "We have not detected any D3 source code on this page.";
+    else
+        d3div.innerHTML = "We have detected D3 source code on this page, but are unable to parse its type.";
+
+    //Handle if iframes are present
     var iframes = msg.iframeList;
-    var div = document.getElementById("iframes");
-    div.innerHTML = "We have detected iframes elements on this page. Currently, Expert Goggles<br>"
-                  + "is not able to detect D3 visualizations inside of embedded iframes. If you think<br>"
-                  + "there is a visualization on this page that we are not detecting, try visiting the<br>"
-                  + "relevant iframe directly. It may circumvent the issue. We have detected iframes<br>"
-                  + "with the following URLs:<br><br>";
-    for(i of iframes)
+    var idiv = document.getElementById("iframediv");
+    if(iframes.length > 0)
     {
-        var iLink = document.createElement("a");
-        iLink.href = i;
-        iLink.innerHTML = i;
-        div.appendChild(iLink);
+        idiv.innerHTML = "We have detected iframes elements on this page. Currently, Expert Goggles<br>"
+                      + "is not able to detect D3 visualizations inside of embedded iframes. If you think<br>"
+                      + "there is a visualization on this page that we are not detecting, try visiting the<br>"
+                      + "relevant iframe directly. It may circumvent the issue. We have detected iframes<br>"
+                      + "with the following URLs:<br>";
+        for(i of iframes)
+        {
+            var iLink = document.createElement("a");
+            iLink.href = i;
+            iLink.innerHTML = i;
+            idiv.appendChild(iLink);
+        }
+        makeLinksClickable();
     }
-    makeLinksClickable();
 });
 
 //Links in Chrome Page Actions are unclickable by default
-//This fixes that.
+//This function fixes that. Called at start and whenever links are added.
 function makeLinksClickable()
 {
     var links = document.getElementsByTagName("a");
@@ -43,9 +53,5 @@ function makeLinksClickable()
     }
 }
 
-
 //Make the links clickable since chrome blocks them in popups
-document.addEventListener('DOMContentLoaded', function ()
-{
-    makeLinksClickable();
-});
+document.addEventListener('DOMContentLoaded', function (){ makeLinksClickable(); });
