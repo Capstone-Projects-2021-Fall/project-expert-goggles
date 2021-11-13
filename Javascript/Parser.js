@@ -16,6 +16,7 @@ function parseType(parseInfo)
     //funcList is a list of tracked function calls from
     //the modified D3 source code
     console.log(parseInfo.funcList);
+    console.log(parseInfo.argList);
     var funcList = [...parseInfo.funcList];
     D3InfoObj.iframeList = parseInfo.iframeList;
 

@@ -1,8 +1,11 @@
 //Expert Goggles: Function Logger Tracks function calls from D3
 var funcLogger = {};
 funcLogger.funcsCalled = [];
+funcLogger.argList = [];
 var alreadyFired = false;
 var iframeList = [] ;
+
+var needArgs = ["append", "attr"];
 
 //This is called to replace D3 functions with functions that log themselves but return the same thing
 funcLogger.replace = function(old_func, func_name)
@@ -11,6 +14,23 @@ funcLogger.replace = function(old_func, func_name)
     {
         if(!funcLogger.funcsCalled.includes(func_name))
             funcLogger.funcsCalled.push(func_name);
+
+        if(needArgs.includes(func_name) && arguments)
+        {
+            var argString = func_name + "(";
+            var count = 0;
+            for(let arg of arguments)
+            {
+                if(count > 0)
+                    argString += ", ";
+
+                 argString += arg.toString();
+                 count++;
+            }
+            argString += ")";
+            funcLogger.argList.push(argString);
+        }
+
         return old_func.apply(this, arguments);
     }
 }
@@ -23,6 +43,7 @@ function sendToParser()
     //Generate an object with the necessary info, append funcList to it
     var parseObj = {};
     parseObj.funcList = funcLogger.funcsCalled;
+    parseObj.argList = funcLogger.argList;
     parseObj.sender = "ExpertGoggles";
     parseObj.iframeList = iframeList;
 
