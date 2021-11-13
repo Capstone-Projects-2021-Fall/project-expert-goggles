@@ -10,6 +10,7 @@
     white-space: nowrap;
     margin-top: 0.5rem;
     background-color: #1e81b0;
+    font-size: 15px;
     border-radius: 8px;
     box-shadow: 0px 0px 5px #74A5FD;
     z-index: 1;
@@ -22,11 +23,12 @@
      height: 100%; /* 100% Full-height */
      width: 0px; /* 0 width - change this with JavaScript */
      position: fixed; /* Stay in place */
-     z-index: 1; /* Stay on top */
+     z-index: 99999; /* Stay on top */
      top: 0; /* Stay at the top */
      bottom: 0;
      right: 0;
      color: white;
+     font-size: 15px;
      box-shadow: -2px 0px 1px #154c79;
      background-color: #1e81b0;
      overflow-x: hidden; /* Disable horizontal scroll */
@@ -40,7 +42,7 @@
     text-align: center;
 }
 
-.sidebar .bodyDiv
+.expertGogglesSidebar .bodyDiv
 {
     text-align: justify;
 }

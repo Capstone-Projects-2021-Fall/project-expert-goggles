@@ -88,37 +88,38 @@ function notifyUnsupported()
     chrome.pageAction.show(myD3.tab);
     chrome.pageAction.setIcon({tabId: myD3.tab,path: icon});
 
-    var message = {"iframeList": myD3.iframeList};
-    message.recipient = "Popup";
+    var message = {"iframeList": myD3.iframeList, "d3type": myD3.type};
 
-    if(myD3.iframeList.length > 0) //Send Iframe Information if Present
-    {
-        //Communicate with Error Popup
-        chrome.extension.onConnect.addListener(function(port)
-        {
-            port.postMessage(message);
-        });
-    }
+    chrome.extension.onConnect.addListener(function(port){ port.postMessage(message); });
 }
-
-
 
 //Listens for a message from the Parser
 chrome.runtime.onMessage.addListener(
   function(D3InfoObj, sender, sendResponse)
   {
-    //Append tab information so we know where to send info back to
+    //Gather Information from the message
     myD3 = D3InfoObj;
     myD3.tab = sender.tab.id;
-    console.log("Received a guide request from the Parser for " + myD3.type);
     myD3.url = sender.tab.url;
     myD3.iframeList = D3InfoObj.iframeList;
 
-    //If the Parser determined there was no D3 on a page or if there was an error,
-    //do nothing and make sure the extension isn't showing anything
-    if(!myD3.type || myD3.type == "none")
-        chrome.pageAction.show(myD3.tab);
-    else if(myD3.type == "unsupported") //If we detected D3 but couldnt Parse it, notify an error
+    //log what kind of request was received
+    console.log("Received a guide request from the Parser for " + myD3.type);
+
+    //Decision Tree depending on information received from Parser
+
+    //If there was no D3...
+    if(myD3.type == "none")
+    {
+        //...and there were no iframes, show the default page action and do nothing else
+        if(myD3.iframeList.length == 0)
+            chrome.pageAction.show(myD3.tab);
+        //...but there were iframes, create an error popup to allow workaround
+        else
+            notifyUnsupported();
+    }
+    //If there was D3 code but it was unparsed, also create the error popup
+    else if(myD3.type == "unsupported")
         notifyUnsupported();
     else //Otherwise, FetchGuide retrieves a guide from the DB, appends it to myD3, and forwards it
         fetchGuide();
