@@ -179,3 +179,14 @@ function saveToHistory(sentObj) {
     console.error("Error saving doc: ", error);
   });
 }
+
+//Interface with dashboard: return User ID
+chrome.runtime.onMessageExternal.addListener(
+    function(request, sender, sendResponse)
+    {
+        if(request)
+            if(request.message)
+                if (request.message == "user_id")
+                    sendResponse({"user_id": uid});
+        return true;
+    });

@@ -24,6 +24,10 @@
       ],
       "run_at": "document_end"
   }],
+  "externally_connectable":
+  {
+    "matches": ["https://expertgoggles-b21b1.web.app/"]
+  },
   "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com/; object-src 'self'",
   "page_action":
   {
@@ -35,9 +39,11 @@
   {
     "128": "style/icon.png"
   },
-  "web_accessible_resources": [
+  "web_accessible_resources":
+  [
     "Javascript/interceptor.js",
-    "Javascript/SupportedTypes.json"],
+    "Javascript/SupportedTypes.json"
+  ],
   "permissions":
   [
     "storage",
