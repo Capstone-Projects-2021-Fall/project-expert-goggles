@@ -8,7 +8,7 @@ import {
 
 import Welcome from './pages/Welcome/Welcome';
 import Settings from './pages/Settings/Settings';
-import HistoryofViews from './pages/HistoryofViews/HistoryofViews';
+import HistoryofViews from './HistoryofViews';
 import Download from './pages/Download/Download';
 import AvailableGuides from './AvailableGuides';
 import Navbar from './Components/Navbar/Navbar';

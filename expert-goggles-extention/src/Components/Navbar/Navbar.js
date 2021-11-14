@@ -71,17 +71,18 @@ const Navbar = () => {
                         <div className = "left"></div>
                         <div className = "right"></div>
                     </div>
-
-                    <li className = "nav-item-active">
+                    
+                    <li classname = "nav-item-active">
                         <NavLink classname = "nav-link" to = "/" exact>
                             <i
                             className = "fa fa-home">
                             </i> Home
                         </NavLink>
                     </li>
+                    
 
                     <li className = "nav-item">
-                        <NavLink classname = "nav-link" to = "/Download" exact>
+                        <NavLink className = "nav-link" to = "/Download" exact>
                             <i
                             className = "fa fa-arrow-circle-o-down">
                             </i> Download
