@@ -7,6 +7,8 @@ var iframeList = [] ;
 
 var needArgs = ["append", "attr"];
 
+var needArgs = ["append", "attr"];
+
 //This is called to replace D3 functions with functions that log themselves but return the same thing
 funcLogger.replace = function(old_func, func_name)
 {
@@ -114,5 +116,4 @@ document.addEventListener("DOMContentLoaded", function()
 });
 
 setTimeout( function() {sendToParser();}, 1500);
-
 
