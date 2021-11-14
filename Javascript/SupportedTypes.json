@@ -7,8 +7,8 @@
     },
     {
         "type": "bar_chart",
-        "functions": ["linear", "ordinal", "range", "axis", "max"],
-        "length": 5,
+        "functions": ["linear", "ordinal", "range", "axis", "max", "dispatch"],
+        "length": 6,
         "arguments": []
     },
     {
@@ -79,8 +79,8 @@
     },
     {
         "type": "stacked_bar_chart",
-        "functions": ["linear", "ordinal", "range", "axis", "max", "stack"],
-        "length": 6,
+        "functions": ["linear", "ordinal", "range", "axis", "max", "stack", "dispatch"],
+        "length": 7,
         "arguments": []
     },
     {
