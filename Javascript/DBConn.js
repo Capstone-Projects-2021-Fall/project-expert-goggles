@@ -9,6 +9,8 @@
 "use strict";
 
 var myD3 = {};
+var myHist = [];
+var myTypeCount = resetTypeCount();
 
 const firebaseConfig = {
   apiKey: "AIzaSyDZoQ24-ym0W4wbJeuRopvlwt5AwT9KQ4M",
@@ -41,6 +43,15 @@ if (user) {
     // https://firebase.google.com/docs/reference/js/firebase.User
     uid = user.uid;
     console.log("obtained user id");
+    downloadHistory();
+    //test sorting
+    
+    console.log("Sort by type:");
+    sortHistory(1);
+    console.log("Sort by URL:");
+    sortHistory(2);
+    console.log("Sort by Last Accessed: ");
+    sortHistory(0);
 } else { console.log(" User is signed out"); }
 });
 
@@ -124,15 +135,102 @@ function saveToHistory(sentObj) {
   .catch((error) => {
     console.error("Error saving doc: ", error);
   });
+}
+
+//fetches user history; called at extension load & user refresh
+function downloadHistory() {
+
+  his_db.where("user", "==", uid)
+  .get()
+  .then((userData) => {
+      userData.forEach((doc) => {    
+          let entry = {};
+          entry.id  = doc.id;
+          entry.user = doc.data().user;
+          entry.type = doc.data().type;
+          entry.url = doc.data().url;
+          entry.last_accessed = doc.data().last_accessed;
+          myHist.push(entry);
+      });
+      countTypes();
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+  //myHist needs to be sent to dashboard
+  sortHistory(0);
+  
+}
+
+function countTypes() {
+  myTypeCount = resetTypeCount();  
+
+  myHist.forEach((doc) => {
+      myTypeCount[doc.type]++;
+  });
+
+  console.log(myTypeCount); //this also must be sent to dashboard
+
+}
+
+//this doesn't work right now
+//sort by scheme:
+//0 - time last accessed (default)
+//1 - type of visualization, alphabetical
+//2 - URL, alphabetical
+function sortHistory(scheme) {
+
+  console.log("sorting");
+
+  switch(scheme) {
+    case 0:
+      console.log("sorting scheme 0 ");
+      myHist.sort(compareLastAccessed);
+      console.log(myHist); //generally speaking these logs can be removed once the 
+      //background-->dashboard communication is established
+      break;
+    case 1:
+      console.log("sorting scheme 1 ");
+      myHist.sort(compareType);  
+      console.log(myHist);
+      break;
+    case 2:
+      console.log("sorting scheme 2 ");
+      myHist.sort(compareURL);
+      console.log(myHist);
+      break;
+  }
+
+}
+
+//will consolidate these into => functions once i figure out
+//what the hell is going on here
+function compareLastAccessed(a,b) { 
+  console.log("A - ", a.last_accessed.seconds, " nano: ", a.last_accessed.nanoseconds);
+  console.log(  "B - ", b.last_accessed.seconds, " nano: ", b.last_accessed.nanoseconds);
+  return (a.last_accessed.seconds * 1000000000 + a.last_accessed.nanoseconds) 
+  - (b.last_accessed.seconds * 1000000000 + b.last_accessed.nanoseconds); 
+}
+
+function compareType(a,b) { 
+  console.log("A - ", a.type);
+  console.log("B - ", b.type);
+  return a.type.localeCompare(b.type); 
+}
+
+function compareURL(a,b) { 
+  console.log("A - ", a.url);
+  console.log("B - ", b.url);
+  return a.url.localeCompare(b.url);
+}
 
 //Credits (modified code): Bob Jenkins (http://www.burtleburtle.net/bob/hash/doobs.html)
 //See also: https://en.wikipedia.org/wiki/Jenkins_hash_function
 //Takes a string of any size and returns an avalanching hash string of 8 hex characters.
-function jenkinsOneAtATimeHash(keyString)
-{
+function jenkinsOneAtATimeHash(keyString) {
   let hash = 0;
-  for (let charIndex = 0; charIndex < keyString.length; ++charIndex)
-  {
+  for (let charIndex = 0; charIndex < keyString.length; ++charIndex) {
     hash += keyString.charCodeAt(charIndex);
     hash += hash << 10;
     hash ^= hash >> 6;
@@ -141,6 +239,20 @@ function jenkinsOneAtATimeHash(keyString)
   hash ^= hash >> 11;
   //4,294,967,295 is FFFFFFFF, the maximum 32 bit unsigned integer value, used here as a mask.
   return (((hash + (hash << 15)) & 4294967295) >>> 0).toString(16)
-};
+}
 
+function resetTypeCount() {
+  return {
+    "bar_chart": 0,
+    "scatter_plot": 0,
+    "line_chart": 0,
+    "pie_chart": 0,
+    "sequences_sunburst": 0,
+    "stacked_area_chart": 0,
+    "stacked_bar_chart": 0,
+    "box_plot": 0,
+    "histogram": 0,
+    "candlestick_chart": 0,
+    "unsupported": 0
+  };
 }
