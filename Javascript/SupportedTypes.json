@@ -6,12 +6,6 @@
         "arguments": []
     },
     {
-        "type": "scatter_plot",
-        "functions": ["keys"],
-        "length": 1,
-        "arguments": []
-    },
-    {
         "type": "line_chart",
         "functions": ["line"],
         "length": 1,
@@ -37,7 +31,7 @@
     },
     {
         "type": "stacked_bar_chart",
-        "functions": ["stack"],
+        "functions": ["ordinal", "stack"],
         "length": 1,
         "arguments": []
     },
@@ -79,7 +73,7 @@
     },
     {
         "type": "moving_averages",
-        "functions": ["scaleLinear", "scaleTime", "linear", "time", "range"],
+        "functions": ["scaleLinear", "scaleTime", "time", "range"],
         "length": 5,
         "arguments": []
     },
@@ -96,14 +90,8 @@
         "arguments": []
     },
     {
-        "type": "hexbin_chart",
-        "functions": ["hexbin"],
-        "length": 1,
-        "arguments": []
-    },
-    {
         "type": "scatter_plot",
-        "functions": ["scaleLinear", "scaleLinear"],
+        "functions": ["linear", "scaleLinear", "scaleLinear", "keys"],
         "length": 2,
         "arguments": ["circle", "cx", "cy"]
     }
