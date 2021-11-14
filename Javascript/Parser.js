@@ -28,6 +28,8 @@ function parseType(parseInfo)
     var possType;
     var funcListLen = funcList.length;
     var prevNumMatches = 0;
+    var prevDeviation = 5;
+    var matches = [];
 
     console.log("Args passed: " + argList);
 
@@ -51,7 +53,21 @@ function parseType(parseInfo)
         }
         if(numMatches > prevNumMatches){
             // possType becomes the most likely answer
+            var deviation = currentEntry.length - numMatches;
             possType = currEntry.type;
+
+            if(deviation < prevDeviation){
+                matches.push(possType);
+            }
+            else if(deviation == prevDeviation && numMatches > prevNumMatches){
+                matches = [];
+                matches.push(possType);
+                prevDeviation = deviation;
+            }
+            else if(deviation == prevDeviation && numMatches == prevNumMatches){
+                matches.push(possType);
+                prevDeviation = deviation
+            }
             prevNumMatches = numMatches;
         }
         else if(numMatches != 0 && numMatches == prevNumMatches){

@@ -32,7 +32,7 @@
     {
         "type": "stacked_bar_chart",
         "functions": ["ordinal", "stack"],
-        "length": 1,
+        "length": 2,
         "arguments": []
     },
     {
@@ -74,7 +74,7 @@
     {
         "type": "moving_averages",
         "functions": ["scaleLinear", "scaleTime", "time", "range"],
-        "length": 5,
+        "length": 4,
         "arguments": []
     },
     {
