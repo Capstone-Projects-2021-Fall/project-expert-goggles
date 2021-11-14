@@ -6,26 +6,35 @@ import { db, auth} from './services/firebase'
 import moment from 'moment'
 //const date = dateCreated.toDate().toDateString()
 
-var hasExtension = false;
+//var hasExtension = false;
 const expertGogglesID = "oaabhcneffbbgikojonjehejjhaobooe";
 var userID;
 
 
-try {
-    chrome.runtime.sendMessage(expertGogglesID, {message:"user_id"},
-    function (reply) {
-        if(reply) {
-            if (reply.user_id) {
-                hasExtension = true;
-    userID = reply.user_id;
+try{
+    chrome.runtime.sendMessage(expertGogglesID, { message: "user_id" },
+    function (reply)
+    {
+        if(reply)
+            if(reply.user_id)
+            {
+                userID = reply.user_id;
+                //Callback function to generate custom user history table
+                //generateHistoryTable(); //Name it whatever you want
             }
-        }
+            else
+            {
+                //Callback to populate page saying no extension was detected or there was an error
+                //generateNoExtensionPage(); //Name it Whatever you want
+            }
     });
 }
-catch(error) {
-    //Do Something if that doesn't work
+catch(err)
+{
+    //Same as the else statement above
+    //Callback to populate page saying no extension was detected or there was an error
+    //generateNoExtensionPage(); //Name it Whatever you want
 }
-console.log(userID);
 
 
 class HistoryofViews extends React.Component {
@@ -49,8 +58,25 @@ class HistoryofViews extends React.Component {
             })
             .catch( error => console.log(error))
     }
-    
-
+    /*
+    constructor() {
+    try {
+        chrome.runtime.sendMessage(expertGogglesID, {message:"user_id"},
+        function (reply) {
+            if(reply) {
+                if (reply.user_id) {
+                    hasExtension = true;
+        userID = reply.user_id;
+                }
+            }
+        });
+    }
+    catch(error) {
+        //Do Something if that doesn't work
+    }
+    console.log(userID);
+}
+*/
     render() {
         return (
             <bodyhistory>
