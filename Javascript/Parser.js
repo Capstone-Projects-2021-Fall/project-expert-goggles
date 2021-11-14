@@ -16,6 +16,7 @@ function parseType(parseInfo)
     //the modified D3 source code
     console.log(parseInfo.funcList);
     var funcList = [...parseInfo.funcList];
+    var argList = [...parseInfo.argList];
 
     //Default: Unsupported
     D3InfoObj.type = "unsupported";
@@ -27,7 +28,9 @@ function parseType(parseInfo)
     var possType;
     var funcListLen = funcList.length;
     var prevNumMatches = 0;
-    
+
+    console.log("Args passed: " + argList);
+
     //No D3 Code
     if(funcListLen == 0)
         possType = "none";
