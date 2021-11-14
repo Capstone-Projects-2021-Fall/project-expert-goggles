@@ -5,6 +5,7 @@
 //It has to be done this way because the original approach, messing with Localstorage, caused
 //issues logging into Canvas (which is admittedly kinda funny).
 var scriptText = `
+//Interceptor Code starts here, is injected.
 //Expert Goggles: Function Logger Tracks function calls from D3
 var funcLogger = {};
 funcLogger.funcsCalled = [];
@@ -111,39 +112,16 @@ mo.observe(document, {subtree: true, childList: true});
 
 
 setTimeout( function() {sendToParser();}, 1500);
-`
+`;
 
-if (!urlContent)
-{
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-
-    xhr.onload = function(e)
-    {
-        if ((xhr.readyState === 4) && (xhr.status === 200))
-        {
-            localStorage.setItem(urlEncoded, xhr.responseText);
-            window.location.reload(true);
-        }
-    };
-
-    xhr.send(null);
-
-    document.write('<script src="' + url + '"><\/scr' + 'ipt>');
-}
-else
-{
-    var d3script = document.createElement("script");
-    //d3script.src = chrome.extension.getURL("Javascript/d3.js");
-    d3script.textContent = urlContent;
-    d3script.charset = "utf-8";
-    d3script.type = "text/javascript";
-    d3script.id = "ExpertGoggles";
-    d3script.setAttribute("async", "false");
-    document.documentElement.append(d3script);
-    localStorage.removeItem(urlEncoded);
-    console.log("Expert Goggles: Injected D3 Interception Script.");
-}
+var d3script = document.createElement("script");
+d3script.textContent = scriptText;
+d3script.charset = "utf-8";
+d3script.type = "text/javascript";
+d3script.id = "ExpertGoggles";
+d3script.setAttribute("async", "false");
+document.documentElement.append(d3script);
+console.log("Expert Goggles: Injected D3 Interception Script.");
 
 
 
