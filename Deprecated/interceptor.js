@@ -105,4 +105,3 @@ mo.observe(document, {subtree: true, childList: true});
 
 setTimeout( function() {sendToParser();}, 1500);
 
-

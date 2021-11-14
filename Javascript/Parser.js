@@ -18,9 +18,6 @@ function parseType(parseInfo)
     var funcList = [...parseInfo.funcList];
     var argList = [...parseInfo.argList];
 
-    //Default: Unsupported
-    D3InfoObj.type = "unsupported";
-
 
     //Logic:
     //waitForJson();
@@ -28,7 +25,7 @@ function parseType(parseInfo)
     var possType;
     var funcListLen = funcList.length;
     var prevNumMatches = 0;
-    var prevDeviation = 5;
+    var prevDeviation = 6;
     var matches = [];
 
     console.log("Args passed: " + argList);
@@ -39,44 +36,53 @@ function parseType(parseInfo)
     else //Default: unsupported, gets overwritten if it is supported
         possType = "unsupported";
 
-    for(var jsonEntry = 0; jsonEntry < supportedTypes.length; jsonEntry++){
-
+    for(var jsonEntry = 0; jsonEntry < supportedTypes.length; jsonEntry++)
+    {
         var numMatches = 0;
         var currEntry = supportedTypes[jsonEntry];
-        console.log("Current Entry functions: " + supportedTypes[jsonEntry].functions);
 
-        for(var currFunc = 0; currFunc < currEntry.functions.length; currFunc++){
-            if(funcList.includes(currEntry.functions[currFunc])){
-                console.log("Matched: " + currEntry.functions[currFunc]);
+        for(var currFunc = 0; currFunc < currEntry.functions.length; currFunc++)
+        {
+            if(funcList.includes(currEntry.functions[currFunc]))
                 numMatches++;
-            }
         }
-        if(numMatches > prevNumMatches){
-            // possType becomes the most likely answer
-            var deviation = currentEntry.length - numMatches;
-            possType = currEntry.type;
 
-            if(deviation < prevDeviation){
-                matches.push(possType);
-            }
-            else if(deviation == prevDeviation && numMatches > prevNumMatches){
-                matches = [];
-                matches.push(possType);
-                prevDeviation = deviation;
-            }
-            else if(deviation == prevDeviation && numMatches == prevNumMatches){
-                matches.push(possType);
-                prevDeviation = deviation
-            }
+        var deviation = currEntry.length - numMatches;
+        if(deviation < prevDeviation)
+        {
+            // possType becomes the most likely answer
+            prevDeviation = deviation;
             prevNumMatches = numMatches;
+            matches = [];
+            matches.push(currEntry.type);
         }
-        else if(numMatches != 0 && numMatches == prevNumMatches){
-            console.log("Could either be type \'" + possType
-             + "\' or \'" + currEntry.type);
+        else if(deviation == prevDeviation)
+        {
+            if(numMatches > prevNumMatches)
+            {
+                matches = [];
+                prevNumMatches = numMatches;
+                matches = [];
+                matches.push(currEntry.type);
+            }
+            else if(numMatches == prevNumMatches)
+                matches.push(currEntry.type);
         }
     }
 
-    console.log("It is likely: " + possType);
+    if(matches.length == 1)
+    {
+        possType = matches[0];
+        console.log("It is likely: " + possType);
+    }
+    else
+    {
+        var output = "Failed to parse type. Cannot differentiate this between";
+        for(let match of matches)
+            output += " " + match;
+        console.log(output);
+    }
+
     D3InfoObj.type = possType;
     sendToDB(D3InfoObj);
 

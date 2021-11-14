@@ -1,7 +1,49 @@
 [
     {
+        "type": "area_chart",
+        "functions": ["area"],
+        "length": 1,
+        "arguments": []
+    },
+    {
         "type": "bar_chart",
-        "functions": ["linear"],
+        "functions": ["linear", "ordinal", "range", "axis", "max"],
+        "length": 5,
+        "arguments": []
+    },
+    {
+        "type": "box_plot",
+        "functions": ["quantile"],
+        "length": 1,
+        "arguments": []
+    },
+    {
+        "type": "candlestick_chart",
+        "functions": ["scaleQuantize"],
+        "length": 1,
+        "arguments": []
+    },
+    {
+        "type": "circle_pack",
+        "functions": ["pack"],
+        "length": 1,
+        "arguments": []
+    },
+    {
+        "type": "difference_chart",
+        "functions": ["area", "bisect"],
+        "length": 2,
+        "arguments": []
+    },
+    {
+        "type": "heatmap",
+        "functions": ["scaleSequential"],
+        "length": 1,
+        "arguments": []
+    },
+    {
+        "type": "histogram",
+        "functions": ["histogram"],
         "length": 1,
         "arguments": []
     },
@@ -18,9 +60,15 @@
         "arguments": []
     },
     {
+        "type": "scatter_plot",
+        "functions": ["linear", "axis", "keys"],
+        "length": 3,
+        "arguments": ["circle", "cx", "cy"]
+    },
+    {
         "type": "sequences_sunburst",
-        "functions": ["hierarchy"],
-        "length": 1,
+        "functions": ["hierarchy", "arc"],
+        "length": 2,
         "arguments": []
     },
     {
@@ -31,26 +79,8 @@
     },
     {
         "type": "stacked_bar_chart",
-        "functions": ["ordinal", "stack"],
-        "length": 2,
-        "arguments": []
-    },
-    {
-        "type": "box_plot",
-        "functions": ["linear", "quantile"],
-        "length": 2,
-        "arguments": []
-    },
-    {
-        "type": "histogram",
-        "functions": ["histogram"],
-        "length": 1,
-        "arguments": []
-    },
-    {
-        "type": "candlestick_chart",
-        "functions": ["scaleQuantize"],
-        "length": 1,
+        "functions": ["linear", "ordinal", "range", "axis", "max", "stack"],
+        "length": 6,
         "arguments": []
     },
     {
@@ -58,41 +88,5 @@
         "functions": ["treemap"],
         "length": 1,
         "arguments": []
-    },
-    {
-        "type": "circle_pack",
-        "functions": ["pack"],
-        "length": 1,
-        "arguments": []
-    },
-    {
-        "type": "colored_line_chart",
-        "functions": ["line", "style"],
-        "length": 2,
-        "arguments": []
-    },
-    {
-        "type": "moving_averages",
-        "functions": ["scaleLinear", "scaleTime", "time", "range"],
-        "length": 4,
-        "arguments": []
-    },
-    {
-        "type": "density_contours",
-        "functions": ["contourDensity", "density"],
-        "length": 2,
-        "arguments": []
-    },
-    {
-        "type": "hexbin_chart",
-        "functions": ["hexbin"],
-        "length": 1,
-        "arguments": []
-    },
-    {
-        "type": "scatter_plot",
-        "functions": ["linear", "scaleLinear", "scaleLinear", "keys"],
-        "length": 2,
-        "arguments": ["circle", "cx", "cy"]
     }
 ]
