@@ -184,9 +184,12 @@ function saveToHistory(sentObj) {
 chrome.runtime.onMessageExternal.addListener(
     function(request, sender, sendResponse)
     {
+        console.log("Recieved External Message");
         if(request)
             if(request.message)
                 if (request.message == "user_id")
                     sendResponse({"user_id": uid});
         return true;
     });
+
+console.log("DBConn is ready.");

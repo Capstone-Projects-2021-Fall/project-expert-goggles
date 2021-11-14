@@ -26,7 +26,7 @@
   }],
   "externally_connectable":
   {
-    "matches": ["https://expertgoggles-b21b1.web.app/"]
+    "matches": ["https://expertgoggles-b21b1.web.app/HistoryofViews"]
   },
   "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com/; object-src 'self'",
   "page_action":
