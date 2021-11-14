@@ -24,13 +24,13 @@
         "arguments": []
     },
     {
-        "type": "circle_pack",
+        "type": "circle_packing_chart",
         "functions": ["pack"],
         "length": 1,
         "arguments": []
     },
     {
-        "type": "difference_chart",
+        "type": "Difference Chart",
         "functions": ["area", "bisect"],
         "length": 2,
         "arguments": []
@@ -84,7 +84,7 @@
         "arguments": []
     },
     {
-        "type": "tree_map",
+        "type": "treemap",
         "functions": ["treemap"],
         "length": 1,
         "arguments": []
