@@ -1,3 +1,4 @@
+/*global chrome*/
 import React from 'react'
 import './HistoryofViews.css'
 //import firebase from 'firebase/compat/app'
@@ -5,28 +6,30 @@ import { db, auth} from './services/firebase'
 import moment from 'moment'
 //const date = dateCreated.toDate().toDateString()
 
-//var hasExtension = false;
-//const expertGogglesID = "oaabhcneffbbgikojonjehejjhaobooe";
-//var userID;
+var hasExtension = false;
+const expertGogglesID = "oaabhcneffbbgikojonjehejjhaobooe";
+var userID;
 
-/*
+
 try {
     chrome.runtime.sendMessage(expertGogglesID, {message:"user_id"},
     function (reply) {
         if(reply) {
             if (reply.user_id) {
                 hasExtension = true;
-                userID = message.user_id;
+    userID = reply.user_id;
             }
         }
     });
 }
-Catch(err) {
+catch(error) {
     //Do Something if that doesn't work
 }
-*/
+console.log(userID);
+
 
 class HistoryofViews extends React.Component {
+    
     state = {
         UserHistories: null
     }
