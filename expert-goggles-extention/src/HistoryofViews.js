@@ -18,7 +18,10 @@ try{
         if(reply)
             if(reply.user_id)
             {
-                window.HistoryofViews.setUser(reply.user_id);
+                if(window.HistoryofViews.state.AllUserHistories)
+                    window.HistoryofViews.setUser(reply.user_id);
+                else
+                    waitToSet(reply.user_id);
             }
             else
             {
@@ -34,6 +37,14 @@ catch(err)
     //generateNoExtensionPage(); //Name it Whatever you want
 }
 
+function waitToSet(id)
+{
+    setTimeout(function()
+    {
+        if(window.HistoryofViews.state.AllUserHistories)
+            window.HistoryofViews.setUser(id);
+    }, 1000);
+}
 
 class HistoryofViews extends React.Component {
 
@@ -44,10 +55,26 @@ class HistoryofViews extends React.Component {
        userID: 0
     }
 
-    constructor(){
+    constructor()
+    {
         super();
         window.HistoryofViews = this;
     }
+
+    componentDidMount() {
+            console.log('mounted')
+            db.collection('UserHistories')
+                .get()
+                .then( snapshot => {
+                    const UserHistories = []
+                    snapshot.forEach( doc => {
+                        const data = doc.data()
+                        UserHistories.push(data)
+                    })
+                    this.setState({ AllUserHistories: UserHistories})
+                })
+                .catch( error => console.log(error))
+        }
 
     setUser = (newID) => {
       this.setState({
@@ -67,40 +94,28 @@ class HistoryofViews extends React.Component {
         this.render();
     }
 
-    componentDidMount() {
-        console.log('mounted')
-        db.collection('UserHistories')
-            .get()
-            .then( snapshot => {
-                const UserHistories = []
-                snapshot.forEach( doc => {
-                    const data = doc.data()
-                    UserHistories.push(data)
-                })
-                this.setState({ AllUserHistories: UserHistories})
-                console.log(snapshot)
-            })
-            .catch( error => console.log(error))
-    }
-
     render() {
         if(this.state.userID === 0)
         {
             return (
-                <bodyhistory>
-                    <div className = "container">
-                        <h1 class = "text-center" style = {{paddingTop: "2%"}}>
-                            History
-                        </h1>
-                        <div>
-                                We are not able to load your history for any of the following reasons:
-                                1. Expert Goggles is not installed.
-                                2. You are not using Google Chrome.
-                                3. There was an error.
-                                If you need to install the extension, visit the downloads page!
+                <mainthree>
+                    <div id = "historypage">
+                        <div className = "container">
+                            <h1 className = "history" style = {{paddingTop: "2%"}}>
+                                History
+                            </h1>
+                            <div>
+                                <ol class = "extension">
+                                    We are not able to load your history for any of the following reasons:
+                                    <li>Expert Goggles is not installed.</li>
+                                    <li> You are not using Google Chrome.</li>
+                                    <li>There was an error. </li>
+                                    If you need to install the extension, visit the downloads page!
+                                </ol>
+                            </div>
                         </div>
                     </div>
-                </bodyhistory>
+                </mainthree>
             )}
         else
         {

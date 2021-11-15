@@ -1,7 +1,20 @@
-.container {
-    background: rgb(247, 208, 161);
-    padding: 0;
-    margin: 0;
+#historypage {
+    background: rgb(192, 221, 224);    
+}
+
+h1.history {
+  text-align: center;
+  font-size: 4em;
+}
+
+.extension {
+    color: black;
+    text-align: left;
+    list-style-position: inside;
+    font-size: 2em;
+    padding-left: 10%;
+    margin: 20%;
+    display: inline-block;
 }
 
 table, th, td {
@@ -39,7 +52,7 @@ table {
 */
 
 .tablecontent {
-    display: grid;
+    display: flex;
     grid-template-columns: (3, 1fr);
     grid-auto-rows: (150px, auto);
 }
