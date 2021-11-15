@@ -18,9 +18,7 @@ try{
         if(reply)
             if(reply.user_id)
             {
-                userID = reply.user_id;
-                //Callback function to generate custom user history table
-                //generateHistoryTable(); //Name it whatever you want
+                window.HistoryofViews.setUser(reply.user_id);
             }
             else
             {
@@ -38,11 +36,37 @@ catch(err)
 
 
 class HistoryofViews extends React.Component {
-    
-    state = {
-        UserHistories: null
+
+    state =
+    {
+       AllUserHistories: null,
+       DisplayedUserHistories: [],
+       userID: 0
     }
-    
+
+    constructor(){
+        super();
+        window.HistoryofViews = this;
+    }
+
+    setUser = (newID) => {
+      this.setState({
+        userID: newID
+      })
+      this.updateDisplay();
+    }
+
+    updateDisplay = (newID) => {
+        var newDisplay = []
+        for(let user of this.state.AllUserHistories)
+        {
+            if(user.user === this.state.userID)
+                newDisplay.push(user);
+        }
+        this.setState({ DisplayedUserHistories: newDisplay})
+        this.render();
+    }
+
     componentDidMount() {
         console.log('mounted')
         db.collection('UserHistories')
@@ -53,31 +77,33 @@ class HistoryofViews extends React.Component {
                     const data = doc.data()
                     UserHistories.push(data)
                 })
-                this.setState({ UserHistories: UserHistories})
+                this.setState({ AllUserHistories: UserHistories})
                 console.log(snapshot)
             })
             .catch( error => console.log(error))
     }
-    /*
-    constructor() {
-    try {
-        chrome.runtime.sendMessage(expertGogglesID, {message:"user_id"},
-        function (reply) {
-            if(reply) {
-                if (reply.user_id) {
-                    hasExtension = true;
-        userID = reply.user_id;
-                }
-            }
-        });
-    }
-    catch(error) {
-        //Do Something if that doesn't work
-    }
-    console.log(userID);
-}
-*/
+
     render() {
+        if(this.state.userID === 0)
+        {
+            return (
+                <bodyhistory>
+                    <div className = "container">
+                        <h1 class = "text-center" style = {{paddingTop: "2%"}}>
+                            History
+                        </h1>
+                        <div>
+                                We are not able to load your history for any of the following reasons:
+                                1. Expert Goggles is not installed.
+                                2. You are not using Google Chrome.
+                                3. There was an error.
+                                If you need to install the extension, visit the downloads page!
+                        </div>
+                    </div>
+                </bodyhistory>
+            )}
+        else
+        {
         return (
             <bodyhistory>
                 <div className = "container">
@@ -85,8 +111,8 @@ class HistoryofViews extends React.Component {
                         History
                     </h1>
                     {
-                        this.state.UserHistories &&
-                        this.state.UserHistories.map ( UserHistories => {
+                        this.state.DisplayedUserHistories &&
+                        this.state.DisplayedUserHistories.map ( DisplayedUserHistories => {
                             return (
                                 <div className = "tablecontent">
                                     <table>
@@ -96,22 +122,10 @@ class HistoryofViews extends React.Component {
                                             <th>Link:</th>
                                         </tr>
                                         <tr>
-                                            <td>{moment(UserHistories.last_accessed.toDate()).calendar()}</td>
-                                            <td>{String(UserHistories.type)}</td>
-                                            <td>{String(UserHistories.url)}</td>
+                                            <td>{moment(DisplayedUserHistories.last_accessed.toDate()).calendar()}</td>
+                                            <td>{String(DisplayedUserHistories.type)}</td>
+                                            <td>{String(DisplayedUserHistories.url)}</td>
                                         </tr>
-                                        {/*<tr>
-                                            <th><p style = {{fontWeight: "bold"}}>Last Accessed: {moment(UserHistories.last_accessed.toDate()).calendar()}</p></th>
-                                        </tr>
-                                        <tr>
-                                            <p style = {{fontWeight: "bold"}}>Type: {String(UserHistories.type)}</p>
-                                        </tr>
-                                        <tr>
-                                            <p style = {{fontWeight: "bold"}}>Link: {String(UserHistories.url)}</p>
-                                        </tr>*/}
-                                        {/*<p style = {{fontWeight: "bold"}}>Last Accessed: {moment(UserHistories.last_accessed.toDate()).calendar()}</p>
-                                        <p style = {{fontWeight: "bold"}}>Type: {String(UserHistories.type)}</p>
-                                        <p style = {{fontWeight: "bold"}}>Link: {String(UserHistories.url)}</p>*/}
                                     </table>
                                 </div>
                             )
@@ -119,19 +133,7 @@ class HistoryofViews extends React.Component {
                     }
                 </div>
             </bodyhistory>
-        )
+        )}
     }
 }
 export default HistoryofViews;
-
-/*
-    return (
-        <div className = "container">
-            <h1 className = "text-center" style = {{paddingTop: "30%"}}>
-                History of Views
-            </h1>
-        </div>
-    )
-
-                                    <p style = {{fontWeight: "bold"}}>User: {String(UserHistories.user)}</p>
-*/
