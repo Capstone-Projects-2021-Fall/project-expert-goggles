@@ -26,4 +26,4 @@ Expert Goggles can be installed using the following steps:<br>
 5.	Navigate to the unzipped directory and click “select folder.”<br>
 6.	Expert Goggles is now installed! <br>
 <h3>Acceptance Testing</h3>
-Steps for using and testing the extension can be found in [our acceptance testing document](Docs/testing.xlsx)
+Steps for using and testing the extension can be found in Docs/testing.xlsx.
