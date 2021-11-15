@@ -11,6 +11,9 @@ var funcLogger = {};
 funcLogger.funcsCalled = [];
 funcLogger.argList = [];
 var alreadyFired = false;
+var iframeList = [] ;
+
+var needArgs = ["append", "attr"];
 
 var needArgs = ["append", "attr"];
 
@@ -52,6 +55,7 @@ function sendToParser()
     parseObj.funcList = funcLogger.funcsCalled;
     parseObj.argList = funcLogger.argList;
     parseObj.sender = "ExpertGoggles";
+    parseObj.iframeList = iframeList;
 
     console.log("Expert Goggles Scraper: Sending message to background.");
 
@@ -85,13 +89,13 @@ function interceptD3()
                     if(typeof subFunc == "function")
                         window.d3[name][subName] = funcLogger.replace(subFunc, subName);
                 }
-
         }
     }
 }
 
 var count = 0;
 
+//Callback for Mutation Observer that watches Window.d3
 function callback(mutations)
 {
     for(let m of mutations)
@@ -104,9 +108,20 @@ function callback(mutations)
         }catch(err){}
     }
 }
+
+//Watch for changes to window.d3, indicating it was loaded
 var mo = new MutationObserver(callback);
 mo.observe(document, {subtree: true, childList: true});
 
+//Also watch for iframes on the page
+document.addEventListener("DOMContentLoaded", function()
+{
+    var iframes = document.getElementsByTagName("iframe");
+    for(let i of iframes)
+    {
+      iframeList.push(i.src);
+    }
+});
 
 setTimeout( function() {sendToParser();}, 1500);
 `;

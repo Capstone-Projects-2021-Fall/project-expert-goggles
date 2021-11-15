@@ -18,6 +18,7 @@ function parseType(parseInfo)
     console.log(parseInfo.funcList);
     console.log(parseInfo.argList);
     var funcList = [...parseInfo.funcList];
+    D3InfoObj.iframeList = parseInfo.iframeList;
 
     //Logic:
     //waitForJson();
