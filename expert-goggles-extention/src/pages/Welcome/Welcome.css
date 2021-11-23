@@ -18,6 +18,8 @@ main {
   
   z-index: 1;
   */
+
+
   .section {
     height: 100vh;
     display: flex;
@@ -120,17 +122,26 @@ main {
   }
   
 
-  /*
-  a::hover button {
-    color: rgba(255,255,255,1);
-  }
-  */
   
   
   .section-2 {
     background-color: #c8e6c9;
+    padding-top: 10%;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    padding: 35px;
   }
-  
+
+  #welcomesection2 ul li {
+    padding: 1.5em;
+  }
+
+  p.question1 {
+    font-size: larger;
+    font-weight: bold;
+  }
+
   .section-3 {
     background-color: #b3e5fc;
   }

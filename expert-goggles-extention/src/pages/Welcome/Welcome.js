@@ -14,9 +14,16 @@ function Welcome() {
                 </section>
                 <section id = "sec-2">
                 <section class="section section-2">
-                    <p>Expert goggles is a context-aware browser extension in regards to training for data literacy.
+                    <p className = "question1" style = {{padding: "20px"}}>What is Expert Goggles?</p>
+                    <ul id = "welcomesection2">
+                        <li>Expert goggles is a context-aware browser extension in regards to training for data literacy.
                         This extension proposes an approach to integrate data literacey training into activities that people are already doing such as web browsing.
-                    </p>
+                        </li>
+                        <li>
+                            This application consists of a Google Chrome Browser Extenson that users can install and use
+                            while they surf the web.
+                        </li>
+                    </ul>
                 </section>
                 </section>
                 <section class="section section-3">
