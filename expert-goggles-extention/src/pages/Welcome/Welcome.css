@@ -144,16 +144,72 @@ main {
 
   .section-3 {
     background-color: #b3e5fc;
+    padding-top: 10%;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    padding: 35px;
+
+  }
+
+  #welcomesection3 ul li {
+    padding: 1.5em;
+  }
+
+  p.question2 {
+    font-size: larger;
+    font-weight: bold;
   }
   
   .section-4 {
     background-color: #f0f4c3;
+    padding-top: 10%;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    padding: 35px;
+  }
+
+  #welcomesection4 ul li {
+    padding: 1.5em;
+  }
+
+  p.question3 {
+    font-size: larger;
+    font-weight: bold;
   }
   
   .section-5 {
     background-color: #ffccbc;
+    padding-top: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 35px;
+  }
+
+  #finalpage ul li {
+    padding: 1.5em;
+    list-style-type: none;
+  }
+
+  #finalpage {
+    list-style-type: none;
+    list-style: none;
+  }
+/*
+  h2.lastpage {
+    justify-content: center;
   }
   
+  h2.finalwords{
+    text-align: center;
+    justify-content: center;
+  }
+
+  */
+
   body {
     font-family: Lato, sans-serif;
   }
