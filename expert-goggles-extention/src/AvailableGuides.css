@@ -1,0 +1,17 @@
+.emage {
+    display: block;
+    margin-left: 15%;
+    margin-right: auto;
+    width: 50%;
+    height: 50%;
+}
+
+p.namees {
+    padding: 15px;
+    padding-bottom: 0px;
+}
+
+p.descriptions {
+    padding: 15px;
+    padding-top: 5px;
+}

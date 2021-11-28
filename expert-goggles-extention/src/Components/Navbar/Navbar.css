@@ -11,14 +11,13 @@ body {
 i {
   margin-right: 10px;
 }
-.navbar-logo {
+.navbar-brand {
   padding: 10px;
   color: #fff;
-  pointer-events: none;
   margin-right: auto;
 }
 
-.navbar-toggle {
+.navbar-toggler {
   display: block;
 }
 

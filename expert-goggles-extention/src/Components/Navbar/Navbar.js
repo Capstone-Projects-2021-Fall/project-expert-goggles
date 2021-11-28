@@ -2,6 +2,7 @@ import React , {useEffect} from 'react'
 import './Navbar.css';
 import { NavLink } from 'react-router-dom';
 import $ from 'jquery';
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 
 const Navbar = () => {
 
@@ -44,23 +45,17 @@ const Navbar = () => {
   }, []);
     return ( 
         <nav className="navbar navbar-expand-lg navbar-mainbg">
-            <NavLink className = "navbar-brand navbar-logo" to="/" exact>
+            <NavLink className = "navbar-brand" to="/" exact>
                 Expert Goggles 🥽
             </NavLink>
 
             <button
-                className="navbar-toggle"
+                class="navbar-toggler"
                 onClick ={ function() {
                     setTimeout(function() { animation(); });
                 }}
-                    type = "button"
-                    data-toggle = "collapse"
-                    data-target = "#navbarSupportedContent"
-                    aria-controls = "navbarSupportedContent"
-                    aria-expanded = "false"
-                    aria-hidden = "true"
-                    aria-label = "Toggle navigation">
-                <i className = "fas fa-bars text-white"></i>
+                type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i className = "fa fa-bars" aria-hidden = "true"></i>
             </button>
 
             <div
@@ -82,9 +77,9 @@ const Navbar = () => {
                     
 
                     <li className = "nav-item">
-                        <NavLink className = "nav-link" to = "/Download" exact>
+                        <NavLink classname = "nav-link" to = "/Download" exact>
                             <i
-                            className = "fa fa-arrow-circle-o-down">
+                            className = "fa fa-arrow-circle-down">
                             </i> Download
                         </NavLink>
                     </li>
@@ -105,14 +100,6 @@ const Navbar = () => {
                         </NavLink>
                     </li>
                     
-                    <li className = "nav-item">
-                        <NavLink classname = "nav-link"
-                        to = "/Settings" exact>
-                            <i
-                            className = "fa fa-cog">
-                            </i> Settings
-                        </NavLink>
-                    </li>
 
                 </ul>
             </div>

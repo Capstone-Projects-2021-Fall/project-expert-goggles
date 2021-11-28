@@ -1,6 +1,7 @@
 import React from 'react'
 import './Welcome.css'
-<link rel = "stylesheet" href = "./Welcome.css" />
+<link href = "https://fonts.googleapis.com/icon?family=Material+Icons" rel = "stylesheet"/>
+
 
 
 function Welcome() {
@@ -97,7 +98,7 @@ function Welcome() {
                             <h3 class = "footerone" style = {{padding: "0px"}}>Created By:</h3>
                         </li>
                         <li>
-                            <h4 class = "footer" style = {{padding: "0px"}}>Ayman El-sayed, Aaron Wile, Conlin Fox, Edward Brace, Joshua Withka, Tyler Wolf</h4>
+                            <h4 class = "footer" style = {{padding: "0px"}}>Aaron Wile, Ayman El-sayed, Conlin Fox, Edward Brace, Joshua Withka, Tyler Wolf</h4>
                         </li>
                     </ul>
                 </section>

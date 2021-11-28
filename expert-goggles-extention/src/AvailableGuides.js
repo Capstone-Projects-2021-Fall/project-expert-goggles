@@ -1,11 +1,19 @@
 import React from 'react'
+import './index.css'
 //import firebase from 'firebase/compat/app'
 import { db, auth } from './services/firebase'
+import { ScrollToTop } from './Components/scroll/ScrollToTop'
+import './AvailableGuides.css'
+//import Guides from "./Data.json"
+<link href = "https://fonts.googleapis.com/icon?family=Material+Icons" rel = "stylesheet"/>
+
+
 
 class AvailableGuides extends React.Component {
     state = { 
         visualizations: null
     }
+    
 /*
     generateImage() {
         var sb = document.createElement("div");
@@ -33,26 +41,30 @@ class AvailableGuides extends React.Component {
             })
             .catch( error => console.log(error))
     }
+    
 
     render() {
         return (
-            <div classname = "container">
-                <h1 class = "text-center" style = {{paddingTop: "2%"}}>
+            <>
+            <div classname = "container" style = {{heigh: "auto"}}>
+                <h1 className = "text-center" style = {{paddingTop: "2%"}}>
                     Available Guides
                 </h1>
                 {
                     this.state.visualizations &&
                     this.state.visualizations.map ( visualizations => {
                         return (
-                            <div>
-                                <p style = {{fontWeight: "bold"}}>Name: {String(visualizations.Name)}</p>
-                                <p style = {{fontWeight: "bold"}}>Guide: {String(visualizations.Guide)}</p>
-                                <p style = {{paddingLeft: "20%"}}><img src={visualizations.img} alt ='guide'/></p>
-                            </div>
+                                <div>
+                                    <p className = "namees" style = {{fontWeight: "bold"}}>Name: {String(visualizations.Name)}</p>
+                                    <p className = "descriptions" style = {{fontWeight: "bold"}}>Guide: {String(visualizations.Guide)}</p>
+                                    <p style = {{paddingLeft: "20%"}}><img src={visualizations.img} alt ='guide' class = "emage"/></p>
+                                </div>
                         )
                     })
                 }
             </div>
+            <ScrollToTop/>
+            </>
         )
     }
 }
