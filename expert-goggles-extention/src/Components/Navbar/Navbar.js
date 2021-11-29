@@ -2,6 +2,7 @@ import React , {useEffect} from 'react'
 import './Navbar.css';
 import { NavLink } from 'react-router-dom';
 import $ from 'jquery';
+import 'bootstrap/dist/css/bootstrap.min.css';
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 
 const Navbar = () => {
@@ -50,12 +51,12 @@ const Navbar = () => {
             </NavLink>
 
             <button
-                class="navbar-toggler"
+                class="navbar-toggle"
                 onClick ={ function() {
                     setTimeout(function() { animation(); });
                 }}
                 type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <i className = "fa fa-bars" aria-hidden = "true"></i>
+                <i className = "fa fa-bars text white"></i>
             </button>
 
             <div

@@ -12,6 +12,8 @@ import HistoryofViews from './HistoryofViews';
 import Download from './pages/Download/Download';
 import AvailableGuides from './AvailableGuides';
 import Navbar from './Components/Navbar/Navbar';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const App = () => {
   return (
