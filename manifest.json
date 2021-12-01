@@ -1,5 +1,6 @@
 {
   "manifest_version": 2,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwJfwNtqGrtsm/vmHxGEYZF91A89oPQ8bX9SGMhO3nPir6uBjhbTLiIioQikpDQVsLL3H0a7XB9OBO0d45jJ4EPk/uOaFSey85yoUPs+DVayi9dRqMa/QM9Hy3Gn36Fbw/+ySQxr0FERAeuRwyQF9Q7fDHUHWHW+DC5ljJZ67OVgf5WhQPTioXhiyXE/QVezHw9mx4UpWjRl7BXB/xCby1a79I7PY1FGi0XHgUPLae34nhWTJ7oV72wLH95DpSuwxTATqijIKYMLftovX9av9eeXRQLYPoLdhzDXxGg7OavzKsWYCCaWI+TH7g19rOWerfGYxxwITWagv6YBhVVhnuwIDAQAB",
   "name": "Expert Goggles",
   "description": "Guides for Data Visualizations",
   "version": "1.0",
