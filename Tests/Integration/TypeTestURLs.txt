@@ -1,0 +1,24 @@
+https://bl.ocks.org/mbostock/raw/3883195/?raw=true Area Chart
+https://bl.ocks.org/mbostock/raw/1389927/?raw=true Bar Chart
+https://bl.ocks.org/mbostock/raw/4061502/?raw=true Boxplot
+https://bl.ocks.org/tompiler/raw/6045b80d2164077faaf96e0304531bba/?raw=true Candlestick Chart
+https://bl.ocks.org/mbostock/raw/1627378/?raw=true Circle Packing Chart
+https://bl.ocks.org/mbostock/raw/3894205/?raw=true Difference Chart
+https://bl.ocks.org/mbostock/raw/1933560/?raw=true Histogram
+https://bl.ocks.org/mbostock/raw/3884955/?raw=true Line Chart
+https://bl.ocks.org/mbostock/raw/1346410/?raw=true Pie Chart
+https://bl.ocks.org/mbostock/raw/3213173/?raw=true Scatterplot
+https://bl.ocks.org/mbostock/raw/4063423/?raw=true Sequences Sunburst
+https://bl.ocks.org/mbostock/raw/3885211/?raw=true Stacked Area Chart
+https://bl.ocks.org/mbostock/raw/1134768/?raw=true Stacked Bar Chart
+https://bl.ocks.org/mbostock/raw/4063582/?raw=true Tree Map
+https://archive.nytimes.com/www.nytimes.com/interactive/2013/03/29/sports/baseball/Strikeouts-Are-Still-Soaring.html Line Chart
+https://money.cnn.com/interactive/economy/diversity-millennials-boomers/ Stacked Bar Chart
+https://flowingdata.com/projects/2021/work-hours-men-women/?initialWidth=1090&childId=work&parentTitle=How%20Much%20Women%20and%20Men%20Work%20%7C%20FlowingData&parentUrl=https%3A%2F%2Fflowingdata.com%2F2021%2F11%2F09%2Fhow-much-women-and-men-worked%2F Stacked Area Chart
+http://graphics.wsj.com/what-percent/ Bar Chart
+http://graphics.wsj.com/gender-pay-gap/ Scatterplot
+http://graphics.wsj.com/fed-composition/ Difference Chart
+http://graphics.wsj.com/medical-money/ Pie Chart
+https://www.wsj.com/graphics/coming-to-america/ Stacked Area Chart
+https://bl.ocks.org/mbostock/4061502 BoxPlot
+https://bl.ocks.org/mbostock/4063582 Tree Map
