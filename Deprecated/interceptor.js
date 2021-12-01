@@ -115,5 +115,5 @@ document.addEventListener("DOMContentLoaded", function()
     }
 });
 
-setTimeout( function() {sendToParser();}, 1500);
+setTimeout( function() {sendToParser();}, 500);
 

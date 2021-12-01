@@ -9,6 +9,7 @@
 "use strict";
 
 var myD3 = {};
+var supportedTypes;
 
 const firebaseConfig = {
   apiKey: "AIzaSyDZoQ24-ym0W4wbJeuRopvlwt5AwT9KQ4M",
@@ -109,6 +110,10 @@ chrome.runtime.onMessage.addListener(
         console.log("Received an error report from the UI.");
         makeErrorReport();
     }
+    else if(myD3.from == "parser_init")
+    {
+        sendResponse({"supportedTypes": supportedTypes});
+    }
     else if(myD3.from == "parser")
     {
         console.log("Received a guide request from the Parser for " + myD3.type);
@@ -180,6 +185,22 @@ function saveToHistory(sentObj) {
   });
 }
 
+// Moved out of Parser to avoid multiple loads
+// Populates the parser with the JSON configuration file types that are currently supported
+async function populateTypes(){
+    return fetch(chrome.extension.getURL('Javascript/SupportedTypes.json'))
+        .then((response) => response.json())
+        .then((responseJson) => {
+            return responseJson;
+        });
+}
+
+// Wait for the JSON fetch...
+async function waitForJson() {
+    supportedTypes = await populateTypes();
+    console.log("DBConn is ready.");
+}
+
 //Interface with dashboard: return User ID
 chrome.runtime.onMessageExternal.addListener(
     function(request, sender, sendResponse)
@@ -192,4 +213,9 @@ chrome.runtime.onMessageExternal.addListener(
         return true;
     });
 
-console.log("DBConn is ready.");
+//Load the Supported Types JSON File on Start
+waitForJson();
+
+
+
+
