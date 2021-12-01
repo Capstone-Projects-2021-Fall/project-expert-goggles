@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function()
     }
 });
 
-setTimeout( function() {sendToParser();}, 1500);
+ setTimeout( function() {sendToParser();}, 1000);
 `;
 
 var d3script = document.createElement("script");
