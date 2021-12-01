@@ -11,6 +11,20 @@ function sendToDB(sentObj)
     catch(err) {console.log("Error in sendToDB()");}
 }
 
+function getSupportedTypes()
+{
+    var message = {};
+    message.from = "parser_init";
+    try{chrome.runtime.sendMessage(message, function(reply)
+    {
+        if(reply)
+            if(reply.supportedTypes)
+                supportedTypes = reply.supportedTypes;
+    }
+    );}
+    catch(err) {console.log(err);}
+}
+
 function parseType(parseInfo)
 {
     //funcList is a list of tracked function calls from
@@ -86,20 +100,6 @@ function parseType(parseInfo)
     sendToDB(D3InfoObj);
 }
 
-// Populates the parser with the JSON configuration file types that are currently supported
-async function populateTypes(){
-    return fetch(chrome.extension.getURL('Javascript/SupportedTypes.json'))
-        .then((response) => response.json())
-        .then((responseJson) => {
-            return responseJson;
-        });
-}
-
-// Wait for the JSON fetch...
-async function waitForJson() {
-    supportedTypes = await this.populateTypes();
-}
-
 //Listen for a message from the script we injected
 window.addEventListener("message", (event) => {
     //Make Sure we're only processing messages from Expert Goggles
@@ -107,4 +107,5 @@ window.addEventListener("message", (event) => {
         parseType(event.data);
 });
 
-waitForJson();
+//Ask DBConn for SupportedTypes on Load
+getSupportedTypes();
