@@ -1,0 +1,60 @@
+.expertGogglesPrompt
+{
+    position: relative;
+    float: right;
+    display: inline-block;
+    margin-right: 0.5rem;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    white-space: nowrap;
+    margin-top: 0.5rem;
+    background-color: #1e81b0;
+    border-radius: 8px;
+    box-shadow: 0px 0px 5px #74A5FD;
+    z-index: 1;
+    right: 0px;
+    font-size: 16px;
+    transition: all 1s ease 0s;
+}
+
+.expertGogglesSidebar
+{
+     height: 100%; /* 100% Full-height */
+     width: 0px; /* 0 width - change this with JavaScript */
+     position: fixed; /* Stay in place */
+     z-index: 99999; /* Stay on top */
+     top: 0; /* Stay at the top */
+     bottom: 0;
+     right: 0;
+     color: white;
+     font-size: 16px;
+     box-shadow: -2px 0px 1px #154c79;
+     background-color: #1e81b0;
+     overflow-x: hidden; /* Disable horizontal scroll */
+     padding-top: 30px; /* Place content 60px from the top */
+     padding-left: 0px;
+     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+.expertGogglesSidebar .titlediv
+{
+    text-align: center;
+}
+
+.expertGogglesSidebar .bodyDiv
+{
+    text-align: justify;
+}
+
+.guideTitle
+{
+    text-align: center;
+    font-size: 24px;
+    white-space: nowrap;
+}
+
+#main {
+  transition: margin-right .5s;
+  padding: 20px;
+}

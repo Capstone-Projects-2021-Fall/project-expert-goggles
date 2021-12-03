@@ -1,0 +1,92 @@
+[
+    {
+        "type": "area_chart",
+        "functions": ["area"],
+        "length": 1,
+        "arguments": []
+    },
+    {
+        "type": "bar_chart",
+        "functions": ["linear", "ordinal", "range", "axis", "max", "dispatch"],
+        "length": 6,
+        "arguments": []
+    },
+    {
+        "type": "box_plot",
+        "functions": ["quantile"],
+        "length": 1,
+        "arguments": []
+    },
+    {
+        "type": "candlestick_chart",
+        "functions": ["scaleQuantize"],
+        "length": 1,
+        "arguments": []
+    },
+    {
+        "type": "circle_packing_chart",
+        "functions": ["pack"],
+        "length": 1,
+        "arguments": []
+    },
+    {
+        "type": "Difference Chart",
+        "functions": ["area", "bisect"],
+        "length": 2,
+        "arguments": []
+    },
+    {
+        "type": "heatmap",
+        "functions": ["scaleSequential"],
+        "length": 1,
+        "arguments": []
+    },
+    {
+        "type": "histogram",
+        "functions": ["histogram"],
+        "length": 1,
+        "arguments": []
+    },
+    {
+        "type": "line_chart",
+        "functions": ["line"],
+        "length": 1,
+        "arguments": []
+    },
+    {
+        "type": "pie_chart",
+        "functions": ["pie"],
+        "length": 1,
+        "arguments": []
+    },
+    {
+        "type": "scatter_plot",
+        "functions": ["linear", "axis", "keys"],
+        "length": 3,
+        "arguments": ["circle", "cx", "cy"]
+    },
+    {
+        "type": "sequences_sunburst",
+        "functions": ["hierarchy", "arc"],
+        "length": 2,
+        "arguments": []
+    },
+    {
+        "type": "stacked_area_chart",
+        "functions": ["stack", "area"],
+        "length": 2,
+        "arguments": []
+    },
+    {
+        "type": "stacked_bar_chart",
+        "functions": ["linear", "ordinal", "range", "axis", "max", "stack", "dispatch"],
+        "length": 7,
+        "arguments": []
+    },
+    {
+        "type": "treemap",
+        "functions": ["treemap"],
+        "length": 1,
+        "arguments": []
+    }
+]
