@@ -110,6 +110,14 @@ chrome.runtime.onMessage.addListener(
         console.log("Received an error report from the UI.");
         makeErrorReport();
     }
+    else if(myD3.from == "interceptor")
+    {
+        if(uid != null)
+        {
+            console.log("Replying to User ID Query: " + uid);
+            sendResponse({"uid": uid});
+        }
+    }
     else if(myD3.from == "parser_init")
     {
         sendResponse({"supportedTypes": supportedTypes});
@@ -221,19 +229,6 @@ async function waitForJson() {
     supportedTypes = await populateTypes();
     console.log("DBConn is ready.");
 }
-
-//Interface with dashboard: return User ID
-chrome.runtime.onMessageExternal.addListener(
-    function(request, sender, sendResponse)
-    {
-        console.log("Recieved External Message");
-        if(request)
-            if(request.message)
-                if (request.message == "user_id")
-                    sendResponse({"user_id": uid});
-        return true;
-    });
-
 //Load the Supported Types JSON File on Start
 waitForJson();
 

@@ -10,32 +10,24 @@ import moment from 'moment'
 const expertGogglesID = "ojdbmjhahmdjlnalcggenpkhkhegckle";
 var userID;
 
+//Listen for the extension messaged the user ID out
+window.addEventListener("message", (event) => {
+    //Make Sure we're only processing messages from Expert Goggles
+    if(!event.data.sender || event.data.sender != "ExpertGoggles")
+        return;
 
-try{
-    chrome.runtime.sendMessage(expertGogglesID, { message: "user_id" },
-    function (reply)
+    //If the info was sent, grab the userID
+    if(event.data.userID)
     {
-        if(reply)
-            if(reply.user_id)
-            {
-                if(window.HistoryofViews.state.AllUserHistories)
-                    window.HistoryofViews.setUser(reply.user_id);
-                else
-                    waitToSet(reply.user_id);
-            }
-            else
-            {
-                //Callback to populate page saying no extension was detected or there was an error
-                //generateNoExtensionPage(); //Name it Whatever you want
-            }
-    });
-}
-catch(err)
-{
-    //Same as the else statement above
-    //Callback to populate page saying no extension was detected or there was an error
-    //generateNoExtensionPage(); //Name it Whatever you want
-}
+        userID = event.data.userID;
+
+        //If the UserHistory data has finished fetching, sort by ID
+        if(window.HistoryofViews.state.AllUserHistories)
+            window.HistoryofViews.setUser(userID);
+        else //Otherwise, wait and try again
+            waitToSet(userID);
+    }
+});
 
 function waitToSet(id)
 {
