@@ -110,7 +110,7 @@ chrome.runtime.onMessage.addListener(
         console.log("Received an error report from the UI.");
         makeErrorReport();
     }
-    else if(myD3.from == "interceptor")
+    else if(myD3.from == "DashboardMessenger")
     {
         if(uid != null)
         {

@@ -11,9 +11,7 @@ var funcLogger = {};
 funcLogger.funcsCalled = [];
 funcLogger.argList = [];
 var alreadyFired = false;
-var iframeList = [] ;
-
-var needArgs = ["append", "attr"];
+var iframeList = [];
 
 var needArgs = ["append", "attr"];
 
@@ -135,32 +133,5 @@ d3script.id = "ExpertGoggles";
 d3script.setAttribute("async", "false");
 document.documentElement.append(d3script);
 console.log("Expert Goggles: Injected D3 Interception Script.");
-
-//Callback function if we're on the user history page
-function userHistory()
-{
-    console.log("Parser: On User History Page, getting userID.");
-    //Get the User ID From DBConn
-    var message = {"from": "interceptor"};
-    try{chrome.runtime.sendMessage(message, function(reply){
-        //Post that info out to the page
-        try
-        {
-            window.postMessage({"userID": reply.uid, "sender": "ExpertGoggles"}, "*");
-            console.log("Posted user ID " + reply.uid);
-        }
-        catch(err) {console.log(err);}
-    }
-    );}
-    catch(err) {console.log(err);}
-}
-
-//Check if we're on the Dashboard's User History Page
-if(location.href == "https://expertgoggles-b21b1.web.app/HistoryofViews")
-{
-    window.addEventListener("load", function(){userHistory();});
-}
-
-
 
 
