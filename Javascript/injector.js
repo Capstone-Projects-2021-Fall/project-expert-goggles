@@ -124,8 +124,9 @@ document.addEventListener("DOMContentLoaded", function()
 });
 
  setTimeout( function() {sendToParser();}, 1000);
-`;
+`; //End of Interceptor Code
 
+//Append that long string into the document head
 var d3script = document.createElement("script");
 d3script.textContent = scriptText;
 d3script.charset = "utf-8";
@@ -134,6 +135,24 @@ d3script.id = "ExpertGoggles";
 d3script.setAttribute("async", "false");
 document.documentElement.append(d3script);
 console.log("Expert Goggles: Injected D3 Interception Script.");
+
+//Check if we're on the Dashboard's User History Page
+var userID;
+if(location.href == "https://expertgoggles-b21b1.web.app/HistoryofViews")
+{
+    //Get the User ID From DBConn
+    var message = {"from": "injector"};
+    try{chrome.runtime.sendMessage(message, function(reply)
+    {
+        userID = reply.uid;
+    }
+    );}
+    catch(err) {console.log(err);}
+
+    //Post that info out to the page
+    try(window.postMessage({"userID": userID, "sender": "ExpertGoggles"}, "*"))
+    catch(err) {console.log(err);}
+}
 
 
 
