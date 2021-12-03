@@ -54,7 +54,7 @@ function sendToParser()
     var parseObj = {};
     parseObj.funcList = funcLogger.funcsCalled;
     parseObj.argList = funcLogger.argList;
-    parseObj.sender = "ExpertGoggles";
+    parseObj.sender = "ExpertGogglesInterceptor";
     parseObj.iframeList = iframeList;
 
     console.log("Expert Goggles Scraper: Sending message to background.");
@@ -136,22 +136,29 @@ d3script.setAttribute("async", "false");
 document.documentElement.append(d3script);
 console.log("Expert Goggles: Injected D3 Interception Script.");
 
-//Check if we're on the Dashboard's User History Page
-var userID;
-if(location.href == "https://expertgoggles-b21b1.web.app/HistoryofViews")
+//Callback function if we're on the user history page
+function userHistory()
 {
+    console.log("Parser: On User History Page, getting userID.");
     //Get the User ID From DBConn
-    var message = {"from": "injector"};
-    try{chrome.runtime.sendMessage(message, function(reply)
-    {
-        userID = reply.uid;
+    var message = {"from": "interceptor"};
+    try{chrome.runtime.sendMessage(message, function(reply){
+        //Post that info out to the page
+        try
+        {
+            window.postMessage({"userID": reply.uid, "sender": "ExpertGoggles"}, "*");
+            console.log("Posted user ID " + reply.uid);
+        }
+        catch(err) {console.log(err);}
     }
     );}
     catch(err) {console.log(err);}
+}
 
-    //Post that info out to the page
-    try(window.postMessage({"userID": userID, "sender": "ExpertGoggles"}, "*"))
-    catch(err) {console.log(err);}
+//Check if we're on the Dashboard's User History Page
+if(location.href == "https://expertgoggles-b21b1.web.app/HistoryofViews")
+{
+    window.addEventListener("load", function(){userHistory();});
 }
 
 

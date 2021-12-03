@@ -110,10 +110,13 @@ chrome.runtime.onMessage.addListener(
         console.log("Received an error report from the UI.");
         makeErrorReport();
     }
-    else if(myD3.from == "injector")
+    else if(myD3.from == "interceptor")
     {
         if(uid != null)
+        {
+            console.log("Replying to User ID Query: " + uid);
             sendResponse({"uid": uid});
+        }
     }
     else if(myD3.from == "parser_init")
     {

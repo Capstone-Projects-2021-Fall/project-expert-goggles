@@ -103,7 +103,7 @@ function parseType(parseInfo)
 //Listen for a message from the script we injected
 window.addEventListener("message", (event) => {
     //Make Sure we're only processing messages from Expert Goggles
-    if(event.data.sender && event.data.sender == "ExpertGoggles")
+    if(event.data.sender && event.data.sender == "ExpertGogglesInterceptor")
         parseType(event.data);
 });
 
