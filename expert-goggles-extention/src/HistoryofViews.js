@@ -18,13 +18,15 @@ window.addEventListener("message", (event) => {
 
     //If the info was sent, grab the userID
     if(event.data.userID)
+    {
         userID = event.data.userID;
 
-    //If the UserHistory data has finished fetching, sort by ID
-    if(window.HistoryofViews.state.AllUserHistories)
-        window.HistoryofViews.setUser(reply.user_id);
-    else //Otherwise, wait and try again
-        waitToSet(reply.user_id);
+        //If the UserHistory data has finished fetching, sort by ID
+        if(window.HistoryofViews.state.AllUserHistories)
+            window.HistoryofViews.setUser(userID);
+        else //Otherwise, wait and try again
+            waitToSet(userID);
+    }
 });
 
 function waitToSet(id)
