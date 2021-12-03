@@ -160,11 +160,32 @@ function jenkinsOneAtATimeHash(keyString)
 //Pushes a reported incorrect parse to the ErrorReports table, saving URLs
 function makeErrorReport()
 {
-    error_db.doc(jenkinsOneAtATimeHash(myD3.url)).set(
-    {
-        url: myD3.url,
-        timestamp: firebase.firestore.Timestamp.now()
+    let docName = jenkinsOneAtATimeHash(myD3.url);
+    let count = 1;
+
+    error_db.doc(docName).get().then((doc) => {
+      if (doc.exists) {
+          if( doc.data().times_reported != null ) {
+            count = doc.data().times_reported + 1;
+          }
+          error_db.doc(docName).set(
+          {
+            url: myD3.url,
+            timestamp: firebase.firestore.Timestamp.now(),
+            times_reported: count
+          });
+      } else { 
+          error_db.doc(docName).set(
+            {
+                url: myD3.url,
+                timestamp: firebase.firestore.Timestamp.now(),
+                times_reported: count
+            });
+        }
+    }).catch((error) => {
+      console.log("Error - could not upload error report. We'd ask you to report this but, ya know...", error);
     });
+
 }
 
 //saves document to database containing ID of relevant user,
