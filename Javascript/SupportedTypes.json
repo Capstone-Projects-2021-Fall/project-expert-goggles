@@ -89,4 +89,10 @@
         "length": 1,
         "arguments": []
     }
+    {
+        "type": "map",
+        "functions": ["geo"],
+        "length": 1,
+        "arguments": []
+    }
 ]
