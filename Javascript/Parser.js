@@ -46,56 +46,58 @@ function parseType(parseInfo)
     //No D3 Code
     if(funcListLen == 0)
         possType = "none";
-    else //Default: unsupported, gets overwritten if it is supported
+    else
+    {
+        //Default: unsupported, gets overwritten if it is supported
         possType = "unsupported";
 
-    for(var jsonEntry = 0; jsonEntry < supportedTypes.length; jsonEntry++)
-    {
-        var numMatches = 0;
-        var currEntry = supportedTypes[jsonEntry];
+        for(var jsonEntry = 0; jsonEntry < supportedTypes.length; jsonEntry++)
+        {
+            var numMatches = 0;
+            var currEntry = supportedTypes[jsonEntry];
 
-        for(var currFunc = 0; currFunc < currEntry.functions.length; currFunc++)
-        {
-            if(funcList.includes(currEntry.functions[currFunc]))
-                numMatches++;
-        }
-
-        var deviation = currEntry.length - numMatches;
-        if(deviation < prevDeviation)
-        {
-            // possType becomes the most likely answer
-            prevDeviation = deviation;
-            prevNumMatches = numMatches;
-            matches = [];
-            matches.push(currEntry.type);
-        }
-        else if(deviation == prevDeviation)
-        {
-            if(numMatches > prevNumMatches)
+            for(var currFunc = 0; currFunc < currEntry.functions.length; currFunc++)
             {
-                matches = [];
+                if(funcList.includes(currEntry.functions[currFunc]))
+                    numMatches++;
+            }
+
+            var deviation = currEntry.length - numMatches;
+            if(deviation < prevDeviation)
+            {
+                // possType becomes the most likely answer
+                prevDeviation = deviation;
                 prevNumMatches = numMatches;
                 matches = [];
                 matches.push(currEntry.type);
             }
-            else if(numMatches == prevNumMatches)
-                matches.push(currEntry.type);
+            else if(deviation == prevDeviation)
+            {
+                if(numMatches > prevNumMatches)
+                {
+                    matches = [];
+                    prevNumMatches = numMatches;
+                    matches = [];
+                    matches.push(currEntry.type);
+                }
+                else if(numMatches == prevNumMatches)
+                    matches.push(currEntry.type);
+            }
+        }
+
+        if(matches.length == 1)
+        {
+            possType = matches[0];
+            console.log("It is likely: " + possType);
+        }
+        else
+        {
+            var output = "Failed to parse type. Cannot differentiate this between";
+            for(let match of matches)
+                output += " " + match;
+            console.log(output);
         }
     }
-
-    if(matches.length == 1)
-    {
-        possType = matches[0];
-        console.log("It is likely: " + possType);
-    }
-    else
-    {
-        var output = "Failed to parse type. Cannot differentiate this between";
-        for(let match of matches)
-            output += " " + match;
-        console.log(output);
-    }
-
     D3InfoObj.type = possType;
     sendToDB(D3InfoObj);
 }
