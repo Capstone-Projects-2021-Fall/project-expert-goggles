@@ -50,7 +50,6 @@ visHistogram.funcList = ["select", "histogram", "ordinal", "linear", "0", "axis"
 visHistogram.argList = [];
 visHistogram.sender = "ExpertGoggles";
 visHistogram.iframeList = [];
-//difference chart, heatmap, histogram
 
 describe('All guide types should be properly recognized', () => {
     it('Line Charts should be recognized', () => {
