@@ -7,13 +7,13 @@
     </head>
     <body>
         <div id="mocha"></div>
+        <div id="ExpertGogglesTestMarker"></div>
         <script src="https://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"></script>
         <script src="https://cdn.rawgit.com/chaijs/chai/3.5.0/chai.js"></script>
         <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
-        
-        <script type="text/javascript" src="../Javascript/SupportedTypes.json"></script>
-        
+
         <script src="../Javascript/Parser.js"></script>
+        <script src="../Javascript/unitTestLoader.js"></script>
         <script>
             const mocha = window.mocha;
             mocha.setup('bdd');
@@ -21,7 +21,7 @@
         <script src="../Javascript/parserTest.js"></script>
         <script>
             mocha.checkLeaks();
-            mocha.run();
+            setTimeout(mocha.run, 1000);
         </script>
     </body>
 </html>
