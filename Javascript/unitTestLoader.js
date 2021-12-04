@@ -29,3 +29,4 @@ chrome.runtime.onMessage.addListener(
         sendResponse({"supportedTypes": supportedTypes});
     }
   });
+

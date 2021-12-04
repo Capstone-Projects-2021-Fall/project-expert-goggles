@@ -11,9 +11,7 @@ var funcLogger = {};
 funcLogger.funcsCalled = [];
 funcLogger.argList = [];
 var alreadyFired = false;
-var iframeList = [] ;
-
-var needArgs = ["append", "attr"];
+var iframeList = [];
 
 var needArgs = ["append", "attr"];
 
@@ -54,7 +52,7 @@ function sendToParser()
     var parseObj = {};
     parseObj.funcList = funcLogger.funcsCalled;
     parseObj.argList = funcLogger.argList;
-    parseObj.sender = "ExpertGoggles";
+    parseObj.sender = "ExpertGogglesInterceptor";
     parseObj.iframeList = iframeList;
 
     console.log("Expert Goggles Scraper: Sending message to background.");
@@ -124,8 +122,9 @@ document.addEventListener("DOMContentLoaded", function()
 });
 
  setTimeout( function() {sendToParser();}, 1000);
-`;
+`; //End of Interceptor Code
 
+//Append that long string into the document head
 var d3script = document.createElement("script");
 d3script.textContent = scriptText;
 d3script.charset = "utf-8";
@@ -134,7 +133,5 @@ d3script.id = "ExpertGoggles";
 d3script.setAttribute("async", "false");
 document.documentElement.append(d3script);
 console.log("Expert Goggles: Injected D3 Interception Script.");
-
-
 
 

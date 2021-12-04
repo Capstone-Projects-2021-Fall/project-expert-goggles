@@ -110,6 +110,14 @@ chrome.runtime.onMessage.addListener(
         console.log("Received an error report from the UI.");
         makeErrorReport();
     }
+    else if(myD3.from == "DashboardMessenger")
+    {
+        if(uid != null)
+        {
+            console.log("Replying to User ID Query: " + uid);
+            sendResponse({"uid": uid});
+        }
+    }
     else if(myD3.from == "parser_init")
     {
         sendResponse({"supportedTypes": supportedTypes});
@@ -160,11 +168,32 @@ function jenkinsOneAtATimeHash(keyString)
 //Pushes a reported incorrect parse to the ErrorReports table, saving URLs
 function makeErrorReport()
 {
-    error_db.doc(jenkinsOneAtATimeHash(myD3.url)).set(
-    {
-        url: myD3.url,
-        timestamp: firebase.firestore.Timestamp.now()
+    let docName = jenkinsOneAtATimeHash(myD3.url);
+    let count = 1;
+
+    error_db.doc(docName).get().then((doc) => {
+      if (doc.exists) {
+          if( doc.data().times_reported != null ) {
+            count = doc.data().times_reported + 1;
+          }
+          error_db.doc(docName).set(
+          {
+            url: myD3.url,
+            timestamp: firebase.firestore.Timestamp.now(),
+            times_reported: count
+          });
+      } else { 
+          error_db.doc(docName).set(
+            {
+                url: myD3.url,
+                timestamp: firebase.firestore.Timestamp.now(),
+                times_reported: count
+            });
+        }
+    }).catch((error) => {
+      console.log("Error - could not upload error report. We'd ask you to report this but, ya know...", error);
     });
+
 }
 
 //saves document to database containing ID of relevant user,
@@ -200,19 +229,6 @@ async function waitForJson() {
     supportedTypes = await populateTypes();
     console.log("DBConn is ready.");
 }
-
-//Interface with dashboard: return User ID
-chrome.runtime.onMessageExternal.addListener(
-    function(request, sender, sendResponse)
-    {
-        console.log("Recieved External Message");
-        if(request)
-            if(request.message)
-                if (request.message == "user_id")
-                    sendResponse({"user_id": uid});
-        return true;
-    });
-
 //Load the Supported Types JSON File on Start
 waitForJson();
 

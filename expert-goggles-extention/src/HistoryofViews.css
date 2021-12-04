@@ -1,0 +1,58 @@
+#historypage {
+    background: rgb(192, 221, 224);    
+}
+
+h1.history {
+  text-align: center;
+  font-size: 4em;
+}
+
+.extension {
+    color: black;
+    text-align: left;
+    list-style-position: inside;
+    font-size: 2em;
+    padding-left: 10%;
+    margin: 20%;
+    display: inline-block;
+}
+
+table, th, td {
+    border: 1px black solid;
+    gap: 10px 2em;
+}
+
+th {
+    
+    background-color: gray;
+    color: white;
+}
+
+th, td {
+    padding: 10px;
+}
+
+td {
+    height: 40px;
+    vertical-align: bottom;
+}
+
+tr:hover {
+    background-color: lightgray;
+}
+
+table {
+    width: 100%;
+    border: 2px;
+}
+
+/*tr:nth-child(even) {
+    background-color: lightgray;
+}
+*/
+
+.tablecontent {
+    display: flex;
+    grid-template-columns: (3, 1fr);
+    grid-auto-rows: (150px, auto);
+}
