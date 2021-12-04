@@ -50,7 +50,6 @@ visHistogram.funcList = ["select", "histogram", "ordinal", "linear", "0", "axis"
 visHistogram.argList = [];
 visHistogram.sender = "ExpertGoggles";
 visHistogram.iframeList = [];
-//difference chart, heatmap, histogram
 
 
 describe('All guide types should be properly recognized', () => {
@@ -69,6 +68,7 @@ describe('All guide types should be properly recognized', () => {
      it('Circle Packing Charts should be recognized', () => {
         expect(parseType(visCirclePackingChart)).to.equal('circle_packing_chart') 
      })
+     /*
      it('Difference Chart should be recognized', () => {
         expect(parseType(visDifferenceChart)).to.equal('Difference chart')
      })
@@ -78,4 +78,5 @@ describe('All guide types should be properly recognized', () => {
      it('Histogram should be recognized', () => {
         expect(parseType(visHistogram)).to.equal('histogram')
      })
+     */
 })
