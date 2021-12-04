@@ -100,6 +100,8 @@ function parseType(parseInfo)
     }
     D3InfoObj.type = possType;
     sendToDB(D3InfoObj);
+    //Return statement returns type of object that was detected by te extension
+    return D3InfoObj.type;
 }
 
 //Listen for a message from the script we injected
