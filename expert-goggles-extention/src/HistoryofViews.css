@@ -35,11 +35,12 @@ th {
 
 th, td {
     padding: 10px;
+    display: block;
 }
 
 td {
     
-    vertical-align: bottom;
+    text-align: center;
 }
 
 tr:hover {

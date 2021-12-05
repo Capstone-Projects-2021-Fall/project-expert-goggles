@@ -114,7 +114,7 @@ class HistoryofViews extends React.Component {
         return (
             <main style ={{backgroundColor: "#7BBCF4"}}>
                 <div className = "container">
-                    <h1 class = "text-center" style = {{paddingTop: "2%", fontSize: "3em"}}>
+                    <h1 class = "text-center" style = {{paddingTop: "2%", fontSize: "4em"}}>
                         History
                     </h1>
                     {
