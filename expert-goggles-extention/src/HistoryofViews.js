@@ -13,7 +13,7 @@ var userID;
 //Listen for the extension messaged the user ID out
 window.addEventListener("message", (event) => {
     //Make Sure we're only processing messages from Expert Goggles
-    if(!event.data.sender || event.data.sender != "ExpertGoggles")
+    if(!event.data.sender || event.data.sender !== "ExpertGoggles")
         return;
 
     //If the info was sent, grab the userID
