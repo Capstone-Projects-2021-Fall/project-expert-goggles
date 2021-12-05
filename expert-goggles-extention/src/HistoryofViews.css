@@ -17,24 +17,39 @@ h1.history {
     display: inline-block;
 }
 
+
 table, th, td {
     border: 1px black solid;
-    gap: 10px 2em;
+    
 }
 
+/*
+gap: 10px 2em;
+*/
+
 th {
-    
+    letter-spacing: 2px;
     background-color: gray;
     color: white;
 }
 
 th, td {
     padding: 10px;
+    padding: 20px;
 }
 
+tbody td {
+    text-align: center;
+    word-break: break-all;
+}
+
+/*
+display: block;
+*/
+
 td {
-    height: 40px;
-    vertical-align: bottom;
+    letter-spacing: 1px;
+    text-align: center;
 }
 
 tr:hover {
@@ -43,8 +58,22 @@ tr:hover {
 
 table {
     width: 100%;
-    border: 2px;
+    border: 5px;
+    border-collapse: collapse;
+    table-layout: fixed;
 }
+
+thead th:nth-child(1) {
+    width: 30%;
+  }
+  
+  thead th:nth-child(2) {
+    width: 20%;
+  }
+  
+  thead th:nth-child(3) {
+    width: 15%;
+  }
 
 /*tr:nth-child(even) {
     background-color: lightgray;
@@ -52,7 +81,5 @@ table {
 */
 
 .tablecontent {
-    display: flex;
-    grid-template-columns: (3, 1fr);
-    grid-auto-rows: (150px, auto);
+    display: block;
 }

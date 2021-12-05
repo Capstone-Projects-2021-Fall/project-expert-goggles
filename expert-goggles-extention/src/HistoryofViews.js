@@ -13,7 +13,7 @@ var userID;
 //Listen for the extension messaged the user ID out
 window.addEventListener("message", (event) => {
     //Make Sure we're only processing messages from Expert Goggles
-    if(!event.data.sender || event.data.sender != "ExpertGoggles")
+    if(!event.data.sender || event.data.sender !== "ExpertGoggles")
         return;
 
     //If the info was sent, grab the userID
@@ -112,9 +112,9 @@ class HistoryofViews extends React.Component {
         else
         {
         return (
-            <bodyhistory>
+            <main style ={{backgroundColor: "#7BBCF4"}}>
                 <div className = "container">
-                    <h1 class = "text-center" style = {{paddingTop: "2%"}}>
+                    <h1 class = "text-center" style = {{paddingTop: "2%", fontSize: "4em"}}>
                         History
                     </h1>
                     {
@@ -122,25 +122,30 @@ class HistoryofViews extends React.Component {
                         this.state.DisplayedUserHistories.map ( DisplayedUserHistories => {
                             return (
                                 <div className = "tablecontent">
-                                    <table>
-                                        <tr>
-                                            <th>Last Accessed:</th>
-                                            <th>Type:</th>
-                                            <th>Link:</th>
-                                        </tr>
-                                        <tr>
-                                            <td>{moment(DisplayedUserHistories.last_accessed.toDate()).calendar()}</td>
-                                            <td>{String(DisplayedUserHistories.type)}</td>
-                                            <td>{String(DisplayedUserHistories.url)}</td>
-                                        </tr>
+                                    <table style = {{boxShadow: "5px 10px #888888"}}>
+                                        <thead>
+                                            <tr>
+                                                <th scope = "col" style = {{height: "50px", width: "50px"}}>Last Accessed:</th>
+                                                <th scope = "col" style = {{height: "50px", width: "50px"}}>Type:</th>
+                                                <th scope = "col" style = {{height: "50px", width: "50px"}}>Link:</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class = "item1" style = {{height: "50px", width: "50px"}}>{moment(DisplayedUserHistories.last_accessed.toDate()).calendar()}</td>
+                                                <td class = "item2" style = {{height: "50px", width: "50px"}}>{String(DisplayedUserHistories.type)}</td>
+                                                <td class = "item3" style = {{height: "50px", width: "50px"}}>{String(DisplayedUserHistories.url)}</td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
                             )
                         })
                     }
                 </div>
-            </bodyhistory>
+            </main>
         )}
     }
 }
+
 export default HistoryofViews;

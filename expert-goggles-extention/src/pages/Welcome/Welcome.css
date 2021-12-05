@@ -11,15 +11,6 @@ main {
     position: relative;
   }
 
-  /*
-  top: 40%;
-  position: fixed;
-  display: block;
-  
-  z-index: 1;
-  */
-
-
   .section {
     height: 100vh;
     display: flex;
@@ -45,7 +36,6 @@ main {
     text-decoration: none;
     -webkit-box-reflect: below 1px linear-gradient(transparent, #0004);
   }
-
   
   a.button span {
     position: absolute;
@@ -121,9 +111,6 @@ main {
     }
   }
   
-
-  
-  
   .section-2 {
     background-color: #c8e6c9;
     padding-top: 10%;
@@ -198,17 +185,6 @@ main {
     list-style-type: none;
     list-style: none;
   }
-/*
-  h2.lastpage {
-    justify-content: center;
-  }
-  
-  h2.finalwords{
-    text-align: center;
-    justify-content: center;
-  }
-
-  */
 
   body {
     font-family: Lato, sans-serif;
@@ -226,80 +202,68 @@ main {
     display: none;
 }
 
-
-
-/* Different */
-
-/*
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
-}
-html {
-    scroll-snap-type: y mandatory
-}
-section {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    scroll-snap-align: start;
-    object-fit: fill;
+:root {
+  --bg-color: hsl(49 37% 94%);
+  --typewriterSpeed: 6s;
+  --typewriterCharacters: 24;
 }
 
-.container {
-    scroll-snap-type: y mandatory;
-    object-fit: fill;
-    position: relative;
-    overflow-y: scroll;
-    height: 100vh;
+h2.footerone {
+  font-size: clamp(1rem, 3vw + 1rem, 4rem);
+  position: relative;
+  font-family: "Source Code Pro", monospace;
+  position: relative;
+  width: max-content;
 }
 
-.one {
-    background: rgb(36, 164, 138);
+h2.footerone::before,
+h2.footerone::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
-.two {
-    background: rgb(211, 79, 79);
+h2.footerone::before {
+  background: var(--bg-color);
+  animation: typewriter var(--typewriterSpeed)
+    steps(var(--typewriterCharacters)) 1s forwards;
 }
 
-.three {
-    background: rgb(67, 91, 175);
+h2.footerone::after {
+  width: 0.125em;
+  background: black;
+  animation: typewriter var(--typewriterSpeed)
+      steps(var(--typewriterCharacters)) 1s forwards,
+    blink 750ms steps(var(--typewriterCharacters)) infinite;
 }
 
-.four {
-    background: lightsalmon;
-}
-*/
-
-
-
-/*
-Different
-*/
-
-/*
-.container {
-    height: 100vh;
-    text-align: center;
-    scroll-snap-type: y mandatory;
-    overflow-y: scroll;
-    object-fit: fill;
-    -ms-overflow-style: none;
-}
-.container::-webkit-scrollbar {
-  display: none;
+.subtitle {
+  color: hsl(0 0% 0% / 0.7);
+  font-size: 2rem;
+  font-weight: 400;
+  opacity: 0;
+  transform: translateY(3rem);
+  animation: fadeInUp 2s ease calc(var(--typewriterSpeed) + 2s) forwards;
 }
 
-.child {
-    height: 100%;
-    scroll-snap-align: start;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgb(36, 164, 138);
+@keyframes typewriter {
+  to {
+    left: 100%;
   }
-*/
+}
+
+@keyframes blink {
+  to {
+    background: transparent;
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -95,10 +95,10 @@ function Welcome() {
                         <br/>
                         <br/>
                         <li>
-                            <h3 class = "footerone" style = {{padding: "0px"}}>Created By:</h3>
+                            <h2 class = "footerone" style = {{padding: "0px"}}>Created By:</h2>
                         </li>
                         <li>
-                            <h4 class = "footer" style = {{padding: "0px"}}>Aaron Wile, Ayman El-sayed, Conlin Fox, Edward Brace, Joshua Withka, Tyler Wolf</h4>
+                            <p class = "subtitle" style = {{padding: "0px"}}>Aaron Wile, Ayman El-sayed, Conlin Fox, Edward Brace, Joshua Withka, Tyler Wolf</p>
                         </li>
                     </ul>
                 </section>
