@@ -3,7 +3,7 @@ var supportedTypes;
 // Moved out of Parser to avoid multiple loads
 // Populates the parser with the JSON configuration file types that are currently supported
 async function populateTypes(){
-    return fetch('../Javascript/SupportedTypes.json')
+    return fetch('../../Javascript/SupportedTypes.json')
         .then((response) => response.json())
         .then((responseJson) => {
             return responseJson;
