@@ -124,14 +124,14 @@ class HistoryofViews extends React.Component {
                                 <div className = "tablecontent">
                                     <table>
                                         <tr>
-                                            <th>Last Accessed:</th>
-                                            <th>Type:</th>
-                                            <th>Link:</th>
+                                            <th style = {{height: "100px", width: "100px"}}>Last Accessed:</th>
+                                            <th style = {{height: "100px", width: "100px"}}>Type:</th>
+                                            <th style = {{height: "100px", width: "100px"}}>Link:</th>
                                         </tr>
                                         <tr>
-                                            <td>{moment(DisplayedUserHistories.last_accessed.toDate()).calendar()}</td>
-                                            <td>{String(DisplayedUserHistories.type)}</td>
-                                            <td>{String(DisplayedUserHistories.url)}</td>
+                                            <td style = {{height: "100px", width: "100px"}}>{moment(DisplayedUserHistories.last_accessed.toDate()).calendar()}</td>
+                                            <td style = {{height: "100px", width: "100px"}}>{String(DisplayedUserHistories.type)}</td>
+                                            <td style = {{height: "100px", width: "100px"}}>{String(DisplayedUserHistories.url)}</td>
                                         </tr>
                                     </table>
                                 </div>

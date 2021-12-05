@@ -45,26 +45,25 @@ class AvailableGuides extends React.Component {
 
     render() {
         return (
-            <>
-            <div classname = "container" style = {{heigh: "auto"}}>
-                <h1 className = "text-center" style = {{paddingTop: "2%"}}>
-                    Available Guides
-                </h1>
-                {
-                    this.state.visualizations &&
-                    this.state.visualizations.map ( visualizations => {
-                        return (
-                                <div>
-                                    <p className = "namees" style = {{fontWeight: "bold"}}>Name: {String(visualizations.Name)}</p>
-                                    <p className = "descriptions" style = {{fontWeight: "bold"}}>Guide: {String(visualizations.Guide)}</p>
-                                    <p style = {{paddingLeft: "20%"}}><img src={visualizations.img} alt ='guide' class = "emage"/></p>
-                                </div>
-                        )
-                    })
-                }
-            </div>
-            <ScrollToTop/>
-            </>
+            <main style = {{backgroundColor: "#f0ead6"}}>
+                <div classname = "container" style = {{height: "auto"}}>
+                    <h1 className = "text-center" style = {{paddingTop: "2%"}}>
+                        Available Guides
+                    </h1>
+                    {
+                        this.state.visualizations &&
+                        this.state.visualizations.map ( visualizations => {
+                            return (
+                                    <div>
+                                        <p className = "namees" style = {{fontWeight: "bold"}}>Name: {String(visualizations.Name)}</p>
+                                        <p className = "descriptions" style = {{fontWeight: "bold"}}>Guide: {String(visualizations.Guide)}</p>
+                                        <p style = {{paddingLeft: "20%"}}><img src={visualizations.img} alt ='guide' class = "emage"/></p>
+                                    </div>
+                            )
+                        })
+                    }
+                </div>
+            </main>
         )
     }
 }
