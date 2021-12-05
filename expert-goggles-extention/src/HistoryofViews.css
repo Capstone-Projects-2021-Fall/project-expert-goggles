@@ -50,7 +50,6 @@ tr:hover {
 table {
     width: 100%;
     border: 2px;
-    border-collapse:  collapse;
 }
 
 /*tr:nth-child(even) {
@@ -59,4 +58,5 @@ table {
 */
 
 .tablecontent {
+    display: block;
 }
