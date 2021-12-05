@@ -2,6 +2,7 @@ var D3InfoObj = {};
 
 //Array of currently supported types
 var supportedTypes;
+var isTest = false;
 
 function sendToDB(sentObj)
 {
@@ -15,14 +16,26 @@ function getSupportedTypes()
 {
     var message = {};
     message.from = "parser_init";
-    try{chrome.runtime.sendMessage(message, function(reply)
+    if(!isTest)
     {
-        if(reply)
-            if(reply.supportedTypes)
-                supportedTypes = reply.supportedTypes;
+        try{chrome.runtime.sendMessage(message, function(reply)
+        {
+            if(reply)
+                if(reply.supportedTypes)
+                    supportedTypes = reply.supportedTypes;
+        }
+        );}
+        catch(err) {console.log(err);}
     }
-    );}
-    catch(err) {console.log(err);}
+    else
+    {
+        window.addEventListener("message", (event) =>
+        {
+            if(event.data.sender && event.data.sender == "ExpertGogglesTest")
+                if(event.data.supportedTypes)
+                    supportedTypes = event.data.supportedTypes;
+        });
+    }
 }
 
 function parseType(parseInfo)
@@ -30,7 +43,6 @@ function parseType(parseInfo)
     //funcList is a list of tracked function calls from
     //the modified D3 source code
     console.log(parseInfo.funcList);
-    console.log(parseInfo.argList);
     var funcList = [...parseInfo.funcList];
     D3InfoObj.iframeList = parseInfo.iframeList;
 
@@ -99,7 +111,12 @@ function parseType(parseInfo)
         }
     }
     D3InfoObj.type = possType;
-    sendToDB(D3InfoObj);
+
+    if(!isTest)
+        sendToDB(D3InfoObj);
+
+    //Return statement returns type of object that was detected by te extension
+    return D3InfoObj.type;
 }
 
 //Listen for a message from the script we injected
@@ -108,6 +125,11 @@ window.addEventListener("message", (event) => {
     if(event.data.sender && event.data.sender == "ExpertGogglesInterceptor")
         parseType(event.data);
 });
+
+//Check if this is being run on the test page
+var check = document.getElementById("ExpertGogglesTestMarker");
+if(check)
+    isTest = true;
 
 //Ask DBConn for SupportedTypes on Load
 getSupportedTypes();

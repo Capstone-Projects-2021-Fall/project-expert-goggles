@@ -49,8 +49,8 @@
     },
     {
         "type": "line_chart",
-        "functions": ["line"],
-        "length": 1,
+        "functions": ["line", "scaleTime"],
+        "length": 2,
         "arguments": []
     },
     {
@@ -61,8 +61,8 @@
     },
     {
         "type": "scatter_plot",
-        "functions": ["linear", "axis", "keys"],
-        "length": 3,
+        "functions": ["linear", "ordinal", "range", "axis", "keys", "category10", "dispatch"],
+        "length": 7,
         "arguments": ["circle", "cx", "cy"]
     },
     {
@@ -91,8 +91,8 @@
     },
     {
         "type": "map",
-        "functions": ["geo"],
-        "length": 1,
+        "functions": ["geo", "path"],
+        "length": 2,
         "arguments": []
     }
 ]
