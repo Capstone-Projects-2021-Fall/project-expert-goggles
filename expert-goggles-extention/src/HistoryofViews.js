@@ -114,7 +114,7 @@ class HistoryofViews extends React.Component {
         return (
             <main style ={{backgroundColor: "#7BBCF4"}}>
                 <div className = "container">
-                    <h1 class = "text-center" style = {{paddingTop: "2%"}}>
+                    <h1 class = "text-center" style = {{paddingTop: "2%", fontSize: "3em"}}>
                         History
                     </h1>
                     {
@@ -124,14 +124,14 @@ class HistoryofViews extends React.Component {
                                 <div className = "tablecontent">
                                     <table style = {{boxShadow: "5px 10px #888888"}}>
                                         <tr>
-                                            <th style = {{height: "50px", width: "50px"}}>Last Accessed:</th>
-                                            <th style = {{height: "50px", width: "50px"}}>Type:</th>
-                                            <th style = {{height: "50px", width: "50px"}}>Link:</th>
+                                            <th class = "item1" style = {{height: "50px", width: "50px"}}>Last Accessed:</th>
+                                            <th class = "item2" style = {{height: "50px", width: "50px"}}>Type:</th>
+                                            <th class = "item3"style = {{height: "50px", width: "50px"}}>Link:</th>
                                         </tr>
                                         <tr>
-                                            <td style = {{height: "50px", width: "50px"}}>{moment(DisplayedUserHistories.last_accessed.toDate()).calendar()}</td>
-                                            <td style = {{height: "50px", width: "50px"}}>{String(DisplayedUserHistories.type)}</td>
-                                            <td style = {{height: "50px", width: "50px"}}>{String(DisplayedUserHistories.url)}</td>
+                                            <td class = "item1" style = {{height: "50px", width: "50px"}}>{moment(DisplayedUserHistories.last_accessed.toDate()).calendar()}</td>
+                                            <td class = "item2" style = {{height: "50px", width: "50px"}}>{String(DisplayedUserHistories.type)}</td>
+                                            <td class = "item3" style = {{height: "50px", width: "50px"}}>{String(DisplayedUserHistories.url)}</td>
                                         </tr>
                                     </table>
                                 </div>
