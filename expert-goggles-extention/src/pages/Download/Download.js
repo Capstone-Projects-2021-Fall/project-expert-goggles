@@ -15,9 +15,13 @@ const Downloads = () => {
                         <li>Navigate to the unzipped directory and click “select folder.”</li>
                         <li>Expert Goggles is now installed!</li>
                     </ol>
-                    <h4 class = "LabelDownload">
-                    <a href = "https://github.com/Capstone-Projects-2021-Fall/project-expert-goggles/releases" target = "_blank" rel="noopener noreferrer"class = "downloadbutton"><span>Open Package Page</span></a>
-                    </h4>
+                        <a href = "https://github.com/Capstone-Projects-2021-Fall/project-expert-goggles/releases" target = "_blank" rel="noopener noreferrer" class = "dwnldbtn">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            Open Package Page
+                        </a>
             </section>
         </bodytwo>
 
