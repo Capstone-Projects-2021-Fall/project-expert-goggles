@@ -147,4 +147,5 @@ class HistoryofViews extends React.Component {
         )}
     }
 }
+
 export default HistoryofViews;

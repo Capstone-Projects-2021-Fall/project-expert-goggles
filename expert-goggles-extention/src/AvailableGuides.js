@@ -67,4 +67,5 @@ class AvailableGuides extends React.Component {
         )
     }
 }
+
 export default AvailableGuides;
