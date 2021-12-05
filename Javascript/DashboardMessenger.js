@@ -1,19 +1,19 @@
-console.log("Extension-to-Dashboard Messenger: On User History Page, getting User ID.");
+/**
+*                                Expert Goggles Dashboard Messenger
+*   DashboardMessenger.js is a content script run only on the Dashboard's User History page.
+*   It simply queries the User ID from DBConn.js, and posts that information to the page.
+*   This allows the Dashboard Page to detect the user without requiring manual sign-in.
+*/
 
-//Get the User ID From DBConn
+//Message to DBConn.js
 var message = {"from": "DashboardMessenger"};
 try
 {
     chrome.runtime.sendMessage(message, function(reply)
     {
-        //Post that info out to the page
-        try
-        {
-            window.postMessage({"userID": reply.uid, "sender": "ExpertGoggles"}, "*");
-            console.log("Posted user ID " + reply.uid);
-        }
-        catch(err) {console.log(err);}
+        //When a reply is received, post that message to the webpage.
+        window.postMessage({"userID": reply.uid, "sender": "ExpertGoggles"}, "*");
     });
 }
-catch(err) {console.log(err);}
+catch(error) {console.log(error);}
 

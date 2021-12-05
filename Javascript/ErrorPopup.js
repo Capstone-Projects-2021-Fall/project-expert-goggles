@@ -1,15 +1,36 @@
-//This file is loaded into the Extension's Error Popup and makes the link to the dashboard clickable
+/**
+*   ErrorPopup.js is the logic for the extension's Error-state Page Action. It informs
+*   the user whether D3 source code was detected, what errors occurred, and if any
+*   iframes are present.
+*/
 
-//Communicate with DBConn
-var port = chrome.extension.connect({
-    name: "Sample Communication"
+//Links in Chrome Page Actions are unclickable by default.
+//This function fixes that. Called at start and whenever links are added.
+function makeLinksClickable()
+{
+    var links = document.getElementsByTagName("a");
+    for(let link of links)
+    {
+        //Check if link already has a click event to avoid duplicate tabs
+        if(!link.listener && link.listener != "true")
+        {
+            link.listener = "true";
+            link.addEventListener('click', () => chrome.tabs.create({active: true, url: link.href}));
+        }
+    }
+}
+
+//Establish a connection with DBConn.js
+var port = chrome.extension.connect
+({
+    name: "Error Popup Communication"
 });
 
-//Populate the error message depending on whether D3 was present or absent, and whether there are iframes
-port.onMessage.addListener(function(msg)
+//Listen on that port for DBConn to send D3 and iframe information
+port.onMessage.addListener(function(message)
 {
     //Handle if D3 Code is present
-    var d3 = msg.d3type;
+    var d3 = message.d3type;
     var d3div = document.getElementById("d3div");
     if(d3 == "none")
         d3div.innerHTML = "We have not detected any D3 source code on this page.";
@@ -17,7 +38,7 @@ port.onMessage.addListener(function(msg)
         d3div.innerHTML = "We have detected D3 source code on this page, but are unable to parse its type.";
 
     //Handle if iframes are present
-    var iframes = msg.iframeList;
+    var iframes = message.iframeList;
     var idiv = document.getElementById("iframediv");
     if(iframes.length > 0)
     {
@@ -36,22 +57,6 @@ port.onMessage.addListener(function(msg)
         makeLinksClickable();
     }
 });
-
-//Links in Chrome Page Actions are unclickable by default
-//This function fixes that. Called at start and whenever links are added.
-function makeLinksClickable()
-{
-    var links = document.getElementsByTagName("a");
-    for(let link of links)
-    {
-        //Check if link already has a click event to avoid duplicate tabs
-        if(!link.listener && link.listener != "true")
-        {
-            link.listener = "true";
-            link.addEventListener('click', () => chrome.tabs.create({active: true, url: link.href}));
-        }
-    }
-}
 
 //Make the links clickable since chrome blocks them in popups
 document.addEventListener('DOMContentLoaded', function (){ makeLinksClickable(); });

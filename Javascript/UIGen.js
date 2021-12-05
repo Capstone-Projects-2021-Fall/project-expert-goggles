@@ -152,8 +152,6 @@ function generateSidebar(guideInfo)
 chrome.runtime.onMessage.addListener(
   function(D3InfoObj, sender, sendResponse)
   {
-    if(D3InfoObj.recipient != "UI")
-        return;
 
     myD3 = D3InfoObj;
 
