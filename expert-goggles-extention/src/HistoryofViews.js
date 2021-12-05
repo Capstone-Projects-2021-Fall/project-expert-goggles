@@ -112,7 +112,7 @@ class HistoryofViews extends React.Component {
         else
         {
         return (
-            <bodyhistory>
+            <bodyhistory style ={{backgroundColor: "#7BBCF4"}}>
                 <div className = "container">
                     <h1 class = "text-center" style = {{paddingTop: "2%"}}>
                         History
@@ -122,16 +122,16 @@ class HistoryofViews extends React.Component {
                         this.state.DisplayedUserHistories.map ( DisplayedUserHistories => {
                             return (
                                 <div className = "tablecontent">
-                                    <table>
+                                    <table style = {{boxShadow: "5px 10px #888888"}}>
                                         <tr>
-                                            <th style = {{height: "100px", width: "100px"}}>Last Accessed:</th>
-                                            <th style = {{height: "100px", width: "100px"}}>Type:</th>
-                                            <th style = {{height: "100px", width: "100px"}}>Link:</th>
+                                            <th style = {{height: "50px", width: "50px"}}>Last Accessed:</th>
+                                            <th style = {{height: "50px", width: "50px"}}>Type:</th>
+                                            <th style = {{height: "50px", width: "50px"}}>Link:</th>
                                         </tr>
                                         <tr>
-                                            <td style = {{height: "100px", width: "100px"}}>{moment(DisplayedUserHistories.last_accessed.toDate()).calendar()}</td>
-                                            <td style = {{height: "100px", width: "100px"}}>{String(DisplayedUserHistories.type)}</td>
-                                            <td style = {{height: "100px", width: "100px"}}>{String(DisplayedUserHistories.url)}</td>
+                                            <td style = {{height: "50px", width: "50px"}}>{moment(DisplayedUserHistories.last_accessed.toDate()).calendar()}</td>
+                                            <td style = {{height: "50px", width: "50px"}}>{String(DisplayedUserHistories.type)}</td>
+                                            <td style = {{height: "50px", width: "50px"}}>{String(DisplayedUserHistories.url)}</td>
                                         </tr>
                                     </table>
                                 </div>

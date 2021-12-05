@@ -19,8 +19,12 @@ h1.history {
 
 table, th, td {
     border: 1px black solid;
-    gap: 10px 2em;
+    
 }
+
+/*
+gap: 10px 2em;
+*/
 
 th {
     
@@ -33,7 +37,7 @@ th, td {
 }
 
 td {
-    height: 40px;
+    
     vertical-align: bottom;
 }
 
@@ -44,6 +48,7 @@ tr:hover {
 table {
     width: 100%;
     border: 2px;
+    border-collapse:  collapse;
 }
 
 /*tr:nth-child(even) {
