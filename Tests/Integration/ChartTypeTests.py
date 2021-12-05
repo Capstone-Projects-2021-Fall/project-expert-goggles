@@ -41,7 +41,10 @@ for url, chart_type in urlList.items():
             print("Test %d failed - ID'd a %s as a %s" % (i, chart_type, name))
 
     except (NoSuchElementException, ElementNotInteractableException):
-        print("Test %d failed - no sidebar created" % i)
+        if (chart_type == "none"):
+            print("Test %d success - nothing done when no d3 code." % i)
+        else:
+            print("Test %d failed - no sidebar created" % i)
 
     i += 1
 

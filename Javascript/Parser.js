@@ -145,7 +145,7 @@ function parseType(parseInfo)
     }
     //If it is the test environment, return the type so Unit Test can work with the info directly.
     else
-        return D3InfoObj.type;
+        return possType;
 }
 
 //-------------------------------------------------------------------------------------------------
