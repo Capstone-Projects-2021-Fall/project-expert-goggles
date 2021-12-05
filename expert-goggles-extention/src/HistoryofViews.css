@@ -58,7 +58,7 @@ tr:hover {
 
 table {
     width: 100%;
-    border: 2px;
+    border: 5px;
     border-collapse: collapse;
     table-layout: fixed;
 }
