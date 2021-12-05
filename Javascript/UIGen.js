@@ -1,30 +1,32 @@
 /**
-*                      Expert Goggles UI Generation
-*   UIGen.js represents the scripts for the Extension's UI Generation.
-*   It listens for information from the Database Connector (DBConn.js),
-*   then generates a floating prompt to the user near the DOM element
-*   associated with the DOMid that was passed to it. When the prompt is
-*   clicked, it splits the page with a sidebar holding the visualization
-*   guide that was sent to it from the Database Connector.
+*                                   Expert Goggles UI Generation
+*   UIGen.js represents the scripts for the Extension's UI Generation. It listens for information
+*   from the Database Connector (DBConn.js), then generates a floating prompt to the user, trying
+*   to place it near the detected visualization on the page. When the prompt is clicked, it splits
+*   the page with a sidebar holding the visualization guide that was sent to it from DBConn.js.
 */
 
 "use strict";
 
-//Internal Variables
-var sbOpened = -1; //-1 if the Sidebar is not currently showing, 1 if so.
-var sidebar = null; //Holds a sidebar DOM Element
-var myD3; //Holds the D3InfoObj that is sent to it.
+//-------------------------------------------------------------------------------------------------
+// Internal Fields
+//-------------------------------------------------------------------------------------------------
 
-//Toggles the sidebar open and closed.
-//If this is somehow called while no sidebar is generated, logs to the console instead.
+var sbOpened = -1; //-1 if the Sidebar is not currently showing, 1 if so.
+var sidebar = null; //Holds a sidebar div element.
+var myD3; //Holds the D3InfoObj that is sent from DBConn.
+
+//-------------------------------------------------------------------------------------------------
+// Functions
+//-------------------------------------------------------------------------------------------------
+
+//toggleSidebar() toggles the sidebar opened and closed. If it's called when the sidebar isn't
+//created, it does nothing.
 function toggleSidebar()
 {
-    //Check that sidebar exists, return if not
+    //Check that the sidebar exists.
     if(sidebar === null)
-    {
-        console.log("Cannot open sidebar: doesn't exist.");
         return;
-    }
 
     //If the sidebar is closed, open it
     if(sbOpened < 0)
@@ -43,11 +45,13 @@ function toggleSidebar()
     }
 
     sbOpened *= -1;
-    return;
 }
 
-//createPrompt(id) uses the DOM id passed to it from the rest of the program, and generates
-//a floating prompt near that DOM element on the page.
+//createPrompt() generates a floating prompt on the page. It tries to append it near
+//the parent element of an SVG element (the likely place of a D3 visualization). If
+//that doesn't work, it appends directly to body. toggleSidebar() is set as the onclick
+//function of the prompt.
+
 function createPrompt()
 {
     //Try to find an svg to place the prompt by
@@ -55,33 +59,37 @@ function createPrompt()
     if(d3 === null)
         d3 = document.body; //If that didn't work, we'll try appending straight to body
     else
-        d3 = d3.parentElement;
+        d3 = d3.parentElement; //If it did, we'll grab the SVG's container.
 
+    //Create and append the prompt.
     var prompt = document.createElement("div");
     prompt.innerHTML = "Expert Goggles:<br>Click for a guide.";
     prompt.classList.add("expertGogglesPrompt");
     prompt.id = "ExpertGoggles";
     d3.appendChild(prompt);
 
-    //The sidebar opens when the prompt is clicked
+    //Set toggleSidebar() as the onclick function.
     window.onclick = function(event)
     {
         if(event.target.id == "ExpertGoggles")
             toggleSidebar();
     }
-    return;
 }
+
+//reportError() handles the case of a user reporting an incorrect parse, via the sidebar
+//report button. It messages the error to DBConn, then changes the contents of the sidebar.
 
 function reportError()
 {
+    //Message the report to DBConn.js
     var message = {"from": "UI"};
-    console.log("Sending Error Report Request to Background");
     try{chrome.runtime.sendMessage(message);}
     catch(err) {console.log(err);}
 
-    //Repopulate the sidebar with a thanks for the feedback
-    sidebar.innerHTML = ""; //Clear current contents
+    //Clear Sidebar Contents
+    sidebar.innerHTML = "";
 
+    //Repopulate the sidebar: Sorry Title
     var sorry = document.createElement("div");
     var outerDiv = document.createElement("div");
     outerDiv.style["text-align"] = "center";
@@ -90,6 +98,7 @@ function reportError()
     outerDiv.appendChild(sorry);
     sidebar.appendChild(outerDiv);
 
+    //Repopulate the sidebar: Thanks for the feedback.
     var thanks = document.createElement("div");
     thanks.classList.add("bodyDiv");
     thanks.innerHTML = "We are constantly working to improve Expert Goggles.<br><br>"
@@ -98,16 +107,17 @@ function reportError()
     sidebar.appendChild(thanks);
 }
 
-//generateSidebar() generates a sidebar DOM element and populates
-//it with a vis. guide that was appended to the D3InfoObj sent
-//from DBConn.js
+//generateSidebar() generates a sidebar div element and populates it with the guide received
+//from DBConn.js. The div is stored in the sidebar internal field.
 
 function generateSidebar(guideInfo)
 {
+    //Create the div and style it.
     var sb = document.createElement("div");
     sb.classList.add("expertGogglesSidebar");
 
-    //Take the Object Passed by the Database and Generate the Guide
+    //Take the Object Passed by the Database and Generate the Guide:
+
     //Title
     var titleDiv = document.createElement("div");
     var outerDiv = document.createElement("div");
@@ -117,7 +127,7 @@ function generateSidebar(guideInfo)
     sb.appendChild(outerDiv);
     outerDiv.appendChild(titleDiv);
 
-    //img
+    //Image
     var pic = document.createElement("img");
     pic.src = guideInfo["img"];
     pic.width = "225";
@@ -131,7 +141,7 @@ function generateSidebar(guideInfo)
     bodyDiv.classList.add("bodyDiv");
     sb.appendChild(bodyDiv);
 
-    //Error Button
+    //Report Error Button
     var buttonDiv = document.createElement("div");
     var button = document.createElement("button");
     button.innerHTML = "Report a parsing error.";
@@ -148,19 +158,27 @@ function generateSidebar(guideInfo)
     return sb;
 }
 
-//Listen for a message from DBConn
-chrome.runtime.onMessage.addListener(
-  function(D3InfoObj, sender, sendResponse)
-  {
+//-------------------------------------------------------------------------------------------------
+// Main Execution
+//-------------------------------------------------------------------------------------------------
 
-    myD3 = D3InfoObj;
 
+//UIGen.js is reactive: All execution depends on receiving a guide from DBConn
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse)
+{
+    //Make sure we didn't accidentally intercept a message from the Parser
+    if(message.from != "DBConn")
+        return;
+
+    //Otherwise, the message is a D3InfoObj from DBConn
+    myD3 = message;
+
+    //Use the received info to generate the sidebar, then create the prompt.
     try
     {
         sidebar = generateSidebar(myD3.guide);
         document.body.appendChild(sidebar);
         createPrompt();
     }
-    catch(err){console.log(err);}
-  }
-);
+    catch(error) { console.log(error); }
+});

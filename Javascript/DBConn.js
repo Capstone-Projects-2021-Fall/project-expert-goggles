@@ -153,6 +153,8 @@ function saveToHistory(sentObj)
 
 function sendToUI(sentObj)
 {
+    sentObj.from = "DBConn";
+
     //Using the tab ID of the guide request from the Parser, forward to the UI Script on that tab.
     try{chrome.tabs.sendMessage(myD3.tab, sentObj);}
     catch(error){console.log("Error in messaging to UI: " + error);}
