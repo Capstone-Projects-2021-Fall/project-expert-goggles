@@ -12,13 +12,13 @@
         <script src="https://cdn.rawgit.com/chaijs/chai/3.5.0/chai.js"></script>
         <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
 
-        <script src="../Javascript/Parser.js"></script>
-        <script src="../Javascript/unitTestLoader.js"></script>
+        <script src="../../Javascript/Parser.js"></script>
+        <script src="unitTestLoader.js"></script>
         <script>
             const mocha = window.mocha;
             mocha.setup('bdd');
         </script>
-        <script src="../Javascript/parserTest.js"></script>
+        <script src="parserTest.js"></script>
         <script>
             mocha.checkLeaks();
             setTimeout(mocha.run, 1000);
