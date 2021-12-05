@@ -29,7 +29,7 @@ visCirclePackingChart.sender = "ExpertGoggles";
 visCirclePackingChart.iframeList = [];
 
 const visDifferenceChart= { };
-visDifferenceChart.funcList = ["format", "scale", "linear", "0", "rebind", "axis", "area", "select", "qualify", "tsv", "dispatch", "extent", "min", "max", "biscect", "day" , "transition", "range"];
+visDifferenceChart.funcList = ["format", "scale", "linear", "0", "rebind", "axis", "area", "select", "qualify", "tsv", "dispatch", "extent", "min", "max", "bisect", "day" , "transition", "range"];
 visDifferenceChart.sender = "ExpertGoggles";
 visDifferenceChart.iframeList = [];
 
@@ -64,7 +64,7 @@ visStackedAreaChart.sender = "ExpertGoggles";
 visStackedAreaChart.iframeList = [];
 
 const visStackedBarChart = {};
-visStackedBarChart.funcList = ["select", "scaleBand", "scaleLinear", "scaleOrdinal", "csv", "max", "stack", "axisBottom", "axisLeft", "formatPartition"];
+visStackedBarChart.funcList = ['format', 'ordinal', 'range', 'linear', '0', 'category10', 'axis', 'select', 'qualify', 'tsv', 'dispatch', 'rebind', 'stack', 'permute', 'max', 'transition'];
 visStackedBarChart.sender = "ExpertGoggles";
 visStackedBarChart.iframeList = [];
 

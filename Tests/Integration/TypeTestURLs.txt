@@ -18,7 +18,6 @@ https://flowingdata.com/projects/2021/work-hours-men-women/?initialWidth=1090&ch
 http://graphics.wsj.com/what-percent/ Bar Chart
 http://graphics.wsj.com/gender-pay-gap/ Scatterplot
 http://graphics.wsj.com/fed-composition/ Difference Chart
-http://graphics.wsj.com/medical-money/ Pie Chart
-https://www.wsj.com/graphics/coming-to-america/ Stacked Area Chart
-https://bl.ocks.org/mbostock/4061502 BoxPlot
-https://bl.ocks.org/mbostock/4063582 Tree Map
+http://graphics.wsj.com/global-growth/ Area Chart
+https://www.google.com/ none
+https://smile.amazon.com/ none
