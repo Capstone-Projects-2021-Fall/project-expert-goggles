@@ -28,18 +28,26 @@ gap: 10px 2em;
 */
 
 th {
-    
+    letter-spacing: 2px;
     background-color: gray;
     color: white;
 }
 
 th, td {
     padding: 10px;
-    display: block;
+    padding: 20px;
 }
 
+tbody td {
+    text-align: center;
+}
+
+/*
+display: block;
+*/
+
 td {
-    
+    letter-spacing: 1px;
     text-align: center;
 }
 
@@ -50,7 +58,21 @@ tr:hover {
 table {
     width: 100%;
     border: 2px;
+    border-collapse: collapse;
+    table-layout: fixed;
 }
+
+thead th:nth-child(1) {
+    width: 30%;
+  }
+  
+  thead th:nth-child(2) {
+    width: 20%;
+  }
+  
+  thead th:nth-child(3) {
+    width: 15%;
+  }
 
 /*tr:nth-child(even) {
     background-color: lightgray;
