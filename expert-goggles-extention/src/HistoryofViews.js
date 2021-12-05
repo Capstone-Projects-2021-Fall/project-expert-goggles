@@ -112,7 +112,7 @@ class HistoryofViews extends React.Component {
         else
         {
         return (
-            <bodyhistory style ={{backgroundColor: "#7BBCF4"}}>
+            <main style ={{backgroundColor: "#7BBCF4"}}>
                 <div className = "container">
                     <h1 class = "text-center" style = {{paddingTop: "2%"}}>
                         History
@@ -139,7 +139,7 @@ class HistoryofViews extends React.Component {
                         })
                     }
                 </div>
-            </bodyhistory>
+            </main>
         )}
     }
 }
