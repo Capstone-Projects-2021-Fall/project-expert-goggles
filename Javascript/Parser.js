@@ -73,6 +73,7 @@ function parseType(parseInfo)
 {
     //Copy the function list and iframe URLs out of parseInfo.
     var funcList = [...parseInfo.funcList];
+    var argList = [...parseInfo.argList];
     D3InfoObj.iframeList = parseInfo.iframeList;
 
     //Bookkeeping for parsing

@@ -19,8 +19,10 @@ var scriptText = `
 
 var funcLogger = {}; //funcLogger holds the interception functions
 funcLogger.funcsCalled = []; //funcsCalled will store a list of D3 functions called by the page.
+funcLogger.argList = [];
 var alreadyFired = false; //to ensure D3 source code is only fired once.
 var iframeList = []; //Cannot detect code inside of iframes, we'll let the Parser know they're here
+var needArgs = ["select", "attr", "csv", "append"];
 
 //-------------------------------------------------------------------------------------------------
 // Functions
@@ -39,6 +41,22 @@ funcLogger.replace = function(old_func, func_name)
         //We don't need duplicates; Only push the function name if not already there.
         if(!funcLogger.funcsCalled.includes(func_name))
             funcLogger.funcsCalled.push(func_name);
+
+        if(needArgs.includes(func_name) && arguments)
+        {
+            var argString = func_name + "(";
+            var count = 0;
+            for(let arg of arguments)
+            {
+                if(count > 0)
+                    argString += ", ";
+
+                 argString += arg.toString();
+                 count++;
+            }
+            argString += ")";
+            funcLogger.argList.push(argString);
+        }
 
         //Return the old function with this extra snippet of code appended.
         return old_func.apply(this, arguments);
@@ -109,8 +127,13 @@ function sendToParser()
     //Generate a message with the necessary info
     var message = {};
     message.funcList = funcLogger.funcsCalled;
+    message.argList = funcLogger.argList;
     message.sender = "ExpertGogglesInterceptor";
     message.iframeList = iframeList;
+
+    //Log Info Out
+    console.log(message.funcList);
+    console.log(message.argList);
 
     //Since this script is injected, we have to use window.postMessage
     try{window.postMessage(message, "*");}
