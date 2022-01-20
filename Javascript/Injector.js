@@ -111,6 +111,8 @@ function sendToParser()
     message.funcList = funcLogger.funcsCalled;
     message.sender = "ExpertGogglesInterceptor";
     message.iframeList = iframeList;
+    console.log("D3 Functions Called:");
+    console.log(message.funcList);
 
     //Since this script is injected, we have to use window.postMessage
     try{window.postMessage(message, "*");}
